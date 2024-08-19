@@ -32,7 +32,7 @@ BuildArch:      noarch
 %{summary}
 
 %prep
-%autosetup -p1 n trento-checks
+%autosetup -p1 -n checks-main
 
 %install
 install -d -m 0755 %buildroot%trento_dir
