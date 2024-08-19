@@ -26,7 +26,7 @@ Group:          System/Monitoring
 BuildArch:      noarch
 
 %define         trento_dir %{_datadir}/trento
-%define         trento_checks_dir %trento_dir/checks.d
+%define         trento_checks_dir %trento_dir/checks
 
 %description
 %{summary}
