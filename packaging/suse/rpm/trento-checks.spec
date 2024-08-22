@@ -27,7 +27,7 @@ License:        Apache-2.0
 Group:          System/Monitoring
 URL:            https://github.com/trento-project/checks
 # Added by _service via OBS
-Source:         %{name}-%{version}.tar.gz
+Source0:         %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 %description
