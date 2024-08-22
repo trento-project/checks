@@ -36,6 +36,9 @@ BuildArch:      noarch
 %prep
 %autosetup -p1
 
+%build
+# empty on purpose
+
 %install
 install -d -m 0755 %buildroot%trento_dir
 install -d -m 0755 %buildroot%trento_checks_dir
