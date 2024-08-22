@@ -16,12 +16,14 @@
 #
 
 Name:           trento-checks
+# Set by _service via OBS and GitHub action "CI"
 Version:        0
 Release:        0
 Summary:        Checks for the Trento checks engine
 License:        Apache-2.0
 URL:            https://github.com/trento-project/checks
-Source:         https://github.com/trento-project/checks/archive/refs/heads/main.tar.gz
+# Added by _service via OBS
+Source:         %{name}-%{version}.tar.gz
 Group:          System/Monitoring
 BuildArch:      noarch
 
@@ -32,7 +34,7 @@ BuildArch:      noarch
 %{summary}
 
 %prep
-%autosetup -p1 -n checks-main
+%autosetup -p1
 
 %install
 install -d -m 0755 %buildroot%trento_dir
