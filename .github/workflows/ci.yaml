@@ -142,27 +142,4 @@ jobs:
           cd $OSC_CHECKOUT_DIR
           osc ar
           osc commit -m "New development version of $NAME released"
-      # - name: Checkout and prepare OBS package
-      #   run: |
-      #     osc checkout $OBS_PROJECT trento-checks -o $OSC_CHECKOUT_DIR
-      #     cp $FOLDER/_service $OSC_CHECKOUT_DIR
-      #     cp $FOLDER/trento-checks.spec $OSC_CHECKOUT_DIR
-      #     rm -vf $OSC_CHECKOUT_DIR/*.tar.gz
-      #     pushd $OSC_CHECKOUT_DIR
-      #     osc service manualrun
-      #     rm -vf $OSC_CHECKOUT_DIR/*.tgz
-      # - name: Prepare trento-checks.changes file
-      #   # The .changes file is updated only in release creation. This current task should be improved
-      #   # in order to add the current rolling release notes
-      #   if: github.event_name == 'release'
-      #   run: |
-      #     git config --global --add safe.directory /__w/checks/checks
-      #     VERSION=$(./hack/get_version_from_git.sh)
-      #     TAG=$(echo $VERSION | cut -f1 -d+)
-      #     hack/gh_release_to_obs_changeset.py $REPOSITORY -a shap-staff@suse.de -t $TAG -f $OSC_CHECKOUT_DIR/trento-checks.changes
-      # - name: Commit changes into OBS
-      #   run: |
-      #     pushd $OSC_CHECKOUT_DIR
-      #     osc ar
-      #     osc commit -m "GitHub Actions automated update to reference ${{ github.sha }}"
 
