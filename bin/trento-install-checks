@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+#  trento-install-checks
+#
+#  This script installs the checks into the directory Wanda expects them.  It
+#  is required, for Kubernetes style sidecar containers and should not be used
+#  in regular deployments using docker
+#
+
+checks_src="/usr/local/src/trento-checks/checks"
+checks_dst="/usr/share/trento/checks"
+
+if [ ! -e "$checks_dst" ] && [ -d "$checks_src" ]; then
+  mkdir -p "$checks_dst"
+  install -p -m 0644 "$checks_src"/* "$checks_dst"
+
+  # FIXME: handle via trap
+  unset checks_src
+  unset checks_dst
+
+  exit $?
+fi
+
+# FIXME: handle via trap
+unset checks_src
+unset checks_dst
+exit 1
