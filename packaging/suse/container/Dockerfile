@@ -1,3 +1,9 @@
+# SPDX-License-Identifier: Apache-2.0
+#!BuildTag: trento/trento-checks:latest
+#!BuildTag: trento/trento-checks:%%VERSION%%
+#!BuildTag: trento/trento-checks:%%VERSION%%-build%RELEASE%
+#!UseOBSRepositories
+#!ExclusiveArch: x86_64
 FROM bci/bci-base:15.4
 
 LABEL org.opencontainers.image.source="https://github.com/trento-project/checks"
@@ -11,8 +17,8 @@ RUN zypper --non-interactive in -y tar && \
     zypper --non-interactive clean
 
 COPY checks /usr/local/src/trento-checks/checks
-COPY bin/trento-install-checks /usr/local/bin/trento-install-checks
 
+COPY bin/trento-install-checks /usr/local/bin/trento-install-checks
 RUN chmod +x /usr/local/bin/trento-install-checks
 
 ENTRYPOINT ["/usr/local/bin/trento-install-checks"]
