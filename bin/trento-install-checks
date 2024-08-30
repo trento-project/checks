@@ -7,12 +7,14 @@
 #  in regular deployments using docker
 #
 
-checks_src="/usr/local/src/trento-checks/checks"
+checks_src="/usr/src/trento-checks/checks"
 checks_dst="/usr/share/trento/checks"
 
-if [ -d "$checks_dst" ] && [ -n "$(find "$checks_dst" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
+mkdir -p "$checks_dst"
+
+if [ -n "$(find "$checks_dst" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
   if [ ! -d "$checks_src" ]; then
-    echo "Make sure the checks are installed to $checks_src" 1>&2
+    echo "Make sure the checks are available at $checks_src" 1>&2
 
     # FIXME: handle via trap
     unset checks_src
@@ -21,7 +23,7 @@ if [ -d "$checks_dst" ] && [ -n "$(find "$checks_dst" -maxdepth 0 -type d -empty
     exit 1
   fi
 
-  install -p -m 0644 "$checks_src"/* "$checks_dst" || echo "Make sure $checks_dst exists, is empty and accessible" 1>&2
+  install -p -m 0644 "$checks_src"/* "$checks_dst"
 
   # FIXME: handle via trap
   unset checks_src
@@ -30,7 +32,7 @@ if [ -d "$checks_dst" ] && [ -n "$(find "$checks_dst" -maxdepth 0 -type d -empty
   exit $?
 fi
 
-echo "Make sure $checks_dst exists, is empty and accessible" 1>&2
+echo "Make sure $checks_dst is empty and accessible" 1>&2
 
 # FIXME: handle via trap
 unset checks_src
