@@ -7,7 +7,7 @@
 #  in regular deployments using docker
 #
 
-checks_src="/usr/local/src/trento-checks/checks"
+checks_src="/usr/src/trento-checks/checks"
 checks_dst="/usr/share/trento/checks"
 
 mkdir -p "$checks_dst"
