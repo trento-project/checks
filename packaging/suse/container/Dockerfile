@@ -16,9 +16,13 @@ ENV LC_ALL en_US.UTF-8
 RUN zypper --non-interactive in -y tar && \
     zypper --non-interactive clean
 
-COPY checks /usr/local/src/trento-checks/checks
+ADD checks.tar.gz /build/
 
-COPY bin/trento-install-checks /usr/local/bin/trento-install-checks
+RUN mkdir -p /usr/local/src/trento-checks
+
+RUN mv /build/checks/checks /usr/local/src/trento-checks/checks
+
+RUN mv /build/checks/bin/trento-install-checks /usr/local/bin/trento-install-checks
 RUN chmod +x /usr/local/bin/trento-install-checks
 
 ENTRYPOINT ["/usr/local/bin/trento-install-checks"]
