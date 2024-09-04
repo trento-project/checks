@@ -8,34 +8,14 @@
 #
 
 checks_src="/usr/src/trento-checks/checks"
-checks_dst="/usr/share/trento/checks"
+checks_target="/usr/share/trento/checks"
 
-mkdir -p "$checks_dst"
+install -d -m 0755 "$checks_target" || exit $?
 
-if [ -n "$(find "$checks_dst" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
-  if [ ! -d "$checks_src" ]; then
-    echo "Make sure the checks are available at $checks_src" 1>&2
+# Remove old checks, if they exist
+rm "$checks_target"/* || exit $?
 
-    # FIXME: handle via trap
-    unset checks_src
-    unset checks_dst
+# Install new checks
+install -p -m 0644 "$checks_src"/* "$checks_target" || exit $?
 
-    exit 1
-  fi
-
-  install -p -m 0644 "$checks_src"/* "$checks_dst"
-
-  # FIXME: handle via trap
-  unset checks_src
-  unset checks_dst
-
-  exit $?
-fi
-
-echo "Make sure $checks_dst is empty and accessible" 1>&2
-
-# FIXME: handle via trap
-unset checks_src
-unset checks_dst
-
-exit 1
+exit 0
