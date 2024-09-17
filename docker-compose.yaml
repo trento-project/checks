@@ -19,7 +19,6 @@ services:
       - 4000:4000
     entrypoint: /bin/sh -c "/app/bin/wanda eval \"Wanda.Release.init()\" && /app/bin/wanda start"
     volumes:
-      - ./priv/catalog/:/app/catalog:rw
       - ./checks:/usr/share/trento/checks:ro
 
   rabbitmq:
