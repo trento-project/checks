@@ -13,7 +13,7 @@ checks_target="/usr/share/trento/checks"
 install -d -m 0755 "$checks_target" || exit $?
 
 # Remove old checks, if they exist
-rm "$checks_target"/* || exit $?
+rm -f "$checks_target"/* || exit $?
 
 # Install new checks
 install -p -m 0644 "$checks_src"/* "$checks_target" || exit $?
