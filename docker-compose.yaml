@@ -14,7 +14,6 @@ services:
     depends_on:
       - postgres
       - rabbitmq
-      - checks
     ports:
       - 4000:4000
     entrypoint: /bin/sh -c "/app/bin/wanda eval \"Wanda.Release.init()\" && /app/bin/wanda start"
