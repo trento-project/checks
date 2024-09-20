@@ -165,9 +165,20 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create checks tarball
+        run: |
+          mkdir checks.dist
+          cp -r bin checks.dist
+          cp -r checks checks.dist
+          mv checks checks.orig
+          mv checks.dist checks
+          tar -czf checks.tar.gz checks
+          mv checks.orig checks
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
+          context: .
+          file: packaging/suse/container/Dockerfile
           push: true # Will only build if this is not here
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
