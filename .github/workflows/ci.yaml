@@ -149,7 +149,7 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     needs: [tlint]
     env:
-      IMAGE_TAG: "${{ (github.event_name == 'release' && github.event.release.tag_name) || (github.event_name == 'push' && github.ref_name == 'main' && 'rolling') || github.sha }}"
+      IMAGE_TAG: "${{ (github.event_name == 'release' && github.event.release.tag_name) || (github.event_name == 'push' && github.ref == 'refs/heads/main' && 'rolling') || github.sha }}"
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.1
