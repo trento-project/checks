@@ -23,11 +23,11 @@ Name:           trento-checks
 Version:        0
 Release:        0
 Summary:        Checks for the Trento checks engine
-License:        Apache-2.0
+License:        GPL-3.0-or-later
 Group:          System/Monitoring
 URL:            https://github.com/trento-project/checks
 # Added by _service via OBS
-Source0:         %{name}-%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 %description
