@@ -1,0 +1,43 @@
+id: "972BE0"
+name: ASCS and ERS instance autostart disabled
+group: OS services
+description: |
+  The ASCS and ERS autostart is disabled on for cluster managed instances.
+remediation: |
+  ## Abstract
+  The ASCS and ERS systemd service must be disabled as their start is handled by the cluster.
+
+  ## Remediation
+  Disable the ASCS and ERS systemd services on every cluster node.
+
+  ```
+  systemctl disable SAPHA1_00
+  systemctl disable SAPHA1_10
+  ```
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: enabled_instances
+    gatherer: dir_scan@v1
+    argument: "/etc/systemd/system/multi-user.target.wants/SAP[A-Z][A-Z0-9][A-Z0-9]_[0-9][0-9].service"
+expectations:
+  # TODO: use systemd gatherer (needs pattern support or return of all services)
+  - name: services_disabled
+    expect: |
+      let enabled_services = facts.enabled_instances.map(|instance| instance["name"].split("/")[5]);
+      for sid in facts.cluster_sids.keys() {
+          for inst in facts.cluster_sids[sid].instances {
+              let service = `SAP${sid}_${inst.instance_number}.service`;
+              if enabled_services.contains(service) {
+                  return false;
+              }
+          }
+      }
+      return true;      
+    failure_message: ASCS or ERS systemd services are not disabled at boot time for a clustered SAP instance

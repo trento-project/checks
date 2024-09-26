@@ -1,0 +1,30 @@
+id: "3AF270"
+name: All enabled Notes are also applied
+group: saptune
+description: |
+  The enabled Notes must be applied to have an active tuning.
+remediation: |
+  ## Abstract
+  The enabled Notes must be also applied but there are deviations.
+  A deviation indicates a mishap or bug normally. E.g. applied Solution/Notes but disabled saptune service and rebooting the system.
+
+  ## Remediation
+  Restart saptune to reapply enabled Notes
+  `saptune service restart` or `systemctl restart saptune.service`
+
+  ## References
+  -  https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
+
+
+metadata:
+  target_type: host
+
+facts:
+  - name: saptune_status
+    gatherer: saptune@v1
+    argument: status
+
+expectations:
+  - name: enabled_notes_applied
+    expect: facts.saptune_status.result.notes_enabled == facts.saptune_status.result.notes_applied
+    failure_message: saptune enabled notes '${facts.saptune_status.result.notes_enabled}' were expected to be applied but there are deviations '${facts.saptune_status.result.notes_applied}'

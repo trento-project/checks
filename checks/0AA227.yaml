@@ -1,0 +1,60 @@
+id: "0AA227"
+name: Cluster priority-fencing-delay
+group: Pacemaker
+description: |
+  Check if global cluster property `priority-fencing-delay` is set on 2-node ASCS/ERS cluster.
+remediation: |
+  ## Abstract
+  The value `priority-fencing-delay` must be set according to the best practices to enable priority fencing.
+
+  ## Remediation
+  Adjust the `priority-fencing-delay` cluster property as recommended in the best practices.
+
+  ```
+  crm configure property priority-fencing-delay=30
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker?tabs=msi#create-a-fencing-device-on-the-pacemaker-cluster
+
+  AWS:
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#cluster-bootstrap
+
+  GCP:
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#set_up_fencing
+
+  Nutanix:
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+
+  VMware:
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+severity: warning
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: priority_fencing_delay
+    default: 30
+expectations:  
+  - name: priority_fencing_delay
+    expect: |
+      if facts.cib_configuration.nodes.node.len != 2 { return true; } // only run on 2 node cluster
+      let props = facts.cib_configuration.crm_config.cluster_property_set
+        .find(|p| p.id == "cib-bootstrap-options" && p.contains("nvpair"));
+      if props == () { return false; }
+      props.nvpair
+        .find(|nv| nv.name == "priority-fencing-delay" && nv.value == values.priority_fencing_delay) != ();
+    failure_message: cluster property priority-fencing-delay is not set to ${values.priority_fencing_delay}

@@ -1,0 +1,125 @@
+id: "B3DA7E"
+name: Cluster resource-stickiness and migration-threshold
+group: SAP HANA System Replication Resource Agent ocf:suse:SAPHana
+description: |
+  Cluster resource-stickiness and migration-threshold are properly configured
+remediation: |
+  ## Abstract
+  For proper SAP HANA cluster actions calculations, it is needed to set resource-stickiness=1000 and migration-threshold=5000.
+
+  ## Remediation
+  Execute the following command to enable it:
+  ```
+  crm configure rsc_defaults resource-stickiness=1000
+  crm configure rsc_defaults migration-threshold=5000
+  ```
+  In case of problems please refer to TID https://www.suse.com/support/kb/doc/?id=000021075 for guidance.
+
+  ## References
+  In addition to the provider specific documentation listed below please refer to TID https://www.suse.com/support/kb/doc/?id=000021075 for important information too.
+
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability#create-sap-hana-cluster-resources
+
+  AWS:
+
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-cluster-resources.html
+
+  GCP:
+
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles
+
+  Nutanix:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
+
+  SUSE / KVM:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
+
+  VMware:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
+
+
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+    - ascs_ers
+
+facts:
+  - name: resource_options
+    gatherer: cibadmin@v1
+    argument: cib.configuration.rsc_defaults.meta_attributes
+
+values:
+  - name: resource_stickiness
+    default: 1
+    conditions:
+      - value: 1000
+        when: env.cluster_type == "hana_scale_up"
+      - value: 1
+        when: env.cluster_type == "ascs_ers"
+
+  - name: migration_threshold
+    default: 3
+    conditions:
+      - value: 5000
+        when: env.cluster_type == "hana_scale_up"
+      - value: 3
+        when: env.cluster_type == "ascs_ers"
+
+expectations:
+  - name: check_for_single_entry
+    expect: |
+      facts.resource_options
+      .all(|item| item.contains("nvpair")) &&
+      facts.resource_options
+      .map(|item| item.nvpair
+         .filter(|prop| prop.name == "resource-stickiness"))
+      .drain(|elem| !elem.is_empty)
+      .len() == 1;
+    failure_message: Wrong number of 'resource-stickiness' entries found in cluster configuration
+
+  - name: check_meta_attribute_name
+    expect: |
+      let meta =
+          facts.resource_options
+          .find(|item| item.id in ["rsc-options", "build-resource-defaults"]);
+
+      meta != ()
+    failure_message: Missing meta attribute name 'rsc-options' or 'build-resource-defaults' in the cluster configuration
+
+  - name: expectations_resource_stickiness
+    expect: |
+      let meta =
+          facts.resource_options
+          .find(|item| item.id == "rsc-options" || item.id == "build-resource-defaults");
+
+      let resource =
+          if meta != () && meta.len() > 1 {
+             meta.nvpair
+             .find(|prop| prop.name == "resource-stickiness");
+          };
+
+      resource != () &&
+      resource.value == values.resource_stickiness
+    failure_message: Cluster resource-stickiness value was expected to be ${values.resource_stickiness} but configured value does not match
+
+  - name: expectations_migration_threshold
+    expect: |
+      let meta =
+          facts.resource_options
+          .find(|item| item.id == "rsc-options" || item.id == "build-resource-defaults");
+
+      let resource =
+          if meta != () && meta.len() > 1 {
+             meta.nvpair
+             .find(|prop| prop.name == "migration-threshold");
+          };
+
+      resource != () &&
+      resource.value == values.migration_threshold
+    failure_message: Cluster migration-threshold value was expected to be ${values.migration_threshold} but configured value does not match

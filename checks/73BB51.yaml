@@ -1,0 +1,32 @@
+id: "73BB51"
+name: sidadm is in sapsys
+group: OS users/groups
+description: |
+  The sidadm user has to be in the sapsys group.
+remediation: |
+  ## Abstract
+  The sidadm must be in the sapsys group for every cluster managed SID on every cluster node.
+
+  ## Remediation
+  Add every sidadm user to the sapsys group for every cluster managed SID on every cluster node.
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: groups
+    gatherer: groups@v1
+expectations:
+  - name: sidadm_in_sapsys
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      let group = facts.groups.find(|g| g.name == "sapsys");
+      if group == () { return false; }
+      for sid in sids {
+        let sidadm = `${sid.to_lower()}adm`;
+        let result = group.users.contains(sidadm);
+        if result == false { return false; }
+      }
+      return true;      
+    failure_message: The sidadm user is not in the sapsys group for every managed SID on all cluster nodes

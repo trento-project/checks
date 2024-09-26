@@ -1,0 +1,28 @@
+id: "442182"
+name: supported patterns-sap-nw version
+group: OS and package versions
+description: |
+  patterns-sap-nw version is supported
+remediation: |
+  ## Abstract
+  Installed patterns-sap-nw version must be equal or higher than the recommended value
+
+  ## Remediation
+  Install or upgrade to a supported patterns-sap-nw version
+
+  ## Reference
+  - https://documentation.suse.com/en-us/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/
+
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+
+facts:
+  - name: compare_patterns_sap_nw
+    gatherer: package_version
+    argument: patterns-sap-nw,15.1
+
+expectations:
+  - name: expectations_patterns_sap_nw_version
+    expect: facts.compare_patterns_sap_nw < 1

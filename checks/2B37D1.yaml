@@ -1,0 +1,52 @@
+id: "2B37D1"
+name: Polkit rules for SAP instance systemd services
+group: Sapservices
+description: |
+  A polkit rule should exist for each SAP instance that is started with systemd.
+remediation: |
+  ## Abstract
+  A polkit rule like /etc/polkit-1/rules.d/10-SAP${SID}-${inst}.rules must exist for every SAP instance that is started with systemd.
+
+  ## Remediation
+  Create a rule file in /etc/polkit-1/rules.d/10-SAP${SID}-${inst}.rules with the following content:
+
+  ```
+  polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.systemd1.manage-units") {
+        if (subject.user == "${sid}adm" && action.lookup("unit") == "SAP${SID}_${inst}.service"  &&
+            (action.lookup("verb") == "restart" || action.lookup("verb") == "stop" || action.lookup("verb") == "start")) {
+            return polkit.Result.YES;
+        }
+    }
+  });
+
+  ```
+
+  ## Reference
+  - https://me.sap.com/notes/3139184
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: sapservices
+    gatherer: sapservices@v1
+  - name: polkit_instance_rules
+    gatherer: dir_scan@v1
+    argument: "/etc/polkit-1/rules.d/[0-9][0-9]-SAP[A-Z][A-Z0-9][A-Z0-9]-[0-9][0-9].rules"
+expectations:
+  - name: polkit_instance_rules_exist
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+        for instance in facts.cluster_sids[sid].instances {
+          let expected_rule_name = `/etc/polkit-1/rules.d/10-SAP${sid}-${instance.instance_number}.rules`;
+          if facts.sapservices.some(|service|
+            service.kind == "systemctl" && service.sid == sid && service.instance_nr == instance.instance_number
+          ) && !facts.polkit_instance_rules.some(|rule| rule.name == expected_rule_name) {
+            return false;
+          }
+        }
+      }
+      return true;
+    failure_message: At least one Polkit rule is missing for a clustered SAP instance that is started with systemd

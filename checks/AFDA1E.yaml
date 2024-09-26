@@ -1,0 +1,77 @@
+id: "AFDA1E"
+name: ASCS instance failure-timeout and migration-threshold - ENSA2
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check that meta attributes `failure-timeout` and `migration-threshold` are not set for ASCS instance resource in an ENSA2 setup.
+remediation: |
+  ## Abstract
+  The meta attributes `failure-timeout` and `migration-threshold` must not be set, according to the best practices for the ASCS instance resource in an ENSA2 setup.
+
+  ## Remediation
+  Remove both meta attributes from SAPInstance resource.
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: ASCS
+expectations:  
+  - name: resource_failure_timeout
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        if facts.cluster_sids[sid].ensa_version == "ensa1" { continue; } // skip sid
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
+        if prim == () { return false; }
+        let result = prim.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "failure-timeout");
+        if result != () { return false; }
+      }
+      return true;
+    failure_message: At least one ${values.resource_type} resource does have a failure-timeout configured, which must not be the case
+  - name: resource_migration_threshold
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        if facts.cluster_sids[sid].ensa_version == "ensa1" { continue; } // skip sid
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if inst == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
+        if inst == () { return false; }
+        let result = prim.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "migration-threshold");
+        if result != () { return false; }
+      }
+      return true;
+    failure_message: At least one ${values.resource_type} resource does have a migration-threshold configured, which must not be the case

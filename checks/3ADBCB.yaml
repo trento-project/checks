@@ -1,0 +1,33 @@
+id: "3ADBCB"
+name: saptune does not report warnings
+group: saptune
+description: |
+  Check `saptune verify` for reported warnings.
+
+remediation: |
+  ## Abstract
+  `saptune verify`  has reported warnings. This may indicate a potential problem. E.g. warning about **conflicting** sysctl changes.
+
+  ## Remediation
+  Run `saptune note verify` to see the warnings and eliminate the causes.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify
+
+
+severity: warning
+
+metadata:
+  target_type: host
+
+facts:
+  - name: saptune_note_verify
+    gatherer: saptune@v1
+    argument: note-verify
+
+expectations:
+  - name: verify_warnings
+    expect: |
+      facts.saptune_note_verify.messages
+           .filter(|item| item.priority == "WARNING").len() == 0;
+    failure_message: A 'saptune verify' was expected to report **NO** warnings but reported '${facts.saptune_note_verify.messages.filter(|item| item.priority == "WARNING").len()}' warnings.

@@ -1,0 +1,28 @@
+id: "C74B02"
+name: supported resource-agents version
+group: OS and package versions
+description: |
+  resource-agents version is supported
+remediation: |
+  ## Abstract
+  Installed resource-agents version must be equal or higher than the recommended value
+
+  ## Remediation
+  Install or upgrade to a supported resource-agents version
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-differences-to-previous-cluster-architectures
+
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers 
+
+facts:
+  - name: compare_resource_agents
+    gatherer: package_version
+    argument: resource-agents,4.0
+
+expectations:
+  - name: expectations_resource_agents_version
+    expect: facts.compare_resource_agents < 1

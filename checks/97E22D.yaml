@@ -1,0 +1,33 @@
+id: "97E22D"
+name: ASCS and ERS virtual hostnames are reachable
+group: OS services
+description: |
+  The ASCS and ERS instances are reachable via their virtual hostnames.
+remediation: |
+  ## Abstract
+  Make sure sapinit is generated and started.
+  The ASCS and ERS instances must be reachable via their virtual hostnames.
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: sapinstance_hostname_resolver
+    gatherer: sapinstance_hostname_resolver@v1
+expectations:
+  - name: cluster_instance_hostnames_reachable
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+          for inst in facts.cluster_sids[sid].instances { 
+              if ! facts.sapinstance_hostname_resolver[sid]
+                      .find(|i| i.instance_name == inst.name)
+                      .reachability {
+                  return false;
+              }
+          }
+      }
+      return true;
+    failure_message: At least one ASCS or ERS instance virtual hostname is not reachable

@@ -1,0 +1,27 @@
+id: "FB95CD"
+name: sapinit generated and started
+group: Saphostagent
+description: |
+  The Sapinit systemd services is generated and started.
+remediation: |
+  ## Abstract
+  Make sure sapinit is generated and started.
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: service_sapinit
+    gatherer: systemd@v2
+    argument: sapinit.service
+expectations:
+  - name: expectations_sapinit_active
+    expect: |
+      facts.service_sapinit["active_state"] == "active"
+    failure_message: The sapinit service is not active
+  - name: expectations_sapinit_generated
+    expect: |
+      facts.service_sapinit["unit_file_state"] == "generated"
+    failure_message: The sapinit service is not generated from sysV-init script

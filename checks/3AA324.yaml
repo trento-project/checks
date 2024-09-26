@@ -1,0 +1,48 @@
+id: "3AA324"
+name: sapping/sapping enabled - simple_mount
+group: OS services
+description: |
+  The sapping/sapping systemd services are enabled on simple mount.
+remediation: |
+  ## Abstract
+  sapping/sappong systemd services must be enabled on every cluster node in the simple mount setup.
+
+  ## Remediation
+  Enable the sapping and sappong systemd services on every cluster node.
+
+  ```
+  systemctl enable sapping
+  systemctl enable sappong
+  ```
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-preparing-the-new-sapstartsrv-resource-agent-implementation
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: service_sapping
+    gatherer: systemd@v2
+    argument: sapping.service
+  - name: service_sappong
+    gatherer: systemd@v2
+    argument: sappong.service
+expectations:
+  - name: sapping_enabled_on_simple_mount
+    expect: |
+      // if any simple mount instance is found
+      if (facts.cluster_sids.values().some(|sid| sid.instances.some(|instance| !instance.filesystem_based))) {
+          return facts.service_sapping["unit_file_state"] == "enabled";
+      }
+      return true;      
+    failure_message: The sapping service is not enabled at boot time
+  - name: sappong_enabled_on_simple_mount
+    expect: |
+      // if any simple mount instance is found
+      if (facts.cluster_sids.values().some(|sid| sid.instances.some(|instance| !instance.filesystem_based))) {
+          return facts.service_sappong["unit_file_state"] == "enabled";
+      }
+      return true;      
+    failure_message: The sappong service is not enabled at boot time

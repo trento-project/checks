@@ -1,0 +1,41 @@
+id: "3AD734"
+name: All nodes have the same Solution and Notes enabled
+group: saptune
+description: |
+  The enabled and applied Solution and Notes are the same on all nodes
+
+remediation: |
+  ## Abstract
+  The same Solution and Notes must be enabled and applied on all cluster nodes. This is the base of having the same configuration even it does not guarantees identical tuning (e.g. staging is used or active diverging overwrites)!
+
+  ## Remediation
+  Enable and apply the same Solution and/or Notes on all nodes with the appropriate saptune commands.
+  This task includes **reverting** and **applying** Notes or the Solution.
+  **ATTENTION**
+      This may influence your SAP system performance and stability.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-enable
+
+
+metadata:
+  target_type: cluster
+
+facts:
+  - name: saptune_status
+    gatherer: saptune@v1
+    argument: status
+
+expectations:
+  - name: enabled_solution
+    expect_same: facts.saptune_status.result.solution_enabled
+    failure_message: Enabled solution is expected to be identical on all nodes, but differs
+  - name: enabled_notes
+    expect_same: facts.saptune_status.result.notes_enabled
+    failure_message: Enabled notes are expected to be identical on all nodes, but differ
+  - name: applied_solution
+    expect_same: facts.saptune_status.result.solution_applied
+    failure_message: Applied solution is expected to be identical on all nodes, but differs
+  - name: applied_notes
+    expect_same: facts.saptune_status.result.notes_applied
+    failure_message: Applied notes are expected to be identical on all nodes, but differ

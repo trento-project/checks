@@ -1,0 +1,51 @@
+id: "3A8663"
+name: saptune is configured correctly service-wise
+group: saptune
+description: |
+  saptune should be configured correctly service-wise, that is it currently runs, will run after a reboot and no conflicting services (will) interfere.
+
+remediation: |
+  ## Abstract
+  saptune should be configured correctly service-wise, but there are problems.
+  Running `saptune status` will give some hints.
+
+  ## Remediation
+  Run `saptune service take-over` to solve the situation.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-enable
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
+
+
+metadata:
+  target_type: host
+
+facts:
+  - name: saptune_status
+    gatherer: saptune@v1
+    argument: status
+
+expectations:
+  - name: saptune_services
+    expect_enum: |
+      let sapconf_serv = false;
+      let tuned_serv = false;
+      let result = facts.saptune_status.result;
+
+      if result.services.sapconf == ["disabled", "inactive"] || result.services.sapconf.is_empty {
+         sapconf_serv = true // OK
+      }
+      if result.services.tuned == ["disabled", "inactive"] || result.services.tuned.is_empty {
+         tuned_serv = true  // OK
+      }
+    
+      if  result.services.saptune == ["enabled", "active"] & sapconf_serv & tuned_serv {
+         "passing"
+      } else if result.services.saptune.contains("inactive") || ! sapconf_serv {
+         "critical"
+      } else {
+         "warning"
+      }
+
+    warning_message: Warning - saptune service is not enabled (${facts.saptune_status.result.services.saptune}) and/or tuned service is active (${facts.saptune_status.result.services.tuned})
+    failure_message: Critical - saptune service is **inactive** (${facts.saptune_status.result.services.saptune}) and/or sapconf service is **enabled** and/or **active** (${facts.saptune_status.result.services.sapconf})

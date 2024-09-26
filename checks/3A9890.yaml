@@ -1,0 +1,41 @@
+id: "3A9890"
+name: saptune overrides are identical on all nodes
+group: saptune
+description: |
+  If overrides exists we assume that these overrides are identical on all nodes.
+
+remediation: |
+  ## Abstract
+  The override values must be identical on all nodes but they are different currently.
+  This means some/all parameter values from the existing override files differ or an override file is missing on at least one node in the cluster.
+
+  ## Remediation
+  Run  `saptune note verify`  on all nodes and compare the overrides.
+  If there are differences please fix the related override file.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify
+
+
+severity: warning
+
+metadata:
+  target_type: cluster
+
+facts:
+  - name: saptune_note_verify
+    gatherer: saptune@v1
+    argument: note-verify
+
+expectations:
+  - name: overrides_identical
+    expect_same: |
+      let overrides = #{};
+      facts.saptune_note_verify.result.verifications.for_each(||{
+          if this.contains("override_value") {
+              overrides.set(this.parameter, this.override_value);
+          }
+      });
+      overrides;
+
+    failure_message: The saptune overrides are expected to be identical on all nodes but they differ

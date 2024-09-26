@@ -1,0 +1,49 @@
+id: "BA215C"
+name: corosync.conf files are identical
+group: Corosync
+description: |
+  corosync.conf files are identical across all nodes
+remediation: |
+  ## Abstract
+  It is required that the corosync.conf files are identical across all nodes in the cluster.
+  Usually, it is done automatically if you have configured csync2, but in case some manual intervention is made, it could cause cluster outages.
+
+  ## References
+  Azure:
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#install-the-cluster
+
+  AWS:
+
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-cluster-configuration.html
+
+  GCP:
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#create_the_corosync_configuration_files
+  
+  Nutanix:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-for-etccorosynccorosync-conf
+  
+  SUSE / KVM:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-for-etccorosynccorosync-conf
+
+  VMware:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-for-etccorosynccorosync-conf
+
+
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+    - hana_scale_out
+    - ascs_ers
+
+facts:
+  - name: corosync_conf_file_content
+    gatherer: corosync.conf@v1
+
+expectations:
+  - name: corosync_conf_file_identical
+    expect_same: facts.corosync_conf_file_content
+    failure_message: corosync.conf files are expected to be identical across all nodes, but differ

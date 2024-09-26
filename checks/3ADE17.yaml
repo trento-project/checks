@@ -1,0 +1,30 @@
+id: "3ADE17"
+name: The tuning of the system is compliant
+group: saptune
+description: |
+  The tuning of the system is compliant, meaning all parameters of all applied Notes have the expected value.
+remediation: |
+  ## Abstract
+  The tuning of the system must be compliant but it's reported as **non-compliant**.
+  This means some/all parameters of some/all applied Notes do **not** have the expected value.
+
+  ## Remediation
+  Run  `saptune note verify --show-non-compliant`  to list all non-compliant parameters, investigate and fix.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify
+
+
+metadata:
+  target_type: host
+
+facts:
+  - name: saptune_note_verify
+    gatherer: saptune@v1
+    argument: note-verify
+
+expectations:
+  - name: system_compliance
+    expect: |
+      facts.saptune_note_verify.result.system_compliance
+    failure_message: The tuning of the system was expected to be 'compliant' but was reported as 'non-compliant'

@@ -1,0 +1,88 @@
+id: "F98557"
+name: ASCS instance failure-timeout and migration-threshold - ENSA1
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if meta attributes `failure-timeout` and `migration-threshold` are properly configured for ASCS instance resource in an ENSA1 setup.
+remediation: |
+  ## Abstract
+  The meta attributes `failure-timeout` and `migration-threshold` must be configured according to the best practices fir the ASCS instance resource in an ENSA1 setup.
+
+  ## Remediation
+  Configure a `failure-timeout` of `60` and `migration-threshold` of `1`, e.g.
+
+  ```
+  primitive rsc_sap_EN2_ASCS00 SAPInstance \
+    [..] \
+    meta failure-timeout=60 migration-threshold=1
+    [..]
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_failure_timeout
+    default: 60
+  - name: resource_migration_threshold
+    default: 1
+  - name: resource_type
+    default: ASCS
+expectations:  
+  - name: resource_failure_timeout
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        if facts.cluster_sids[sid].ensa_version == "ensa2" { continue; } // skip sid
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
+        if prim == () { return false; }
+        let result = prim.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "failure-timeout" && nv.value == values.resource_failure_timeout);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one ${values.resource_type} resource does not have correct failure-timeout of ${values.resource_failure_timeout}
+  - name: resource_migration_threshold
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        if facts.cluster_sids[sid].ensa_version == "ensa2" { continue; } // skip sid
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
+        if prim == () { return false; }
+        let result = prim.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "migration-threshold" && nv.value == values.resource_migration_threshold);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one ${values.resource_type} resource does not have correct migration-threshold of ${values.resource_migration_threshold}

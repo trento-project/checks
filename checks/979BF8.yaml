@@ -1,0 +1,67 @@
+id: "979BF8"
+name: Sapservices start with systemd or SysVinit
+group: Sapservices
+description: |
+  All entries in `/usr/sap/sapservices` are either started with systemd or SysVinit, not a mix.
+remediation: |
+  ## Abstract
+  Systemd and SysVinit entries should not be mixed in `/usr/sap/sapservices`.
+
+  ## Remediation
+  Make sure you use the same init system for all your instances.
+  You can enable an instance for systemd like this:
+
+    - sapcontrol -nr ${instance} -function Stop
+    - export LD_LIBRARY_PATH=/usr/sap/${SID}/ASCS${instance}/exe
+    - /usr/sap/${SID}/ASCS${instance}/exe/sapstartsrv pf=/usr/sap/${SID}/SYS/profile/${SID}_ASCS${instance}_${vhost} -reg
+    - systemctl start SAP${SID}_${instance}.service
+
+  ## References
+  AZURE:
+    - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://me.sap.com/notes/3139184/E
+    - https://me.sap.com/notes/3115048/E
+
+  AWS:
+    - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://me.sap.com/notes/3139184/E
+    - https://me.sap.com/notes/3115048/E
+
+  GCP:
+    - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://me.sap.com/notes/3139184/E
+    - https://me.sap.com/notes/3115048/E
+
+  SUSE / KVM:
+    - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://me.sap.com/notes/3139184/E
+    - https://me.sap.com/notes/3115048/E
+
+  Nutanix:
+    - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://me.sap.com/notes/3139184/E
+    - https://me.sap.com/notes/3115048/E
+
+  VMware:
+    - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://me.sap.com/notes/3139184/E
+    - https://me.sap.com/notes/3115048/E
+severity: warning
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: sapservices
+    gatherer: sapservices@v1
+expectations:
+  - name: sapservices_same_init_system
+    expect: |
+      facts.sapservices.all(|line| line.kind == "systemctl") !=
+      facts.sapservices.all(|line| line.kind == "sapstartsrv");
+    failure_message: /usr/sap/sapservices contains mixed entries for systemd and SysVinit

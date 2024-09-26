@@ -1,0 +1,33 @@
+id: "82A031"
+name: pacemaker version identical on all nodes
+group: OS and package versions
+description: |
+  Installed Pacemaker version is identical on all nodes
+remediation: |
+  ## Abstract
+  Installed Pacemaker version must be identical on all nodes of the cluster
+
+  ## Remediation
+  Install identical Pacemaker version on all nodes of the cluster
+
+  ## Reference
+  - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
+    (EXAMPLE 1:Installing additional software for the HA cluster)
+
+
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+    - hana_scale_out
+    - ascs_ers
+
+facts:
+  - name: installed_pacemaker_version
+    gatherer: package_version@v1
+    argument: pacemaker
+
+expectations:
+  - name: pacemaker_version_identical
+    expect_same: facts.installed_pacemaker_version[0].version
+    failure_message: Installed Pacemaker version is expected to be identical on all nodes, but differs

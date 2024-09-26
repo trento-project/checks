@@ -1,0 +1,67 @@
+id: "B3BD54"
+name: ASCS and ERS instance directory ownership
+group: Filesystems
+description: |
+  The ASCS and ERS instance directories have the correct ownership.
+remediation: |
+  ## Abstract
+  The ASCS and ERS instance directories must be owned by the sidadm user and the sapsys group.
+
+  ## Remediation
+  Change the owner and group of the ASCS and ERS instance directories.
+
+  ```
+  chown ha1adm:sapsys /usr/sap/HA1/ASCS00
+  chown ha1adm:sapsys /usr/sap/HA1/ERS10
+  ```
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-installing-ascs-on-valuga11
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-installing-ers-on-valuga12
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: ascs_dirs
+    gatherer: dir_scan@v1
+    argument: "/usr/sap/[A-Z][A-Z0-9][A-Z0-9]/ASCS[0-9][0-9]"
+  - name: ers_dirs
+    gatherer: dir_scan@v1
+    argument: "/usr/sap/[A-Z][A-Z0-9][A-Z0-9]/ERS[0-9][0-9]"
+expectations:
+  - name: ascs_dir_ownership
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+          let owner = `${sid.to_lower()}adm`;
+          let group = "sapsys";
+          for inst in facts.cluster_sids[sid].instances {
+              if inst.local && inst.name.starts_with("ASCS") {
+                  let dir = `/usr/sap/${sid}/${inst.name}`;
+                  let expected = #{owner: owner, group: group, name: dir};
+                  if !facts.ascs_dirs.contains(expected) {
+                      return false;
+                  }
+              }
+          }
+      }
+      return true;
+    failure_message: At least one ASCS instance directory is not owned by the sidadm and sapsys
+  - name: ers_dir_ownership
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+          let owner = `${sid.to_lower()}adm`;
+          let group = "sapsys";
+          for inst in facts.cluster_sids[sid].instances {
+              if inst.local && inst.name.starts_with("ERS") {
+                  let dir = `/usr/sap/${sid}/${inst.name}`;
+                  let expected = #{owner: owner, group: group, name: dir};
+                  if !facts.ers_dirs.contains(expected) {
+                      return false;
+                  }
+              }
+          }
+      }
+      return true;
+    failure_message: At least one ERS instance directory is not owned by the sidadm and sapsys

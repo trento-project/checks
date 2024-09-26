@@ -1,0 +1,56 @@
+id: "6E0DEC"
+name: Concurrent fencing option is enabled
+group: Azure Fence Agent
+description: |
+  Concurrent fencing option is enabled
+remediation: |
+  ## Abstract
+  Concurrent fencing must be enabled in order to use Azure Fence agent combined with SBD fencing.
+
+  ## Remediation
+  To enable it, run:
+  ```
+  crm configure property concurrent-fencing=true
+  ```
+
+  ## References
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#use-an-azure-fence-agent
+
+
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+    - hana_scale_out
+    - ascs_ers
+  provider: azure
+
+facts:
+  - name: crm_config_properties
+    gatherer: cibadmin@v1
+    argument: cib.configuration.crm_config.cluster_property_set
+  - name: resources_primitives
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources.primitive
+
+expectations:
+  - name: expectations_concurrent_fencing
+    expect: |
+      let fence_azure_arm_detected =
+          facts.resources_primitives
+               .filter(|item| item.type == "fence_azure_arm").len() != 0;
+
+      if !fence_azure_arm_detected {
+        /* if no Azure Fence Agent is configured, exit with a pass */
+         return true;
+      }
+
+      let cc_fencing =
+          facts.crm_config_properties
+               .find(|item| item.id == "cib-bootstrap-options").nvpair
+               .find(|prop| prop.name == "concurrent-fencing");
+
+      cc_fencing != () && cc_fencing.value
+    failure_message: Concurrent fencing option 'concurrent-fencing' is disabled or missing in the cluster configuration

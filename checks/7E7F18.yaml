@@ -1,0 +1,107 @@
+id: "7E7F18"
+name: IPaddr2 resources
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if IPaddr2 resources are present in each ASCS and ERS resource group.
+remediation: |
+  ## Abstract
+  IPaddr2 resources for ASCS and ERS must be configured according to the best practices of a simple mount setup.
+
+  ## Remediation
+  Add the missing IPaddr2 resource according to the best practices documentation.
+
+  ```
+  crm configure show rsc_ip_NW1_ASCS00
+  
+  primitive rsc_ip_NW1_ASCS00 IPaddr2 \
+    params ip=X.X.X.X cidr_netmask=24 nic=ethX \
+    op monitor interval=10s timeout=20s
+
+  crm configure show rsc_ip_NW1_ERS10
+  
+  primitive rsc_ip_NW1_ERS10 IPaddr2 \
+    params ip=X.X.X.X cidr_netmask=24 nic=ethX \
+    op monitor interval=10s timeout=20s
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-azure-files?tabs=lb-portal%2Censa1#installing-sap-netweaver-ascsers
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-simple-mount?tabs=lb-portal%2Censa1#install-sap-netweaver-ascs-and-ers
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#overlay-ip-resources
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#create_the_vip_resources
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: IPaddr2
+expectations:  
+  - name: ascs_resource_in_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+      }
+      return true;
+    failure_message: At least one ASCS resource group is missing a ${values.resource_type} resource
+  - name: ers_resource_in_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+      }
+      return true;
+    failure_message: At least one ERS resource group is missing a ${values.resource_type} resource

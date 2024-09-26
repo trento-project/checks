@@ -1,0 +1,32 @@
+id: "9C304A"
+name: sidadm is in haclient
+group: OS users/groups
+description: |
+  The sidadm user has to be in the haclient group.
+remediation: |
+  ## Abstract
+  The sidadm user must be in the haclient group for every cluster managed SID on every cluster node.
+
+  ## Remediation
+  Add every sidadm user to the haclient group for every cluster managed SID on every cluster node.
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: groups
+    gatherer: groups@v1
+expectations:
+  - name: sidadm_in_haclient
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      let group = facts.groups.find(|g| g.name == "haclient");
+      if group == () { return false; }
+      for sid in sids {
+        let sidadm = `${sid.to_lower()}adm`;
+        let result = group.users.contains(sidadm);
+        if result == false { return false; }
+      }
+      return true;      
+    failure_message: The sidadm user is not in the haclient group for every managed SID on all cluster nodes

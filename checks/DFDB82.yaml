@@ -1,0 +1,70 @@
+id: "DFDB82"
+name: HA interface has 2 or more nodes
+group: Sapcontrol
+description: |
+  HA interface has 2 or more nodes configured for all SIDs and Instances.
+remediation: |
+  ## Abstract
+  The HA interface must have 2 nodes configured for all SIDs or Instances.
+  `sapcontrol -function HAGetFailoverConfig` returns 2 or more entries in "HANodes"
+
+  ## Remediation
+  Above problem could happen due to several reasons. E.g.
+  
+    1. The <SID>adm user in not part of haclient group.
+    2. The cluster use ACL to control access and haclient doesn't have the needed rights.
+    3. The ASCS/ERS resource contains wrong parameters. 
+    4. The ownership of the <SID>adm user /home/<SID>adm/.config directory is not set correctly to <SID>adm:sapsys.
+    5. On SLE15 SP5 the packages crmsh and crmsh-scripts are not on the latest patch level and should have at least version crmsh-4.4.0+20221028.3e41444-150400.3.9.1
+    6. /var/lib/heartbeat/cores/hacluster directory needs group read/execute permission (chmod 750 /var/lib/heartbeat/cores/hacluster)
+
+  ## References
+  AZURE:
+    - https://www.suse.com/support/kb/doc/?id=000019924
+    - https://www.suse.com/support/kb/doc/?id=000019613
+    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+
+  AWS:
+    - https://www.suse.com/support/kb/doc/?id=000019924
+    - https://www.suse.com/support/kb/doc/?id=000019613
+    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+
+  GCP:
+    - https://www.suse.com/support/kb/doc/?id=000019924
+    - https://www.suse.com/support/kb/doc/?id=000019613
+    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+
+  SUSE / KVM:
+    - https://www.suse.com/support/kb/doc/?id=000019924
+    - https://www.suse.com/support/kb/doc/?id=000019613
+    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+
+  Nutanix:
+    - https://www.suse.com/support/kb/doc/?id=000019924
+    - https://www.suse.com/support/kb/doc/?id=000019613
+    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+
+  VMware:
+    - https://www.suse.com/support/kb/doc/?id=000019924
+    - https://www.suse.com/support/kb/doc/?id=000019613
+    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: ha_get_failover_config
+    gatherer: sapcontrol@v1
+    argument: HAGetFailoverConfig
+expectations:
+  - name: ha_nodes_count
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+        if !facts.ha_get_failover_config.contains(sid) || 
+          facts.ha_get_failover_config[sid].all(|i| i.output.ha_nodes.len < 2) {
+            return false;
+        }
+      }
+      return true;      
+    failure_message: Sapcontrol HAGetFailoverConfig 'ha_nodes' does not have at least 2 nodes for every instance

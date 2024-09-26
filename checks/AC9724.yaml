@@ -1,0 +1,54 @@
+id: "AC9724"
+name: Sapservices contain all clustered instances
+group: Sapservices
+description: |
+  `/usr/sap/sapservices` contains all instances that are configured in the cluster.
+remediation: |
+  ## Abstract
+  `/usr/sap/sapservices` must contain entries for every clustered SAP instance.
+
+  ## Remediation
+  Make sure you put all clustered SAP instances to `/usr/sap/sapservices` for compatibility reasons.
+
+  ## References
+  AZURE:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+severity: warning
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: sapservices
+    gatherer: sapservices@v1
+expectations:
+  - name: sapservices_all_cluster_instances
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let instances = facts.cluster_sids[sid].instances;
+        for inst in instances {
+            if facts.sapservices.find(|line|
+                line.sid == sid &&
+                line.instance_nr == inst.instance_number
+            ) == () { return false; }
+        }
+      }
+      return true;
+    failure_message: /usr/sap/sapservices does not contain all instances that are defined in the cluster
