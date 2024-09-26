@@ -1,0 +1,58 @@
+id: "F6CFDB"
+name: ASCS Enqueue server restart is disabled - ENSA1
+group: SAP profiles
+description: |
+  The enqueue server restart has to be disabled for the ASCS instance in an ENSA1 setup.
+remediation: |
+  ## Abstract
+  The ASCS Enqueue server restart must be disabled in the ENSA1 setup.
+  A restart would result in a loss of the enqueue locks.
+
+  ## Remediation
+  Make sure to change `Restart_Program_01 = local $(_ENQ) pf=$(_PF)` to `Start_Program_01 = local $(_EN) pf=$(_PF)` in the ASCS profile.
+
+  ## References
+  AZURE:
+    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: sap_profiles
+    gatherer: sap_profiles@v1
+expectations:
+  - name: enq_startmode_is_start
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        if facts.cluster_sids[sid].ensa_version == "ensa2" { continue; } // skip sid
+        let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ASCS${inst.instance_number}`);
+        if inst == () { return false; }
+        let result = facts.sap_profiles[sid].profiles.find(|p| {
+          p.content.contains("INSTANCE_NAME") && 
+          p.content["INSTANCE_NAME"] == inst.name &&
+          !p.content.contains("Restart_Program_01") && // check restart is disabled
+          p.content.contains("Start_Program_01")       // check start is enabled
+        });
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one enqueue server restart is enabled and has to be disabled.

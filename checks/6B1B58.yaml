@@ -1,0 +1,66 @@
+id: "6B1B58"
+name: ASCS group resource-stickiness
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if the meta attribute `resource-stickiness` is properly configured for the ASCS resource group
+remediation: |
+  ## Abstract
+  The meta attribute `resource-stickiness` must be configured according to the best practices for the ASCS resource group.
+
+  ## Remediation
+  Configure a `resource-stickiness` of `3000`, e.g.
+
+  ```
+  group grp_EN2_ASCS00 \
+    rsc_ip_EN2_ASCS00 rsc_fs_EN2_ASCS00 rsc_sap_EN2_ASCS00 \
+    meta resource-stickiness=3000
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_stickiness_group
+    default: 3000
+  - name: resource_type
+    default: ASCS
+expectations:  
+  - name: group_resource_stickiness
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);        
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group && g.contains("meta_attributes"));
+        if group == () { return false; }
+        let result = group.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "resource-stickiness" && nv.value == values.resource_stickiness_group);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one ${values.resource_type} group does not have correct resource-stickiness of ${values.resource_stickiness_group}

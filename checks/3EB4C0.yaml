@@ -1,0 +1,165 @@
+id: "3EB4C0"
+name: SAPStartSrv resources - simple_mount
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if the SAPStartSrv resources are present in the simple mount setup.
+remediation: |
+  ## Abstract
+  SAPStartSrv resources for ASCS and ERS must be configured according to the best practices of a simple mount setup.
+
+  ## Remediation
+  Add the correct number of SAPStartSrv resources to the cluster configuration.
+
+  ```
+  crm configure show rsc_SAPStartSrv_NW1_ASCS00
+
+  primitive rsc_SAPStartSrv_NW1_ASCS00 ocf:suse:SAPStartSrv \
+    params InstanceName=NW1_ASCS00_sapnw1as
+
+  crm configure show rsc_SAPStartSrv_NW1_ERS10
+
+  primitive rsc_SAPStartSrv_NW1_ERS10 ocf:suse:SAPStartSrv \
+    params InstanceName=NW1_ERS10_sapnw1er
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-simple-mount?tabs=lb-portal%2Censa1#install-sap-netweaver-ascs-and-ers
+
+  AWS:
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sapstartsrv-resources
+
+  GCP:
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+
+  Nutanix:
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+
+  VMware:
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: SAPStartSrv
+expectations:  
+  - name: ascs_resource_in_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}`);
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+      }
+      return true;
+    failure_message: At least one ASCS resource group is missing a ${values.resource_type} resource
+  - name: ascs_resource_outside_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("resources") { return false; }
+      if !facts.cib_configuration.resources.contains("primitives") { return true; } // primitive does not exist
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let prim = facts.cib_configuration.resources.primitive.find(|p| p.type == values.resource_type && p.contains("instance_attributes"));
+        if prim == () { return false; }
+        let check_key = "InstanceName";
+        let check_value = `${sid}_${inst.name}_${inst.virtual_hostname}`;
+        let result = prim.instance_attributes.nvpair
+          .find(|nv| nv.name == check_key && nv.value == check_value);
+        if result != () { return false; }
+      }
+      return true;      
+    failure_message: At least one ASCS ${values.resource_type} resource found outside of resource group
+  - name: ascs_resource_monitor_operation
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}`);
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+        let check_key = "monitor";
+        if !prim.contains("operations") { return true; }
+        let result = prim.operations.op
+          .find(|op| op.name == check_key);
+        if result != () { return false; }
+      }
+      return true;
+    failure_message: At least one ASCS ${values.resource_type} resource has a monitoring operation configured
+  - name: ers_resource_in_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("resources") { return false; }
+      if !facts.cib_configuration.resources.contains("group") { return false; }
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+      }
+      return true;
+    failure_message: At least one ERS resource group is missing a ${values.resource_type} resource
+  - name: ers_resource_outside_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("resources") { return false; }
+      if !facts.cib_configuration.resources.contains("primitives") { return true; } // primitive does not exist
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let prim = facts.cib_configuration.resources.primitive.find(|p| p.type == values.resource_type && p.contains("instance_attributes"));
+        if prim == () { return false; }
+        let check_key = "InstanceName";
+        let check_value = `${sid}_${inst.name}_${inst.virtual_hostname}`;
+        let result = prim.instance_attributes.nvpair
+          .find(|nv| nv.name == check_key && nv.value == check_value);
+        if result != () { return false; }
+      }
+      return true;      
+    failure_message: At least one ERS ${values.resource_type} resource found outside of resource group
+  - name: ers_resource_monitor_operation
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+        let check_key = "monitor";
+        if !prim.contains("operations") { return true; }
+        let result = prim.operations.op
+          .find(|op| op.name == check_key);
+        if result != () { return false; }
+      }
+      return true;
+    failure_message: At least one ERS ${values.resource_type} resource has a monitoring operation configured

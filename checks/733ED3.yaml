@@ -1,0 +1,72 @@
+id: "733ED3"
+name: ASCS and ERS colocation
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if the colocation constraint for ASCS and ERS exists with correct scoring (-5000) and order (first ERS then ASCS groups).
+remediation: |
+  ## Abstract
+  A colocation constraint must exist according to the best practices documentation.
+
+  ## Remediation
+  Correct the ASCS and ERS colocation constraint according to the best practices.
+
+  ```
+  crm configure show col_sap_NW1_not_both 
+  
+  colocation col_sap_NW1_not_both -5000: grp_NW1_ERS10 grp_NW1_ASCS00
+  ```
+
+  ## References
+  Azure:
+    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  AWS:
+    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  GCP:
+    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  Nutanix:
+    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  SUSE / KVM:
+    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  VMware:
+    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: colocation_score
+    default: -5000
+expectations:  
+  - name: colocation_ascs_ers
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("constraints") { return false; } // a colocation is expected
+      if !facts.cib_configuration.constraints.contains("rsc_colocation") { return false; } // a colocation is expected      
+      for sid in sids {
+        let group_ascs = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}` ).resource_group;
+        if group_ascs == () { return false; } // without an ASCS group we cannot check colocation
+        let group_ers = facts.cluster_sids[sid].instances.find(|i| i.name == "ERS" + i.instance_number ).resource_group;
+        if group_ers == () { return false }; // without a ERS group we cannot check colocation
+        let result = facts.cib_configuration.constraints.rsc_colocation
+          .find(|c| c.rsc == group_ers && c["with-rsc"] == group_ascs && c.score == values.colocation_score);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one colocation to separate ASCS and ERS is not configured correctly with the score ${values.colocation_score}

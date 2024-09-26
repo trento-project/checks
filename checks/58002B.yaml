@@ -1,0 +1,73 @@
+id: "58002B"
+name: ASCS and ERS order
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if the order constraint exists with score as `optional` (numeric score is deprecated) and if the ASCS starts first (but does not have to stop first, `symmetrical=false`).
+remediation: |
+  ## Abstract
+  An order constraint must exists for ASCS and ERS according to the best practices.
+
+  ## Remediation
+  Correct the ASCS and ERS order constraint according to the best practices.
+
+  ```
+  crm configure show ord_sap_NW1_first_start_ascs 
+  order ord_sap_NW1_first_start_ascs \
+    Optional: rsc_sap_NW1_ASCS00:start rsc_sap_NW1_ERS10:stop symmetrical=false
+  ```
+
+  ## References
+
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+
+expectations:  
+  - name: order_ascs_ers
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("constraints") { return false; } // an order is expected
+      if !facts.cib_configuration.constraints.contains("rsc_order") { return false; } // an order is expected
+      for sid in sids {
+        let inst_ascs = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}` ).resource_instance;
+        if inst_ascs == () { return false; } // without ASCS instance order cannot exist
+        let inst_ers = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}` ).resource_instance;
+        if inst_ers == () { return false; } // without ERS instance order cannot exist
+        let result = facts.cib_configuration.constraints.rsc_order
+          .find(|order| order.first == inst_ascs &&
+            order["first-action"] == "start" &&
+            order.then == inst_ers &&
+            order["then-action"] == "stop" &&
+            order.kind == "Optional" &&
+            order.symmetrical == false);
+        if result == () { return false; }
+      }
+      return true;
+    failure_message: At least one Order constraint to start ERS after ASCS is not configured correctly

@@ -1,0 +1,83 @@
+id: "83952D"
+name: ERS group order - simple_mount
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if the ERS resource group exists and the order is correct in the simple_mount setup.
+remediation: |
+  ## Abstract
+  ERS resource groups must have the correct order according to the best practice documentation.
+
+  ## Remediation
+  Create the resource group or correct its order according the the best practices documentation.
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-simple-mount?tabs=lb-portal%2Censa1#install-sap-netweaver-ascs-and-ers
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sapstartsrv-resources
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: ERS
+  - name: resource_order
+    default:
+      - IPaddr2
+      - SAPStartSrv
+      - SAPInstance
+    conditions:
+      - when: env.provider == "aws"
+        value:
+          - IPaddr2
+          - SAPStartSrv
+          - SAPInstance
+      - when: env.provider == "azure"
+        value:
+          - azure-lb
+          - IPaddr2
+          - SAPStartSrv
+          - SAPInstance
+      - when: env.provider == "gcp"
+        value:
+          - anything
+          - IPaddr2
+          - SAPStartSrv
+          - SAPInstance
+expectations:  
+  - name: check_group_order
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+          let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+          if inst == () { return false; }
+          if inst.filesystem_based { continue; } // skip instance if resource_managed
+          let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+          if group == () { return false; }
+          let found_types = group.primitive.map(|p| p.type);
+          if found_types != values.resource_order { return false; }
+      }
+      return true;      
+    failure_message: At least one ${values.resource_type} group has wrong resource order, correct order would be ${values.resource_order}

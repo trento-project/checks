@@ -1,0 +1,35 @@
+id: "3AA381"
+name: The saptune package version is identical on all nodes
+group: saptune
+description: |
+  Installed saptune package version is identical on all nodes
+remediation: |
+  ## Abstract
+  The version of the installed saptune package must be identical on all cluster nodes. This is the base of having the same configuration even it does not guarantees identical Notes (e.g. staging is used or override file exists).
+  But the version of the installed saptune package differs on the cluster nodes.
+  Also make sure, that "SAPTUNE_VERSION" in /etc/sysconfig/saptune has identical values on all nodes.
+
+  ## Remediation
+  Update the saptune package to get the same version on all cluster nodes
+  `zypper update saptune`
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-update
+
+premium: true
+
+metadata:
+  target_type: cluster
+
+facts:
+  - name: saptune_status
+    gatherer: saptune@v1
+    argument: status
+
+expectations:
+  - name: installed_saptune_version_identical
+    expect_same: facts.saptune_status.result.package_version
+    failure_message: Installed saptune package version is expected to be identical on all nodes, but differs
+  - name: configured_saptune_version_identical
+    expect_same: facts.saptune_status.result.configured_version
+    failure_message: Configured saptune version is expected to be identical on all nodes, but differs

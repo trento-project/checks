@@ -1,0 +1,31 @@
+id: "31BDCB"
+name: supported SAPHanaSR version
+group: OS and package versions
+description: |
+  SAPHanaSR version is supported
+remediation: |
+  ## Abstract
+  Installed SAPHanaSR version must be equal or higher than the recommended value
+  ## Remediation
+  Install or upgrade to a supported SAPHanaSR version
+  ## Reference
+  As it is highly recommended to use the HA/DR provider hook when running SAP workloads in HA environments and the HA/DR provider hook support started with SAPHanaSR version 0.153.2, delivered on installation media of 15SP1 and as update package for 15GA, the version of the SAPHanaSR package must be at least 0.153.2.
+  - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
+    (EXAMPLE 1:Installing additional software for the HA cluster)
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: hana_scale_up
+  architecture_type: classic
+
+facts:
+  - name: compare_SAPHanaSR_version
+    gatherer: package_version@v1
+    argument: SAPHanaSR,0.153.2
+
+expectations:
+  - name: expectations_SAPHanaSR_version
+    expect: facts.compare_SAPHanaSR_version < 1
+    failure_message: The installed SAPHanaSR version is older than the recommended version (0.153.2)

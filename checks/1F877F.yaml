@@ -1,0 +1,35 @@
+id: "1F877F"
+name: users sidadm and sapadm
+group: OS users/groups
+description: |
+  A user for each SID (sidadm) and a sapadm user should exist on every cluster node.
+remediation: |
+  ## Abstract
+  sidadm and a sapadm user must exist for every cluster managed SID on every cluster node.
+
+  ## Remediation
+  Create the missing sidadm and sapadm users for every cluster managed SID on every cluster node.
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: passwd
+    gatherer: passwd@v1
+expectations:
+  - name: sapadm_exist
+    expect: |
+      facts.passwd.find(|u| u.user == "sapadm") != ();
+    failure_message: The sapadm user does not exist on all cluster nodes
+  - name: sidadm_exist
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let sidadm = `${sid.to_lower()}adm`;
+        let result = facts.passwd.find(|u| u.user == sidadm);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: The sidadm user does not exist for every managed SID on all cluster nodes

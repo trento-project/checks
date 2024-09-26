@@ -1,0 +1,36 @@
+id: "AF7D5C"
+name: Clustered SAP instances in Instance List
+group: Sapcontrol
+description: |
+  Every clustered SAP instance is present in GetSystemInstanceList.
+remediation: |
+  ## Abstract
+  All SAP instances that are configured in the cluster must be present in the GetSystemInstanceList output.
+  `sapcontrol -function GetSystemInstanceList` returns all clustered instances.
+
+  ## Remediation
+  Check why your Instances are not configured correctly or are having issues by looking at the systems configuration and Instances log files.
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib
+    gatherer: cibadmin@v1
+  - name: system_instance_list
+    gatherer: sapcontrol@v1
+    argument: GetSystemInstanceList
+expectations:
+  - name: instance_count
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+        if !facts.system_instance_list.contains(sid) { return false; }
+        for cl_inst in facts.cluster_sids[sid].instances {
+          if cl_inst.local && facts.system_instance_list[sid].find(|sap_inst| sap_inst.name == cl_inst.name) == () {
+            return false;  
+          }
+        }
+      }
+      return true;      
+    failure_message: Sapcontrol GetSystemInstanceList does not include all clustered SAP instances

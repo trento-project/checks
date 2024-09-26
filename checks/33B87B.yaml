@@ -1,0 +1,29 @@
+id: "33B87B"
+name: supported supportutils-plugin-ha-sap version
+group: OS and package versions
+description: |
+  supportutils-plugin-ha-sap version is supported
+remediation: |
+  ## Abstract
+  Installed supportutils-plugin-ha-sap version must be equal or higher than the recommended value
+
+  ## Remediation
+  Install or upgrade to a supported supportutils-plugin-ha-sap version
+
+  ## Reference
+  - https://documentation.suse.com/en-us/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+
+facts:
+  - name: compare_supportutils_plugin_ha_sap
+    gatherer: package_version
+    argument: supportutils-plugin-ha-sap,0.0.1
+
+expectations:
+  - name: expectations_supportutils_plugin_ha_sap_version
+    expect: facts.compare_supportutils_plugin_ha_sap < 1

@@ -1,0 +1,29 @@
+id: "801E6A"
+name: supported sapstartsrv-resource-agents version
+group: OS and package versions
+description: |
+  sapstartsrv-resource-agents version is supported
+remediation: |
+  ## Abstract
+  Installed sapstartsrv-resource-agents version must be equal or higher than the recommended value
+
+  ## Remediation
+  Install or upgrade to a supported sapstartsrv-resource-agents version
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-differences-to-previous-cluster-architectures
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+
+facts:
+  - name: compare_sapstartsrv_resource_agents
+    gatherer: package_version
+    argument: sapstartsrv-resource-agents,0.9.1
+
+expectations:
+  - name: expectations_sapstartsrv_resource_agents_version
+    expect: facts.compare_sapstartsrv_resource_agents < 1

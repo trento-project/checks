@@ -1,0 +1,57 @@
+id: "ABA3CA"
+name: SAP Host Agent is running
+group: OS and package versions
+description: |
+  SAP Host Agent is running
+remediation: |
+  ## Abstract
+  SAP Host Agent should be running on all cluster nodes
+
+  ## Remediation
+  Install and start SAP Host Agent on all nodes.
+
+  ## Reference
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability#install-sap-hana
+
+  AWS:
+
+    - https://docs.aws.amazon.com/launchwizard/latest/userguide/launch-wizard-sap-add-remove-nodes.html
+
+  GCP:
+
+  SUSE / KVM:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-install
+
+  Nutanix:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-install
+
+  VMware:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-install
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+    - hana_scale_out
+    - ascs_ers
+
+facts:
+  - name: saphostctrl_ping
+    gatherer: saphostctrl@v1
+    argument: Ping
+
+values:
+  - name: expected_saphostctrl_ping
+    default: SUCCESS
+
+expectations:
+  - name: expectations_saphostctrl_ping
+    expect: facts.saphostctrl_ping.status == values.expected_saphostctrl_ping
+    failure_message: SAP Host Agent is not running, expected ${values.expected_saphostctrl_ping} but got ${facts.saphostctrl_ping.status}

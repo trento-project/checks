@@ -1,0 +1,112 @@
+id: "DE74B2"
+name: Azure Fence agent configuration
+group: Azure Fence Agent
+description: |
+  Azure Fence agent configuration parameters are correct
+remediation: |
+  ## Abstract
+  The Azure SAP Clustering best practices determines specific timing and retries parameter values for proper functioning of the Azure Fence agent.
+
+  ## Remediation
+  Please, make sure to set the following values for the fence-agent parameter:
+  ```
+  pcmk_monitor_retries=4
+  pcmk_action_limit=3
+  power_timeout=240
+  pcmk_reboot_timeout=900
+  ```
+  and the following monitor operation configuration:
+  ```
+  interval=3600
+  timeout=120
+  ```
+
+  ## References
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#create-a-fencing-device-on-the-pacemaker-cluster
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+    - hana_scale_out
+    - ascs_ers
+  provider: azure
+
+facts:
+  - name: resources_primitives
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources.primitive
+
+values:
+  - name: pcmk_action_limit
+    default: 3
+
+  - name: pcmk_monitor_retries
+    default: 4
+
+  - name: pcmk_reboot_timeout
+    default: 900
+
+  - name: power_timeout
+    default: 240
+
+  - name: fencing_monitor_interval
+    default: 3600
+
+  - name: fencing_monitor_timeout
+    default: 120
+
+expectations:
+  - name: azure_fencing_attribute_settings_correct
+    expect: |
+      let fence_azure_arm =
+          facts.resources_primitives
+               .find(|item| item.type == "fence_azure_arm");
+
+      if fence_azure_arm == () {
+         /* if no Azure Fence Agent is configured, exit with a pass */
+         return true;
+      }
+
+      let azure_fencing_attributes =
+          fence_azure_arm.instance_attributes.nvpair;
+
+      let expected_fencing_values = [
+          "pcmk_monitor_retries",
+          "pcmk_action_limit",
+          "pcmk_reboot_timeout",
+          "power_timeout",
+      ];
+
+      expected_fencing_values.all(|value_name| {
+          let attribute_content =
+              azure_fencing_attributes
+                   .find(|entry| entry.name == value_name);
+
+          attribute_content != () && attribute_content.value == values[value_name];
+      })
+    failure_message: The Azure Fence agent configuration parameters are NOT set correctly
+
+  - name: azure_fencing_monitor_operations_settings_correct
+    expect: |
+      let fence_azure_arm =
+          facts.resources_primitives
+               .find(|item| item.type == "fence_azure_arm");
+
+      if fence_azure_arm == () {
+         /* if no Azure Fence Agent is configured, exit with a pass */
+         return true;
+      }
+
+      let fencing_monitor_ops =
+          fence_azure_arm.operations.op
+               .find(|entry| entry.name == "monitor");
+
+      fencing_monitor_ops != () &&
+      fencing_monitor_ops.interval == values.fencing_monitor_interval &&
+      fencing_monitor_ops.timeout == values.fencing_monitor_timeout
+    failure_message: The Azure Fence agent monitor operation configuration is NOT set correctly

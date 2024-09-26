@@ -1,0 +1,58 @@
+id: "F0337F"
+name: ASCS and ERS location - ENSA2
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check that the location constraint to move ASCS to ERS after failover does not exists for ENSA2.
+remediation: |
+  ## Abstract
+  There must not not any location constraint for ASCS and ERS in the ENSA2 setup.
+
+  ## Remediation
+  Delete the ASCS and ERS location constraint according to the best practices for an ENSA2 setup.
+
+  ## References
+
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+expectations:  
+  - name: location_ascs_ers_absent
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        if facts.cluster_sids[sid].ensa_version == "ensa1" { continue; } // skip sid
+        if !facts.cib_configuration.contains("constraints") { return true; } // no location is expected
+        if !facts.cib_configuration.constraints.contains("rsc_location") { return true; } // no location is expected
+        let inst_ascs = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}` ).resource_instance;
+        if inst_ascs == () { return false; } // without ASCS instance location cannot exist
+        let result = facts.cib_configuration.constraints.rsc_location
+          .find(|l| l.rsc == inst_ascs &&
+            l.rule.expression.attribute == "runs_ers_" + sid);
+        if result != () { return false; }
+      }
+      return true;      
+    failure_message: At least one location constraint was found for this ENSA2 ASCS/ERS setup but there should not be any

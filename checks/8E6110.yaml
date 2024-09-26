@@ -1,0 +1,35 @@
+id: "8E6110"
+name: saphostagent enabled and started
+group: Saphostagent
+description: |
+  The Saphostagent systemd services is enabled and started.
+remediation: |
+  ## Abstract
+  The saphostagent systemd service must be enabled and started on every cluster node.
+
+  ## Remediation
+  Start and enable the saphostagent systemd services on every cluster node.
+
+  ```
+  systemctl enable --now saphostagent
+  ```
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: service_saphostagent
+    gatherer: systemd@v2
+    argument: saphostagent.service
+expectations:
+  - name: expectations_saphostagent_active
+    expect: |
+      facts.service_saphostagent["active_state"] == "active"
+    failure_message: The saphostagent service is not active
+  - name: expectations_saphostagent_enabled
+    expect: |
+      facts.service_saphostagent["unit_file_state"] == "enabled"
+    failure_message: The saphostagent service is not enabled at boot time

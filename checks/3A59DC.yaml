@@ -1,0 +1,59 @@
+id: "3A59DC"
+name: The recommended Solution is enabled
+group: saptune
+description: |
+  Check if the recommended Solution is enabled on the system. The recommendation is based on the SAP product detection of Trento.
+
+remediation: |
+  ## Abstract
+  The enabled Solution is **not** the recommended one.
+
+  ## Remediation
+  Enable the recommended Solution with `saptune solution change <SOLUTION>`.
+  If you running an individual configuration, please create a custom solution starting with the name of the recommended solution, followed by an individual text separated by  **_**  and enable it.
+  Such a Solution is considered equivalent to the recommendation.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-switch-solution
+
+premium: true
+
+metadata:
+  target_type: cluster
+
+facts:
+  - name: saptune_status
+    gatherer: saptune@v1
+    argument: status
+
+values:
+  - name: expected_solution
+    default: "S4HANA"
+    conditions:
+      - value: "HANA"
+        when: env.cluster_type == "hana_scale_up" || env.cluster_type == "hana_scale_out"
+      - value: "NETWEAVER"
+        when: env.cluster_type == "ascs_ers"
+
+expectations:
+  - name: recommended_solution
+    expect: |
+      // handle custom solutions like 'HANA_mySol' too
+      let current_solution = 
+        if ! facts.saptune_status.result.solution_enabled.is_empty {
+            facts.saptune_status.result.solution_enabled[0]
+        } else {
+            ""
+        }.split("_")[0];
+      let solution = [];
+      if values.expected_solution == "HANA" {
+        solution = ["HANA", "S4HANA-DBSERVER", "NETWEAVER+HANA", "S4HANA-APP+DB"];
+      } else if values.expected_solution == "NETWEAVER" {
+        solution = ["NETWEAVER", "NETWEAVER+MAXDB", "S4HANA-APPSERVER", "NETWEAVER+HANA", "S4HANA-APP+DB"];
+      } else {
+        solution = ["NETWEAVER+HANA", "S4HANA-APP+DB"];
+      }
+
+      current_solution in solution
+
+    failure_message: The enabled Solution '${facts.saptune_status.result.solution_enabled[0]}' is **not** the recommended one '${values.expected_solution}'.

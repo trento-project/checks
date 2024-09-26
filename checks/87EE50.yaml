@@ -1,0 +1,29 @@
+id: "87EE50"
+name: supported systemd version
+group: OS and package versions
+description: |
+  systemd version is supported
+remediation: |
+  ## Abstract
+  Installed systemd version must be equal or higher than the recommended value
+
+  ## Remediation
+  Install or upgrade to a supported systemd version
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-differences-to-previous-cluster-architectures
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers  
+
+facts:
+  - name: compare_systemd
+    gatherer: package_version
+    argument: systemd,234
+
+expectations:
+  - name: expectations_systemd_version
+    expect: facts.compare_systemd < 1

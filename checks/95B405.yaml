@@ -1,0 +1,35 @@
+id: "95B405"
+name: Instance Status
+group: Sapcontrol
+description: |
+  GetSystemInstanceList returns "SAPControl-GREEN".
+remediation: |
+  ## Abstract
+  GetSystemInstanceList returns "SAPControl-GREEN" for all configurations on all SIDs and Instances.
+  `sapcontrol -function GetSystemInstanceList` returns "SAPControl-GREEN" on "dispstatus".
+
+  ## Remediation
+  Check why your Instances are having issues by looking at the systems and Instances log files.
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: system_instance_list
+    gatherer: sapcontrol@v1
+    argument: GetSystemInstanceList
+values:
+  - name: expected_instance_status
+    default: SAPControl-GREEN
+expectations:
+  - name: instance_status_green
+    expect: |
+      for sid in facts.cluster_sids.keys() {
+        if !facts.system_instance_list.contains(sid) || 
+          !facts.system_instance_list[sid].all(|inst| inst.output.all(|o| o.dispstatus == values.expected_instance_status)) {
+            return false;
+        }
+      }
+      return true;
+    failure_message: Sapcontrol GetSystemInstanceList 'dispstatus' does not match ${values.expected_instance_status} for every instance

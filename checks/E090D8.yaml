@@ -1,0 +1,31 @@
+id: "E090D8"
+name: /usr/sap is local filesystem
+group: Filesystems
+description: |
+  The /usr/sap directory is on a local filesystem.
+remediation: |
+  ## Abstract
+  The /usr/sap directory must be on a local filesystem.
+  As /usr/sap contains the SAP control file sapservices and the saphostagent, the directory should not be placed on a shared file system between the cluster nodes.
+
+  ## Remediation
+  Create the local directory structure on all nodes that should run the SAP resource.
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-creating-mount-points-and-nfs-shares
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+severity: warning
+facts:
+  - name: fstab
+    gatherer: fstab@v1
+expectations:
+  - name: usr_sap_not_on_nfs
+    expect: |
+      facts.fstab.find(|line| 
+        line.mount_point == "/usr/sap" &&
+        line.file_system_type.starts_with("nfs")
+      ) == ();
+    failure_message: There are fstab entries for /usr/sap on a NFS filesystem.

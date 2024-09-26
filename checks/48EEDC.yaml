@@ -1,0 +1,29 @@
+id: "48EEDC"
+name: supported sap_suse_cluster_connector version
+group: OS and package versions
+description: |
+  sap_suse_cluster_connector version is supported
+remediation: |
+  ## Abstract
+  Installed sap_suse_cluster_connector version must be equal or higher than the recommended value
+
+  ## Remediation
+  Install or upgrade to a supported sap_suse_cluster_connector version
+
+  ## Reference
+  - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+
+facts:
+  - name: compare_sap_suse_cluster_connector
+    gatherer: package_version
+    argument: sap-suse-cluster-connector,3.1.0
+
+expectations:
+  - name: expectations_sap_suse_cluster_connector_version
+    expect: facts.compare_sap_suse_cluster_connector < 1

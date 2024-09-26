@@ -1,0 +1,153 @@
+id: "802D5D"
+name: ASCS and ERS Filesystem resources - resource_managed
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if filesystems resources are present for ASCS and ERS in the resource_managed setup.
+remediation: |
+  ## Abstract
+  Filesystem resources for ASCS and ERS must be configured according to the best practices of a resource_managed setup.
+
+  ## Remediation
+  Create the missing filesystem resources.
+
+  ```
+  crm configure show rsc_fs_NW1_ASCS00 
+
+  primitive rsc_fs_NW1_ASCS00 Filesystem \
+  	params device="..." directory="/usr/sap/NW1/ASCS00" fstype=xfs \
+  	op start timeout=60s interval=0 \
+  	op stop timeout=60s interval=0 \
+  	op monitor interval=20s timeout=40s
+
+  crm configure show rsc_fs_NW1_ERS10 
+
+  primitive rsc_fs_NW1_ERS10 Filesystem \
+  	params device="..." directory="/usr/sap/NW1/ERS10" fstype=xfs \
+  	op start timeout=60s interval=0 \
+  	op stop timeout=60s interval=0 \
+  	op monitor interval=20s timeout=40s
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-azure-files?tabs=lb-portal%2Censa1#installing-sap-netweaver-ascsers
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#filesystem-resources
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#create_the_file_system_resources
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
+    - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: Filesystem
+expectations:  
+  ## check will always return true if no fs resource is found due to the way the gatherer sets `filesystem_based`
+  - name: ascs_resource_in_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}`);
+        if inst == () { return false; }
+        if !inst.filesystem_based { continue; } // skip instance if simple_mount
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+      }
+      return true;
+    failure_message: At least one ASCS resource group is missing a ${values.resource_type} resource
+  - name: ascs_resource_outside_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("resources") { return false; }
+      if !facts.cib_configuration.resources.contains("primitives") { return true; } // primitive does not exist
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if !inst.filesystem_based { continue; } // skip instance if simple_mount
+        let prim = facts.cib_configuration.resources.primitive.find(|p| p.type == values.resource_type && p.contains("instance_attributes"));
+        if prim == () { return false; }
+        let check_key = "directory";
+        let check_value = `/usr/sap/${sid}/${inst.name}`;
+        let result = prim.instance_attributes.nvpair
+          .find(|nv| nv.name == check_key && nv.value == check_value);
+        if result != () { return false; }
+      }
+      return true;      
+    failure_message: At least one ASCS ${values.resource_type} resource found outside of resource group
+  ## check will always return true if no fs resource is found due to the way the gatherer sets `filesystem_based`
+  - name: ers_resource_in_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if !inst.filesystem_based { continue; } // skip instance if simple_mount
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == values.resource_type);
+        if prim == () { return false; }
+      }
+      return true;
+    failure_message: At least one ERS resource group is missing a ${values.resource_type} resource
+  - name: ers_resource_outside_group
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      if !facts.cib_configuration.contains("resources") { return false; }
+      if !facts.cib_configuration.resources.contains("primitives") { return true; } // primitive does not exist
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `ERS${i.instance_number}`);
+        if inst == () { return false; }
+        if !inst.filesystem_based { continue; } // skip instance if simple_mount
+        let prim = facts.cib_configuration.resources.primitive.find(|p| p.type == values.resource_type && p.contains("instance_attributes"));
+        if prim == () { return false; }
+        let check_key = "directory";
+        let check_value = `/usr/sap/${sid}/${inst.name}`;
+        let result = prim.instance_attributes.nvpair
+          .find(|nv| nv.name == check_key && nv.value == check_value);
+        if result != () { return false; }
+      }
+      return true;      
+    failure_message: At least one ERS ${values.resource_type} resource found outside of resource group

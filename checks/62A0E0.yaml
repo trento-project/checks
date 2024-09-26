@@ -1,0 +1,72 @@
+id: "62A0E0"
+name: ERS instance MINIMAL_PROBE - simple_mount
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  The parameter `MINIMAL_PROBE` is set to `true` for ERS instances in the simple mount setup.
+remediation: |
+  ## Abstract
+  The parameter `MINIMAL_PROBE` must be set to `true` for ERS instances cluster resources in the simple mount setup.
+
+  ## Remediation
+  Set the parameter `MINIMAL_PROBE` to `true` for the ERS instance cluster resource.
+
+  ```
+  primitive rsc_sap_EN2_ERS10 SAPInstance \
+    [..] \
+    params [..] InstanceName=EN2_ERS10_sapen2er \
+      MINIMAL_PROBE=true \
+    [..] \
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-simple-mount?tabs=lb-portal%2Censa1#install-sap-netweaver-ascs-and-ers
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-simple
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: ERS
+expectations:  
+  - name: resource_minimal_probe
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);        
+        if inst == () { return false; }
+        if inst.filesystem_based { continue; } // skip instance if resource_managed
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("instance_attributes"));
+        if prim == () { return false; }
+        let result = prim.instance_attributes.nvpair
+          .find(|nv| nv.name == "MINIMAL_PROBE" && nv.value == true);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one ${values.resource_type} resource does not have MINIMAL_PROBE set to true in simple mount setup

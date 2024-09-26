@@ -1,0 +1,48 @@
+id: "3A361F"
+name: Systemd system state is running
+group: saptune
+description: |
+  Check, if the systemd system state reports running and therefore the system is sound from systemd's point of view
+remediation: |
+  ## Abstract
+  Check, if the systemd system state reported by `systemctl is-system-running` is **running**.
+  Even that the systemd system state does not directly affect saptune other systemd services - especially the SAP related services - may be suffer from a **NOT** running state.
+  If the systemd system state is **running**, the check is passing.
+  If the systemd system state is **initializing** or **starting** or **maintenance** or **stopping**, the check will report a warning.
+  And if the systemd system state is **degraded** or **offline** or **unknown**, the check will report a critical error.
+
+  ## Remediation
+  Check the man page of **systemctl** to get a detailed explanation, what the reported state means. A `systemctl list-units --failed` list failed services and can assist to track down the cause.
+
+  ## References
+  - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
+
+premium: true
+
+metadata:
+  target_type: host
+
+facts:
+  - name: saptune_status
+    gatherer: saptune@v1
+    argument: status
+
+expectations:
+  - name: systemd_state_running
+    expect_enum: |
+      let expected_systemd_state = ["running"];
+      let warning_systemd_state = ["initializing", "starting", "maintenance", "stopping"];
+
+      if facts.saptune_status.result != () && 
+         facts.saptune_status.result.systemd_system_state in expected_systemd_state {
+        "passing"
+      } else if facts.saptune_status.result != () &&
+                facts.saptune_status.result.systemd_system_state in warning_systemd_state {
+        "warning"
+      } else {
+        // critical_systemd_state = ["degraded", "offline", "unknown"];
+        // and everything currently unknown
+        "critical"
+      }
+    failure_message: The systemd system state was expected to be 'running' but is currently '${facts.saptune_status.result.systemd_system_state}'
+    warning_message: The systemd system state was expected to be 'running' but is currently '${facts.saptune_status.result.systemd_system_state}'

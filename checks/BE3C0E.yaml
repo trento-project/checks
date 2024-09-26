@@ -1,0 +1,27 @@
+id: "BE3C0E"
+name: sapsys and sapinst groups exist
+group: OS users/groups
+description: |
+  The groups sapsys ans sapinst should exist on every cluster node.
+remediation: |
+  ## Abstract
+  Make sure the groups sapsys and sapinst exist exist on every cluster node.
+
+  ## Remediation
+  Create the missing groups.
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: groups
+    gatherer: groups@v1
+expectations:
+  - name: sapsys_exists
+    expect: |
+      facts.groups.find(|g| g.name == "sapsys") != ();
+    failure_message: The sapsys group does not exist on all cluster nodes
+  - name: sapinst_exists
+    expect: |
+      facts.groups.find(|g| g.name == "sapinst") != ();
+    failure_message: The sapinst group does not exist on all cluster nodes

@@ -1,0 +1,69 @@
+id: "57C663"
+name: ASCS instance resource-stickiness
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if the meta attribute `resource-stickiness` is properly configured for ASCS instance resource
+remediation: |
+  ## Abstract
+  The meta attribute `resource-stickiness` must be configured according to the best practices for the ASCS instance resource.
+
+  ## Remediation
+  Configure a `resource-stickiness` of `5000`, e.g.
+
+  ```
+  primitive rsc_sap_EN2_ASCS00 SAPInstance \
+    [..] \
+    meta resource-stickiness=5000
+    [..]
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.3
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.3
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.3
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.3
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.3
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.3
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_stickiness_res
+    default: 5000
+  - name: resource_type
+    default: ASCS
+expectations:  
+  - name: ascs_resource_resource_stickiness
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
+        if prim == () { return false; }
+        let result = prim.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "resource-stickiness" && nv.value == values.resource_stickiness_res);
+        if result == () { return false; }
+      }
+      return true;
+    failure_message: At least one ${values.resource_type} resource does not have correct resource-stickiness ${values.resource_stickiness_res}

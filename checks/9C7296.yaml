@@ -1,0 +1,69 @@
+id: "9C7296"
+name: SAP Kernel supports systemd
+group: SAP Kernel
+description: |
+  The SAP Kernel provides native systemd support for instances that are configured to run via systemd.
+remediation: |
+  ## Abstract
+  Every clustered instance that uses systemd should run a supported SAP Kernel Release or patch level.
+  As of SAP Kernel Release 788 and as of the specified patch levels of older kernel releases (722, 753, 777, 781, 785), sapstartsrv also provides native systemd support on Linux if an appropriately supported Linux version is available.
+  The supported patch levels are:
+    - SAP Kernel 7.22 >= SP1119
+    - SAP Kernel 7.53 >= SP1011
+    - SAP Kernel 7.77 >= SP441
+    - SAP Kernel 7.81 >= SP241
+    - SAP Kernel 7.85 >= SP115
+
+  ## Remediation
+  Install a supported SAP Kernel Release that supports systemd or start instance with SysVinit.
+
+  ## Reference
+  - https://me.sap.com/notes/3115048
+severity: warning
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: sapservices
+    gatherer: sapservices@v1
+  - name: disp_work
+    gatherer: disp+work@v1
+values:
+  - name: supported_kernel_release
+    default: 788
+expectations:
+  - name: sap_kernel_supported
+    expect: |
+      let supported_kernel_patches = [
+        [722, 1119],
+        [753, 1011],
+        [777, 441],
+        [781, 241],
+        [785, 115]
+      ];
+      for sid in facts.cluster_sids.keys() {
+        if !facts.disp_work.contains(sid) { return false; }
+        for instance in facts.cluster_sids[sid].instances {
+          // Check if systemd enabled instance
+          if !facts.sapservices.some(|service|
+            service.kind == "systemctl" &&
+            service.sid == sid && service.instance_nr == instance.instance_number) {
+            continue;
+          }
+          let kernel_release = parse_int(facts.disp_work[sid].kernel_release);
+          let patch_number = parse_int(facts.disp_work[sid].patch_number);
+          // Check if kernel is supported
+          if kernel_release >= values.supported_kernel_release {
+            continue;
+          }
+          // Check if older kernel patchlevel is supported
+          if !supported_kernel_patches.some(|kernel_patch| kernel_release == kernel_patch[0] && patch_number >= kernel_patch[1]) {
+            return false
+          }
+        }
+      }
+      return true;
+    failure_message: At least one SAP Kernel from a clustered instance using systemd is not supported

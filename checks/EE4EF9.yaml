@@ -1,0 +1,57 @@
+id: "EE4EF9"
+name: ASCS Message server restart is enabled
+group: SAP profiles
+description: |
+  The message server restart has to be enabled for the ASCS instance.
+remediation: |
+  ## Abstract
+  The ASCS Message server restart must be enabled.
+  A restart is not harmfull and increases availability.
+
+  ## Remediation
+  Make sure to change `Start_Program_00 = local $(_MS) pf=$(_PF)` to `Restart_Program_00 = local $(_MS) pf=$(_PF)` in the ASCS profile.
+
+  ## References
+  AZURE:
+    - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
+
+  AWS:
+    - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
+
+  GCP:
+    - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
+
+  SUSE / KVM:
+    - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
+
+  Nutanix:
+    - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
+
+  VMware:
+    - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: sap_profiles
+    gatherer: sap_profiles@v1
+expectations:
+  - name: ms_startmode_is_restart
+    expect: |
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ASCS${inst.instance_number}`);
+        if inst == () { return false; }
+        let result = facts.sap_profiles[sid].profiles.find(|p| {
+          p.content.contains("INSTANCE_NAME") && 
+          p.content["INSTANCE_NAME"] == inst.name && 
+          !p.content.contains("Start_Program_00") && // check start is disabled
+          p.content.contains("Restart_Program_00")   // check restart is enabled
+        });
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one the message server restart is disabled and has to be enabled.

@@ -1,0 +1,89 @@
+id: "C15B2C"
+name: ASCS instance priority
+group: ASCS / ERS Cluster - cluster resources
+description: |
+  Check if priority meta attribute is set for ASCS instance resource on 2-node ASCS/ERS cluster.
+remediation: |
+  ## Abstract
+  ASCS resources must have correct priority set to enable priority fencing.
+
+  ## Remediation
+  Make sure the `priority` meta attribute is set correctly for the resource as recommended in the best practices.
+
+  ```
+  crm resource meta rsc_sap_NW1_ASCS00 show priority
+  crm resource meta rsc_sap_NW1_ASCS00 set priority 10
+  ```
+
+  ```
+  crm configure show rsc_sap_NW1_ASCS00
+
+  primitive rsc_sap_NW1_ASCS00 SAPInstance \
+    [..] \
+    meta priority=10
+  ```
+
+  ## References
+  Azure:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-azure-files?tabs=lb-portal%2Censa1#installing-sap-netweaver-ascsers
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-simple-mount?tabs=lb-portal%2Censa1#install-sap-netweaver-ascs-and-ers
+
+  AWS:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-classic
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-simple
+
+  GCP:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+
+  Nutanix:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+
+  SUSE / KVM:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+
+  VMware:
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+severity: warning
+premium: true
+metadata:
+  target_type: cluster
+  cluster_type: ascs_ers
+facts:
+  - name: cluster_sids
+    gatherer: ascsers_cluster@v1
+  - name: cib_configuration
+    gatherer: cibadmin@v1
+    argument: cib.configuration
+values:
+  - name: resource_type
+    default: ASCS
+  - name: resource_priority
+    default: 10
+expectations:  
+  - name: resource_priority
+    expect: |
+      if facts.cib_configuration.nodes.node.len != 2 { return true; } // only run on 2 node cluster
+      let sids = facts.cluster_sids.keys();
+      for sid in sids {
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
+        if inst == () { return false; }
+        let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
+        if group == () { return false; }
+        let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
+        if prim == () { return false; }
+        
+        let result = prim.meta_attributes[0].nvpair
+          .find(|nv| nv.name == "priority" && nv.value == values.resource_priority);
+        if result == () { return false; }
+      }
+      return true;      
+    failure_message: At least one ${values.resource_type} resource does not have correct priority ${values.resource_priority_ascs}

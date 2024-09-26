@@ -1,0 +1,49 @@
+id: "0B0F87"
+name: SAPHanaSR version identical on all nodes
+group: OS and package versions
+description: |
+  Installed SAPHanaSR version is identical on all nodes
+remediation: |
+  ## Abstract
+  Installed SAPHanaSR version must be identical on all nodes of the cluster
+
+  ## Remediation
+  Install identical SAPHanaSR version on all nodes of the cluster
+
+  ## Reference
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability#implement-hana-hooks-saphanasr-and-suschksrv
+
+  AWS:
+
+  GCP:
+
+  Nutanix:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-hook
+
+  SUSE / KVM:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-hook
+
+  VMware:
+
+    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-hook
+
+premium: true
+
+metadata:
+  target_type: cluster
+  cluster_type: hana_scale_up
+  architecture_type: classic
+
+facts:
+  - name: installed_saphanasr_version
+    gatherer: package_version@v1
+    argument: SAPHanaSR
+
+expectations:
+  - name: saphanasr_version_identical
+    expect_same: facts.installed_saphanasr_version[0].version
+    failure_message: Installed SAPHanaSR version is expected to be identical on all nodes, but differs
