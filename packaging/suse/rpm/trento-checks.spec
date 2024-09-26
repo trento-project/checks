@@ -48,5 +48,6 @@ install -p -m 0644 checks/* %{buildroot}%{trento_checks_dir}
 %license LICENSE
 %dir %{trento_dir}
 %dir %{trento_checks_dir}
+%{trento_checks_dir}/*
 
 %changelog
