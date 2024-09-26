@@ -24,7 +24,6 @@ remediation: |
 
   ## Reference
   - https://me.sap.com/notes/3139184
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

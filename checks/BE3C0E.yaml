@@ -9,7 +9,6 @@ remediation: |
 
   ## Remediation
   Create the missing groups.
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

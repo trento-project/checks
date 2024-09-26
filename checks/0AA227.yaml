@@ -36,7 +36,6 @@ remediation: |
   VMware:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
 severity: warning
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

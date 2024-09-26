@@ -8,7 +8,6 @@ remediation: |
   Make sure sapinit is generated and started.
   The ASCS and ERS instances must be reachable via their virtual hostnames.
 
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

@@ -40,7 +40,6 @@ remediation: |
   VMware:
     - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
     - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

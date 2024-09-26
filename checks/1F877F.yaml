@@ -9,7 +9,6 @@ remediation: |
 
   ## Remediation
   Create the missing sidadm and sapadm users for every cluster managed SID on every cluster node.
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

@@ -29,7 +29,6 @@ remediation: |
 
   VMware:
     - https://help.sap.com/doc/saphelp_nw74/7.4.16/en-US/48/9a9a6b48c673e8e10000000a42189b/content.htm?no_cache=true
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

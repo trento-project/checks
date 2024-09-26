@@ -16,7 +16,6 @@ remediation: |
   - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-enable
   - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
 
-premium: true
 
 metadata:
   target_type: host

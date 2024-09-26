@@ -20,7 +20,6 @@ remediation: |
   ## Reference
   - https://me.sap.com/notes/3115048
 severity: warning
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

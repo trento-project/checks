@@ -22,7 +22,6 @@ remediation: |
 
   ## Reference
   - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-creating-mount-points-and-nfs-shares
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

@@ -16,7 +16,6 @@ remediation: |
   ## References
   - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-verify
 
-premium: true
 
 severity: warning
 

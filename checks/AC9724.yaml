@@ -29,7 +29,6 @@ remediation: |
   VMware:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
 severity: warning
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

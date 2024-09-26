@@ -13,7 +13,6 @@ remediation: |
   ## Reference
   - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
-premium: true
 
 metadata:
   target_type: cluster

@@ -29,7 +29,6 @@ remediation: |
 
   VMware:
     - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

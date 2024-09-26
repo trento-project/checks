@@ -33,7 +33,6 @@ remediation: |
 
   VMware:
     - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

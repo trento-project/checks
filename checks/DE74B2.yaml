@@ -26,7 +26,6 @@ remediation: |
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#create-a-fencing-device-on-the-pacemaker-cluster
 
-premium: true
 
 metadata:
   target_type: cluster

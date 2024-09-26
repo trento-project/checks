@@ -18,7 +18,6 @@ remediation: |
   ## Reference
   - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-installing-ascs-on-valuga11
   - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-installing-ers-on-valuga12
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

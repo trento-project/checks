@@ -16,7 +16,6 @@ remediation: |
   
     - https://www.suse.com/c/sles-for-sap-hana-maintenance-procedures-part-2-manual-administrative-tasks-os-reboots-and-updation-of-os-and-hana/
 
-premium: true
 
 metadata:
   target_type: cluster

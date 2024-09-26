@@ -36,7 +36,6 @@ remediation: |
 
   VMware:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

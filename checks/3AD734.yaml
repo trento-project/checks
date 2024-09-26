@@ -17,7 +17,6 @@ remediation: |
   ## References
   - https://documentation.suse.com/sles-sap/15-SP5/single-html/SLES-SAP-guide/#sec-saptune-enable
 
-premium: true
 
 metadata:
   target_type: cluster

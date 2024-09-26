@@ -29,7 +29,6 @@ remediation: |
 
   VMware:
     - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

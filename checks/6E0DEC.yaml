@@ -18,7 +18,6 @@ remediation: |
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#use-an-azure-fence-agent
 
-premium: true
 
 metadata:
   target_type: cluster

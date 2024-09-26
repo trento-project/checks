@@ -39,7 +39,6 @@ remediation: |
 
   VMware:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
-premium: true
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

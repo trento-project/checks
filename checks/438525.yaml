@@ -39,7 +39,6 @@ remediation: |
 
 severity: warning
 
-premium: true
 
 metadata:
   target_type: cluster
