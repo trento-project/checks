@@ -178,7 +178,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: packaging/suse/container/Dockerfile
           push: true # Will only build if this is not here
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}

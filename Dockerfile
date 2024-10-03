@@ -1,10 +1,4 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
-#!BuildTag: trento/trento-checks:latest
-#!BuildTag: trento/trento-checks:%%VERSION%%
-#!BuildTag: trento/trento-checks:%%VERSION%%-build%RELEASE%
-#!UseOBSRepositories
-#!ExclusiveArch: x86_64
-FROM bci/bci-base:15.4
+FROM registry.suse.com/bci/bci-base:15.4
 
 LABEL org.opencontainers.image.source="https://github.com/trento-project/checks"
 
