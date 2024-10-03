@@ -15,7 +15,6 @@ ENV LC_ALL=C.UTF-8
 RUN zypper --non-interactive in -y tar && \
     zypper --non-interactive clean
 
-
 RUN mkdir --mode=0600 /tmp/trento-checks-build
 
 WORKDIR /tmp/trento-checks-build
@@ -28,11 +27,9 @@ RUN install --directory --mode=0755 /usr/src/trento-checks/checks
 RUN install --preserve-timestamps --mode=0644 ./checks/checks/* /usr/src/trento-checks/checks
 RUN install --preserve-timestamps --mode=0755 ./checks/bin/trento-install-checks /usr/bin/trento-install-checks
 
-
 WORKDIR /
 
 RUN rm -r /tmp/trento-checks-build
-
 
 ENTRYPOINT ["/usr/bin/trento-install-checks"]
 
