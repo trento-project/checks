@@ -38,6 +38,9 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
+  ensa_version:
+    - ensa1
+    - mixed_versions
 facts:
   - name: cluster_sids
     gatherer: ascsers_cluster@v1

@@ -19,6 +19,7 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
+  ensa_version: ensa2
 facts:
   - name: service_saphostagent
     gatherer: systemd@v2
