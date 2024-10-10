@@ -17,6 +17,9 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
+  filesystem_type:
+    - simple_mount
+    - mixed_fs_types
 
 facts:
   - name: compare_sapstartsrv_resource_agents

@@ -72,6 +72,9 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
+  filesystem_type:
+    - resource_managed
+    - mixed_fs_types
 facts:
   - name: cluster_sids
     gatherer: ascsers_cluster@v1
