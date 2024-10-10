@@ -9,6 +9,8 @@ remediation: |
 
   Attention: Please do not use consecutive semicolons in the **SBD_DEVICE** variable in the SBD configuration file. This can cause problems in the cluster functionality as ``sbd`` ignores consecutive semicolons, but the ``fencing agent`` does not. Therefore they should be avoided.
 
+  This check is only applicable when disk-based SBD is configured.
+
   The SBD is not used in GCP or AWS environments.
 
   ## References

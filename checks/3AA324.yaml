@@ -1,8 +1,8 @@
 id: "3AA324"
-name: sapping/sapping enabled - simple_mount
+name: sapping/sappong enabled - simple_mount
 group: OS services
 description: |
-  The sapping/sapping systemd services are enabled on simple mount.
+  The sapping/sappong systemd services are enabled on simple mount.
 remediation: |
   ## Abstract
   sapping/sappong systemd services must be enabled on every cluster node in the simple mount setup.
