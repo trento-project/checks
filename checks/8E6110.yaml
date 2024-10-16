@@ -15,6 +15,7 @@ remediation: |
   ```
 
   ## Reference
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
   - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
 metadata:
   target_type: cluster

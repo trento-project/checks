@@ -2,10 +2,10 @@ id: "DA114A"
 name: Corosync rings
 group: Corosync
 description: |
-  Corosync has at least 2 rings configured
+  Corosync has the minimum number of recommended rings configured
 remediation: |
   ## Abstract
-  It is strongly recommended to add a second ring to the corosync communication.
+  The general recommendation is to add a second ring for the corosync communication but some platforms are good with only one.
 
   ## References
   Azure:

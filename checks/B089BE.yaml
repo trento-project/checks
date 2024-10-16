@@ -4,10 +4,15 @@ group: SBD
 description: |
   SBD watchdog timeout is set to the recommended value
 remediation: |
-  ## Remediation
-  Make sure you configure your SBD Watchdog Timeout to `the recommended value` seconds as recommended on the best practices.
+  ## Abstract
+  Configure the SBD watchdog to use the recommended value.
+
+  This check is only applicable when disk-based SBD is configured.
 
   The SBD is not used in GCP or AWS environments.
+
+  ## Remediation
+  Make sure you configure your SBD Watchdog Timeout to `the recommended value` seconds as recommended on the best practices.
 
   ## References
   Azure:

@@ -4,11 +4,19 @@ group: SBD
 description: |
   SBD msgwait timeout value is at least two times the watchdog timeout
 remediation: |
+  ## Abstract
+  Configure SBD msgwait timeout value to be at least two times the watchdog timeout.
+
+  This check is only applicable when disk-based SBD is configured.
+
+  The SBD is not used in GCP or AWS environments.
+
   ## Remediation
   Make sure you configure your the SBD msgwait to 2 * (SBD Watchdog Timeout) as recommended on the best practices.
 
-  The SBD is not used in GCP or AWS environments.
   ## References
+  - https://www.suse.com/support/kb/doc/?id=000017952
+
   Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#set-up-the-iscsi-target-server-sbd-device

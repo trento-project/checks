@@ -2,10 +2,10 @@ id: "32CFC6"
 name: corosync running 2 ring configuration
 group: Corosync
 description: |
-  Corosync is running with at least 2 rings
+  Corosync is running with minimum number of recommended rings
 remediation: |
   ## Abstract
-  It is strongly recommended to add a second ring to the corosync communication.
+  The general recommendation is to add a second ring for the corosync communication but some platforms are good with only one.
 
   ## References
   Azure:
