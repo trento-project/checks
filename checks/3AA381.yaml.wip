@@ -9,6 +9,8 @@ remediation: |
   But the version of the installed saptune package differs on the cluster nodes.
   Also make sure, that "SAPTUNE_VERSION" in /etc/sysconfig/saptune has identical values on all nodes.
 
+  Note: This check cannot be used on clusters with majority maker.
+
   ## Remediation
   Update the saptune package to get the same version on all cluster nodes
   `zypper update saptune`

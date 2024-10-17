@@ -8,6 +8,8 @@ remediation: |
   ## Abstract
   The same Solution and Notes must be enabled and applied on all cluster nodes. This is the base of having the same configuration even it does not guarantees identical tuning (e.g. staging is used or active diverging overwrites)!
 
+  Note: This check cannot be used on clusters with majority maker.
+
   ## Remediation
   Enable and apply the same Solution and/or Notes on all nodes with the appropriate saptune commands.
   This task includes **reverting** and **applying** Notes or the Solution.
