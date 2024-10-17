@@ -7,6 +7,8 @@ remediation: |
   ## Abstract
   SAP Host Agent should be running on all cluster nodes
 
+  Note: This check cannot be used on clusters with majority maker.
+
   ## Remediation
   Install and start SAP Host Agent on all nodes.
 

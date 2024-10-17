@@ -8,6 +8,8 @@ remediation: |
   ## Abstract
   The enabled Solution is **not** the recommended one.
 
+  Note: This check cannot be used on clusters with majority maker.
+
   ## Remediation
   Enable the recommended Solution with `saptune solution change <SOLUTION>`.
   If you running an individual configuration, please create a custom solution starting with the name of the recommended solution, followed by an individual text separated by  **_**  and enable it.
