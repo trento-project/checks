@@ -1,0 +1,24 @@
+name: Checks Links Checker
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  tlint:
+    name: Checks Checker
+    runs-on: ubuntu-20.04
+    container:
+      image: ghcr.io/trento-project/checks-checker:latest
+      volumes:
+        - ${{ github.workspace }}:/data
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run checks-checker
+        run: "/app/checks-checker checks/*.yaml"
