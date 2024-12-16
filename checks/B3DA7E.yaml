@@ -48,7 +48,7 @@ metadata:
   cluster_type: 
     - hana_scale_up
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: resource_options
     gatherer: cibadmin@v1

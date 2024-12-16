@@ -21,7 +21,7 @@ metadata:
     - hana_scale_out
     - ascs_ers
   provider: [azure, nutanix, kvm, vmware]
-
+  hana_scenario: performance_optimized
 facts:
   - name: compare_sbd_version
     gatherer: package_version@v1

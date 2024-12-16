@@ -17,7 +17,7 @@ metadata:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: exclude_package_pacemaker
     gatherer: package_version@v1

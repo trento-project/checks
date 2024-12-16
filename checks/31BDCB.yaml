@@ -18,7 +18,7 @@ metadata:
   target_type: cluster
   cluster_type: hana_scale_up
   architecture_type: classic
-
+  hana_scenario: performance_optimized
 facts:
   - name: compare_SAPHanaSR_version
     gatherer: package_version@v1

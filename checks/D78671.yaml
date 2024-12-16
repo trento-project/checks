@@ -52,7 +52,7 @@ metadata:
   cluster_type: 
     - hana_scale_up
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: runtime_two_node
     gatherer: corosync-cmapctl@v1

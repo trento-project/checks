@@ -47,7 +47,7 @@ metadata:
   cluster_type: 
     - hana_scale_up
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: crm_config_properties
     gatherer: cibadmin@v1

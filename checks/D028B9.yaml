@@ -19,7 +19,7 @@ metadata:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: compare_sles_sap_version
     gatherer: package_version@v1

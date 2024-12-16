@@ -71,7 +71,7 @@ metadata:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: corosync_transport_protocol
     gatherer: corosync.conf@v1

@@ -54,7 +54,7 @@ metadata:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: token_timeout
     gatherer: corosync-cmapctl@v1

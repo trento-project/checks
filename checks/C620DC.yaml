@@ -50,7 +50,7 @@ metadata:
   cluster_type: 
     - hana_scale_up
     - ascs_ers
-
+  hana_scenario: performance_optimized
 facts:
   - name: corosync_expected_votes
     gatherer: corosync.conf@v1
