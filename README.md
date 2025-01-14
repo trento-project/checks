@@ -18,12 +18,4 @@ TBD
 
 ## License
 
-Copyright 2024 SUSE LLC
-
-Licensed under the GNU General Public License (the "License"); you may not use
-any of the source code in this project repository except in compliance with the License.
-
-This software is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the [License](LICENSE) file for more details on copying permissions and limitations.
+See the [LICENSE](LICENSE) notice.
