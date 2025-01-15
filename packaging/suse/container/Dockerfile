@@ -4,16 +4,12 @@
 #!BuildTag: trento/trento-checks:%%VERSION%%-build%RELEASE%
 #!UseOBSRepositories
 #!ExclusiveArch: x86_64
-FROM bci/bci-base:15.4
+FROM registry.suse.com/bci/bci-base:15.6
 
 LABEL org.opencontainers.image.source="https://github.com/trento-project/checks"
 
 # If set to C, LC_ALL takes precedence
 ENV LC_ALL=C.UTF-8
-
-# tar is required by kubectl cp
-RUN zypper --non-interactive in -y tar && \
-    zypper --non-interactive clean
 
 RUN mkdir --mode=0600 /tmp/trento-checks-build
 
