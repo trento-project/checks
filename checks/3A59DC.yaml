@@ -27,6 +27,8 @@ facts:
     gatherer: saptune@v1
     argument: status
 
+customizable: false
+
 values:
   - name: expected_solution
     default: "S4HANA"
