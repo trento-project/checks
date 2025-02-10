@@ -27,7 +27,7 @@ facts:
     gatherer: saptune@v1
     argument: status
 
-customizable: false
+customization_disabled: true
 
 values:
   - name: expected_solution
