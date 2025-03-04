@@ -10,7 +10,7 @@ on:
 jobs:
   tlint:
     name: Lint checks
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container:
       image: ghcr.io/trento-project/tlint:latest
       volumes:
@@ -26,7 +26,7 @@ jobs:
   obs-commit-rpm:
     name: Commit to OBS to generate a RPM package
     needs: [tlint]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     container:
       image: ghcr.io/trento-project/continuous-delivery:main
@@ -84,7 +84,7 @@ jobs:
 
   obs-commit-image:
     name: Commit to OBS to generate a container image
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     needs: [tlint]
     container:
@@ -145,7 +145,7 @@ jobs:
 
   github-release-container:
     name: Release container to GitHub container registry
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     needs: [tlint]
     env:
