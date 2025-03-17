@@ -1,0 +1,33 @@
+id: "206B26"
+name: sudoers entry for SAPHanaSR-hookHelper is correct
+group: TBD
+description: |
+  Check if sudoers entry for SAPHanaSR-hookHelper is correct for any found SID.
+  Users are expected to be in the format `<SID>adm`.
+  SIDs for which a user is not found are skipped.
+remediation: |
+  TBD
+metadata:
+  target_type: host
+facts:
+  - name: sudoers_conf
+    gatherer: sudoers@v1
+expectations:  
+  - name: hookhelper_check
+    expect: |
+      let users = [];
+      for entry in facts.sudoers_conf {
+        if !users.contains(entry.user) {
+          users.push(entry.user);
+        }
+      }
+      for user in users {
+        let sid = user[0..-3];
+        let command = `/usr/sbin/SAPHanaSR-hookHelper --case checkTakeover --sid\=${sid}`;
+        let found = facts.sudoers_conf.find(|s| s.user == user && s.command == command);
+        if found == () {
+          return false;
+        }
+      }
+      return true;
+    failure_message: SAPHanaSR-hookHelper sudoers entry is not correct for some user.
