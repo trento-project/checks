@@ -1,0 +1,36 @@
+# Fixtures images are based on Trento's Barbecue,\
+# which is a containerized version of Trento's agent.
+# Barbecue images provide a file-based sandbox environment for the Trento agent, 
+# thus by modifying the image files, you can customize the agent's behavior.
+FROM ghcr.io/trento-project/barbecue-hana_node01:latest
+
+# Override the default files
+# to customize the agent's behavior
+# for this fixture
+COPY . /
+
+# Optionally, you can run a setup script
+# to install additional dependencies
+# or perform other tasks
+RUN if [ -f setup.sh ]; then \
+    chmod +x setup.sh && \
+    ./setup.sh && \
+    rm setup.sh; \
+    fi
+
+# The entrypoint starts the Trento agent
+# It requires the following environment variables:
+# - FACTS_SERVICE_URL: the amqp URL of the facts service
+# - AGENT_ID: the agent ID to use 
+# Discovery periods are set to 99h to avoid running the discovery process
+# during the test
+ENTRYPOINT /usr/bin/trento-agent \
+    start \
+    --api-key=1234567890 \
+    --facts-service-url=$FACTS_SERVICE_URL \
+    --cluster-discovery-period=99h \
+    --cloud-discovery-period=99h \
+    --host-discovery-period=99h \
+    --saptune-discovery-period=99h \
+    --sapsystem-discovery-period=99h \
+    --force-agent-id $AGENT_ID 
