@@ -8,7 +8,7 @@ description: |
 remediation: |
   TBD
 metadata:
-  target_type: host
+  target_type: cluster
 facts:
   - name: sudoers_conf
     gatherer: sudoers@v1
