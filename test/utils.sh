@@ -4,14 +4,12 @@
 WANDA_URL=${WANDA_URL:-http://localhost:4000}
 # AMQP URL for the Facts service (RabbitMQ)
 FACTS_SERVICE_URL=${FACTS_SERVICE_URL:-amqp://wanda:wanda@localhost:5672}
-
 # DEBUG=true will log debug messages to /tmp/checks.YYYYMMDD.log
 DEBUG=${DEBUG:-false}
-
 # OCI_REGISTRY is used to pull the agent image from a private registry
 # set it to "localhost/" when using Podman locally
 OCI_REGISTRY=${OCI_REGISTRY:-""}
-
+# log file for debug messages
 log_file="/tmp/checks.$(date +%Y%m%d).log"
 
 debug() {
