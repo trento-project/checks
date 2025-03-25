@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env sh
 
 # Base URL for the Wanda API
 WANDA_URL=${WANDA_URL:-http://localhost:4000}
@@ -12,23 +12,21 @@ DEBUG=${DEBUG:-false}
 # set it to "localhost/" when using Podman locally
 OCI_REGISTRY=${OCI_REGISTRY:-""}
 
-function log_file() {
-	echo "/tmp/checks.$(date +%Y%m%d).log"
-}
+log_file="/tmp/checks.$(date +%Y%m%d).log"
 
-function debug() {
-	if [ "$DEBUG" == "true" ]; then
+debug() {
+	if [ "$DEBUG" = "true" ]; then
 		for e in "$@"; do
-			echo "[$(date '+%Y-%m-%d %H:%M:%S')] DEBUG: $e" >>"$(log_file)"
+			echo "[$(date '+%Y-%m-%d %H:%M:%S')] DEBUG: $e" >>"$log_file"
 		done
 	fi
 }
 
-function start_agent() {
+start_agent() {
 	agent_id=${1:?argument required}
 	dockerfile_path=${2:?argument required}
 	fixture_path=${3:?argument required}
-	image_name="trento_bbq_agent:$(echo -n "$fixture_path" | sha256sum | awk '{print $1}')"
+	image_name="trento_bbq_agent:$(echo "$fixture_path" | sha256sum | awk '{print $1}')"
 	container_name="trento_bbq_agent_$(uuidgen)"
 
 	(
@@ -50,12 +48,12 @@ function start_agent() {
 	echo "$container_name"
 }
 
-function stop_agent() {
+stop_agent() {
 	container_name=${1:?argument required}
 	docker kill "$container_name"
 }
 
-function start_check_execution() {
+start_check_execution() {
 	request=${1:?argument required}
 
 	debug "starting check execution"
@@ -75,7 +73,7 @@ function start_check_execution() {
 	echo "$execution_id"
 }
 
-function get_check_execution() {
+get_check_execution() {
 	execution_id=${1:?argument required}
 
 	debug "getting check execution $execution_id"
@@ -104,7 +102,7 @@ function get_check_execution() {
 	done
 }
 
-function assert_check_result() {
+assert_check_result() {
 	expected=${1:?argument required}
 	check_info=${2:?argument required}
 

@@ -1,5 +1,3 @@
-#!/usr/bin/bash
-
 .PHONY: lint
 lint:
 	@echo "Running lint..."
@@ -8,7 +6,7 @@ lint:
 .PHONY: shellcheck
 shellcheck:
 	@echo "Running shellcheck..."
-	shellcheck ./**/*.sh ./**/*.bats Makefile
+	shellcheck ./**/*.sh ./**/*.bats
 
 .PHONY: fmt
 fmt:

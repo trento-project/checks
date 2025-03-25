@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 set -e
 
 TAG=$(git tag | grep -E "[0-9]\.[0-9]\.[0-9]" | sort -rn | head -n1)
