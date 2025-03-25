@@ -1,14 +1,22 @@
 #!/usr/bin/bash
 
+# Base URL for the Wanda API
 WANDA_URL=${WANDA_URL:-http://localhost:4000}
+# AMQP URL for the Facts service (RabbitMQ)
 FACTS_SERVICE_URL=${FACTS_SERVICE_URL:-amqp://wanda:wanda@localhost:5672}
+
+# DEBUG=true will log debug messages to /tmp/checks.YYYYMMDD.log
 DEBUG=${DEBUG:-false}
 
-function log_file {
+# OCI_REGISTRY is used to pull the agent image from a private registry
+# set it to "localhost/" when using Podman locally
+OCI_REGISTRY=${OCI_REGISTRY:-""}
+
+function log_file() {
 	echo "/tmp/checks.$(date +%Y%m%d).log"
 }
 
-function debug {
+function debug() {
 	if [ "$DEBUG" == "true" ]; then
 		for e in "$@"; do
 			echo "[$(date '+%Y-%m-%d %H:%M:%S')] DEBUG: $e" >>"$(log_file)"
@@ -35,7 +43,7 @@ function start_agent() {
 			--env FACTS_SERVICE_URL="$FACTS_SERVICE_URL" \
 			--env AGENT_ID="$agent_id" \
 			--network host \
-			"$image_name"
+			"$OCI_REGISTRY$image_name"
 
 	) >/dev/null
 
@@ -48,42 +56,17 @@ function stop_agent() {
 }
 
 function start_check_execution() {
-	agent_id=${1:?argument required}
-	check_ids=\"${2:?argument required}\"
-	shift 2
-	for check_id in "$@"; do
-		check_ids="$check_ids,\"$check_id\""
-	done
+	request=${1:?argument required}
 
-	execution_id=$(uuidgen)
-	data=$(
-		cat <<EOF
-{
-    "target_type": "cluster",
-    "env": {
-        "provider": "azure"
-    },
-    "execution_id": "$execution_id",
-    "group_id": "3dff9d03-4adf-453e-9513-8533e221bb12",
-    "targets": [
-        {
-            "agent_id": "$agent_id",
-            "checks": [$check_ids]
-        }
-    ]
-}
-EOF
-	)
-
-	debug "starting check execution $execution_id for agent $agent_id with checks $check_ids"
-	debug "$data"
+	debug "starting check execution"
+	debug "$request"
 
 	code=$(curl -s -o /dev/null \
 		-w "%{http_code}" \
 		--request POST "$WANDA_URL/api/v1/checks/executions/start" \
 		--header 'accept: application/json' \
 		--header 'Content-Type: application/json' \
-		--data-raw "$data")
+		--data-raw "$request")
 
 	debug "response code: $code"
 

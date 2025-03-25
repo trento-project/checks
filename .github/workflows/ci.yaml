@@ -51,7 +51,7 @@ jobs:
       - name: Run ShellCheck
         run: make shellcheck
 
-  shfmt:
+  format:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
@@ -59,8 +59,8 @@ jobs:
       - uses: mfinelli/setup-shfmt@v3
         with:
           shfmt-version: 3.11.0
-      - name: Run shfmt
-        run: make shfmt
+      - name: Run fmt
+        run: make fmt
       - name: Check for changes
         run: git diff --exit-code
 

@@ -10,8 +10,8 @@ shellcheck:
 	@echo "Running shellcheck..."
 	shellcheck ./**/*.sh ./**/*.bats Makefile
 
-.PHONY: shfmt
-shfmt:
+.PHONY: fmt
+fmt:
 	@echo "Running shfmt..."
 	shfmt -w -s -ci -bn ./**/*.sh ./**/*.bats
 

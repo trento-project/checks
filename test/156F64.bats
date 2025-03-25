@@ -19,9 +19,28 @@ setup() {
 
 	sleep 1s
 
-	run start_check_execution "$agent_id" "$check_id"
+	execution_id="$(uuidgen)"
+	request=$(
+		cat <<EOF
+{
+    "target_type": "cluster",
+    "env": {
+        "provider": "azure"
+    },
+    "execution_id": "$execution_id",
+    "group_id": "$(uuidgen)",
+    "targets": [
+        {
+            "agent_id": "$agent_id",
+            "checks": ["$check_id"]
+        }
+    ]
+}
+EOF
+	)
+
+	run start_check_execution "$request"
 	[ "$status" -eq 0 ]
-	execution_id="$output"
 
 	sleep 1s
 
@@ -47,9 +66,28 @@ setup() {
 
 	sleep 1s
 
-	run start_check_execution "$agent_id" "$check_id"
+	execution_id="$(uuidgen)"
+	request=$(
+		cat <<EOF
+{
+    "target_type": "cluster",
+    "env": {
+        "provider": "azure"
+    },
+    "execution_id": "$execution_id",
+    "group_id": "$(uuidgen)",
+    "targets": [
+        {
+            "agent_id": "$agent_id",
+            "checks": ["$check_id"]
+        }
+    ]
+}
+EOF
+	)
+
+	run start_check_execution "$request"
 	[ "$status" -eq 0 ]
-	execution_id="$output"
 
 	sleep 1s
 
