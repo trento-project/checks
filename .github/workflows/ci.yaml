@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Run TLint
-        run: "/home/tlint/tlint lint -f /data/checks"
+        run: "/home/tlint/tlint lint /data/checks"
 
   obs-commit-rpm:
     name: Commit to OBS to generate a RPM package
