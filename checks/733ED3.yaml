@@ -17,29 +17,9 @@ remediation: |
   ```
 
   ## References
-  Azure:
-    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+  - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+  - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
-  AWS:
-    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
-
-  GCP:
-    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
-
-  Nutanix:
-    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
-
-  SUSE / KVM:
-    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
-
-  VMware:
-    - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
-    - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4NW10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
