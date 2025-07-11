@@ -29,9 +29,7 @@ Checks Executions] and link:#adding-new-checks[adding new ones].
 == Requirements
 
 * https://www.gnu.org/software/make/manual/make.html[Make]
-* https://www.docker.com/products/cli/[Docker CLI]
-** or
-https://podman-desktop.io/docs/migrating-from-docker/managing-docker-compatibility[Podman]
+* https://www.docker.com/products/cli/[Docker CLI] or https://podman-desktop.io/docs/migrating-from-docker/managing-docker-compatibility[Podman]
 using the Docker compatibility feature
 * https://asdf-vm.com/guide/getting-started.html[Asdf]
 
