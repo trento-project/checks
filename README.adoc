@@ -19,11 +19,11 @@ https://github.com/trento-project/wanda/blob/main/guides/[there] until
 migrated somewhere else (if ever).
 
 You can start learning more by consulting the
-https://github.com/trento-project/wanda/blob/main/guides/specification.md[specification
+https://github.com/trento-project/wanda/blob/main/guides/specification.adoc[specification
 document] # Developing Checks
 
 Wanda architecture aims to simplify
-https://github.com/trento-project/wanda/blob/main/README.md#testing-executions[testing
+https://github.com/trento-project/wanda/blob/main/README.adoc#testing-executions[testing
 Checks Executions] and link:#adding-new-checks[adding new ones].
 
 == Requirements
@@ -65,11 +65,11 @@ Built-in Checks can be found in the Catalog directory at `+./checks/+`
 To implement new checks and test them:
 
 * write a new
-https://github.com/trento-project/wanda/blob/main/guides/specification.md[Check
+https://github.com/trento-project/wanda/blob/main/guides/specification.adoc[Check
 Specification] file
 * locate the newly created Check in the Catalog directory `+./checks/+`
 * test the execution as
-https://github.com/trento-project/wanda/blob/main/README.md#testing-executions[described
+https://github.com/trento-project/wanda/blob/main/README.adoc#testing-executions[described
 in the check engine]
 
 == Static code analysis
