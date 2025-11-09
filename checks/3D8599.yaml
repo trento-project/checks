@@ -1,0 +1,89 @@
+id: "3D8599"
+name: order constraint is correctly configured for scale-up perf-optimized cluster
+group: Pacemaker
+description: |
+  order constraint is correctly configured for scale-up perf-optimized cluster
+remediation: |
+  ## Abstract
+  This Trento check verifies if colocation constraint is correctly configured for scale-up perf-optimized cluster
+
+  ## Remediation
+
+  Edit the crm configuration and make changes as per the best practice guide
+
+  ## References
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
+    
+  AWS:
+
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-constraints.html
+  
+  GCP:
+
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    
+  SUSE / KVM: 
+            
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
+                  
+  Nutanix:        
+                  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
+
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: classic
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized  
+
+facts:
+  - name: constraints
+    gatherer: cibadmin@v1
+    argument: cib.configuration.constraints
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources    
+
+values:
+  - name: ord_kind
+    customization_disabled: true 
+    default: "Optional"
+
+expectations:
+  - name: expectations_order_configured
+    expect: |
+          let ord = facts.constraints.rsc_order[0];
+          let masters = [];
+          let clones = [];
+          let msl_id = "";
+          let cln_id = "";
+          let resources = facts.resources;
+          if "master" in resources {
+            masters = resources.master;
+          }
+          if "clone" in resources {
+            clones = resources.clone;
+          }
+
+          let masters_and_clones = masters + clones;
+          if is_empty(masters_and_clones) {
+            return false;
+          }
+
+          for resource_group in masters_and_clones {
+            for primitive in resource_group.primitive {
+              if primitive.type == "SAPHana" { msl_id = resource_group.id; }
+              if primitive.type == "SAPHanaTopology" { cln_id = resource_group.id; }
+            }
+          }
+
+          if ord["first"] == cln_id && ord["kind"] == values.ord_kind && ord["then"] == msl_id { return true; }
+
+          return false;
+    failure_message: order constraint is not correctly configured

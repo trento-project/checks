@@ -1,0 +1,76 @@
+id: "9CFD28"
+name: virtual IP resource is configured
+group: Pacemaker
+description: |
+  virtual IP resource is configured  
+remediation: |
+  ## Abstract
+  This Trento check verifies if virtual IP resource is configured and not missing. 
+  ## Remediation
+  Edit the crm configuration and make changes as per the best practice guide
+  ## References
+  Azure:
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
+    
+  AWS:
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-move-the-ip-resource.html
+      ## AWS have different resource agent for virtual IP and different values for interval and timeout for monitor operation for virtual IP resource configured
+  
+  GCP:
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+      ## GCP have same resource agent IPaddr2 but different value for interval and timeout for monitor operations.
+    
+  SUSE / KVM: 
+            
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
+                  
+  Nutanix:        
+                  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: classic
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized  
+
+facts:
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources
+
+values:
+  - name: resource_provider
+    customization_disabled: true    
+    default: "heartbeat"
+    conditions:
+      - value: "suse"
+        when: env.provider == "aws"
+  - name: resource_type
+    customization_disabled: true    
+    default: "IPaddr2"
+    conditions:
+      - value: "aws-vpc-move-ip"
+        when: env.provider == "aws"    
+
+expectations:
+  - name: expectations_vip_configured
+    expect: |
+          let primitives = facts.resources.primitive;
+          for prim in primitives {
+                  let vip = prim.instance_attributes.nvpair.find(|item| item.name == "ip"); 
+                  if vip != () && prim.provider == values.resource_provider && prim.type == values.resource_type { return true; }
+            }
+          let groups = facts.resources.group;
+          for grp in groups {
+          let primitives = grp.primitive;
+          for prim in primitives {
+                  let vip = prim.instance_attributes.nvpair.find(|item| item.name == "ip");
+                  if vip != () && prim.provider == values.resource_provider && prim.type == values.resource_type { return true; }
+            }
+            }            
+          return false;          
+    failure_message: virtual IP resource is not correctly configured    

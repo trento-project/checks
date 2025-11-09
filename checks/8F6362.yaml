@@ -1,0 +1,84 @@
+id: "8F6362"
+name: sudoers entry for crm_attribute command is correctly configured
+group: sudoers
+description: |
+  sudoers entry for crm_attribute command is correctly configured so that SAPHanaSR hook(for classic) can properly work
+remediation: |
+  ## Abstract
+  This Trento check verifies if sudoers entry for crm_attribute command is correctly configured.
+  ## Remediation
+  Edit the sudoers configuration and make changes as per the best practice guide
+  ## References
+  Azure:
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#set-up-sap-hana-hadr-providers
+    
+  AWS:
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-hana-control.html#hook_saphanasr
+
+  GCP:
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
+    
+  SUSE / KVM /Nutanix: 
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-allowing-sidadm-to-access-the-cluster
+                  
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up 
+  architecture_type: 
+    - classic
+  hana_scenario:
+    - performance_optimized 
+    - cost_optimized   
+        
+facts:  
+  - name: sudoers
+    gatherer: sudoers@v1
+  - name: sid_and_site_name 
+    gatherer: ini_files@v1
+    argument: global.ini
+
+values:
+  - name: command
+    customization_disabled: true
+    default: "/usr/sbin/crm_attribute"
+  - name: val1
+    customization_disabled: true
+    default: "SOK"
+  - name: val2
+    customization_disabled: true
+    default: "SFAIL"
+  - name: type_name
+    customization_disabled: true
+    default: "crm_config"
+  - name: scope_name
+    customization_disabled: true
+    default: "SAPHanaSR"
+
+expectations:
+  - name: expectations_sudoers_configured
+    expect: |
+      let SID; let sid; let site_name;
+      for value in facts.sid_and_site_name {
+        SID = value.sid;
+        sid = SID.to_lower();
+        site_name = value.content.system_replication.site_name;
+      }
+      for sudoers_entries in facts.sudoers {
+        let command = sudoers_entries.command;
+        let words = ["","","","","","","","",""];
+        let word_count = 0;
+        let word_start = 0;
+        for (char,count) in command {
+          if char == " " { words[word_count] = command[word_start..count]; word_count = word_count+1; word_start = count+1;}
+        }
+        words[word_count] = command[word_start..];
+        if sudoers_entries.user == sid+"adm" &&  words[0] == values.command {
+          if words[1] == "-n" && words[2] == "hana_"+sid+"_site_srHook_*" { return true;}
+          else if words[1] == "-n" && words[2] == "hana_"+sid+"_site_srHook_"+site_name && words[3] == "-v" && words[4] == values.val1 && words[5] == "-t" && words[6] == values.type_name && words[7] == "-s" && words[8] == values.scope_name { return true; }
+          else if words[1] == "-n" && words[2] == "hana_"+sid+"_site_srHook_"+site_name && words[3] == "-v" && words[4] == values.val2 && words[5] == "-t" && words[6] == values.type_name && words[7] == "-s" && words[8] == values.scope_name { return true; }
+        }
+      }
+      return false;
+    failure_message: sudoers entry for command crm_attribute is not correctly configured      

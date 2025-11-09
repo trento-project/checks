@@ -1,0 +1,93 @@
+id: "553B8A"
+name: SAPHanaTopology resource has monitor interval correctly configured
+group: Pacemaker
+description: |
+  SAPHanaTopology resource has monitor interval correctly configured 
+remediation: |
+  ## Abstract
+  This Trento check verified if SAPHanaTopoloy resource has monitor interval correctly configured and the configuration is not missing. 
+
+  ## Remediation
+
+  Edit the crm configuration and make changes as per the best practice guide
+
+  ## References
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_5_saphanasr
+    
+  AWS:
+
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphanatopology.html
+  
+  GCP:
+
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    
+  SUSE / KVM: 
+            
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphanatopology
+                  
+  Nutanix:        
+                  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphanatopology
+
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: classic
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized  
+
+facts:
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources
+
+values:
+  - name: monitor_interval
+    customization_disabled: true
+    default: 10
+
+expectations:
+  - name: expectations_monitor_interval_configured
+    expect: |
+          let masters = [];
+          let clones = [];
+          let SAPHanaTopo_interval = 0;
+          let SAPHana_interval = 0;
+
+          let resources = facts.resources;
+          if "master" in resources {
+            masters = resources.master;
+          }
+          if "clone" in resources {
+            clones = resources.clone;
+          }
+
+          let masters_and_clones = masters + clones;
+          if is_empty(masters_and_clones) {
+            return false;
+          }
+
+          for resource_group in masters_and_clones {
+            for primitive in resource_group.primitive {
+              if primitive.type == "SAPHana" { 
+                let op_SAPHana = primitive.operations.op.find(|oname| oname.name == "monitor" && oname.role == "Master" ); 
+                if op_SAPHana == () {return false} else { SAPHana_interval = op_SAPHana.interval; }
+              }
+              if primitive.type == "SAPHanaTopology" { 
+                let op_SAPHanaTopo = primitive.operations.op.find(|oname| oname.name == "monitor"); 
+                if op_SAPHanaTopo == () {return false} else { SAPHanaTopo_interval = op_SAPHanaTopo.interval; } 
+              }
+            }
+          }
+
+          if SAPHanaTopo_interval == values.monitor_interval && SAPHanaTopo_interval < SAPHana_interval { return true; }
+
+          return false;          
+
+    failure_message: SAPHanaTopology resource has monitor interval not correctly configured

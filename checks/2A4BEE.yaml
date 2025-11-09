@@ -1,0 +1,61 @@
+id: "2A4BEE"
+name: SAPHanaSR global.ini file configuration is properly done
+group: ini_files
+description: |
+  SAPHanaSR global.ini file configuration is properly done
+remediation: |
+  ## Abstract
+  This Trento check verified if SAPHanaSR global.ini file configuration is properly done.
+  ## Remediation
+  Edit the global.ini configuration and make changes as per the best practice guide
+  ## References
+  Azure:
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
+    
+  AWS:
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-implementing-python-hook-saphanasr-in-sles.html
+  
+  GCP:
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
+    
+  SUSE / KVM: 
+            
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
+                  
+  Nutanix:        
+                  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: 
+    - classic
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized 
+
+facts:
+  - name: ini_files
+    gatherer: ini_files@v1
+    argument: global.ini
+
+values:
+  - name: execution_order
+    default: 1
+  - name: path
+    default: "/usr/share/SAPHanaSR/"
+  - name: provider
+    customization_disabled: true
+    default: "SAPHanaSR"    
+
+expectations:
+  - name: expectations_saphanasr_global_ini_configured
+    expect: |
+      for items in facts.ini_files {
+        let saphanasr = items.content.ha_dr_provider_saphanasr;
+        if saphanasr.execution_order == values.execution_order && saphanasr.path == values.path && saphanasr.provider == values.provider {return true;}
+      }
+      return false;      
+    failure_message: SAPHanaSR section in global.ini is not correctly configured    

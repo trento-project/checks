@@ -1,0 +1,77 @@
+id: "3D8598"
+name: colocation constraint is correctly configured for scale-up perf-optimized cluster
+group: Pacemaker
+description: |
+  colocation constraint is correctly configured for scale-up perf-optimized cluster
+remediation: |
+  ## Abstract
+  This Trento check verified if colocation constraint is correctly configured for scale-up perf-optimized cluster
+
+  ## Remediation
+
+  Edit the crm configuration and make changes as per the best practice guide
+
+  ## References
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
+    
+  AWS:
+
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-constraints.html
+  
+  GCP:
+
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    
+  SUSE / KVM: 
+            
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
+                  
+  Nutanix:        
+                  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
+
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: classic
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized  
+
+facts:
+  - name: constraints
+    gatherer: cibadmin@v1
+    argument: cib.configuration.constraints
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources    
+
+values:
+  - name: col_rsc_role
+    customization_disabled: true 
+    default: "Started"
+  - name: col_rsc_score
+    customization_disabled: true
+    default: 2000
+  - name: col_with_rsc_role
+    customization_disabled: true
+    default: "Promoted"
+
+expectations:
+  - name: expectations_colocation_configured
+    expect: |
+          let col = facts.constraints.rsc_colocation[0];
+          let vip = facts.resources.primitive.find(|rsc| rsc.type == "IPaddr2").id;
+          let hana_ct = facts.resources.master;
+          for cln in hana_ct {
+            let rsc = cln.primitive;
+            for prim in rsc {
+              if col["rsc"] == vip && col["rsc-role"] == values.col_rsc_role && col["score"] == 2000 && col["with-rsc"] == cln.id && col["with-rsc-role"] == values.col_with_rsc_role {return true;}                  
+            }
+          }
+          return false;          
+    failure_message: Colocation constraint is not correctly configured

@@ -1,0 +1,85 @@
+id: "AE0C6C"
+name: SAPHana resource has meta attribute priority correctly configured
+group: Pacemaker
+description: |
+  SAPHana resource has meta attribute priority correctly configured 
+remediation: |
+  ## Abstract
+  This Trento check verified if SAPHana resource SAPHana resource has meta attribute priority correctly configured and not missing for 2 node cluster. 
+
+  ## Remediation
+
+  Edit the crm configuration and make changes as per the best practice guide
+
+  ## References
+  Azure:
+
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_6_saphanasr
+    
+  AWS:
+
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphana.html
+  
+  GCP:
+
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    
+  SUSE / KVM: 
+            
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphana
+                  
+  Nutanix:        
+                  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphana
+
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: classic
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized  
+
+facts:
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources
+
+  - name: corosync_num_nodes
+    gatherer: corosync.conf@v1
+    argument: nodelist.node
+
+  - name: cib_num_nodes
+    gatherer: cibadmin@v1
+    argument: cib.configuration.nodes.node    
+
+values:
+  - name: meta_priority
+    customization_disabled: true
+    default: 100
+
+expectations:
+  - name: num_nodes_equal_in_corosync_and_cib
+    expect: facts.corosync_num_nodes.len == facts.cib_num_nodes.len
+    failure_message: Number of nodes mentioned in corosync.conf is not equal to number of nodes in cib.xml
+
+  - name: expectations_meta_priority_configured
+    expect: |
+          if facts.corosync_num_nodes.len == 2 { 
+          let hana_ct = facts.resources.master;
+          for cln in hana_ct {
+            let msl = cln.primitive;
+            for prim in msl {
+              let meta_attr = prim.meta_attributes;
+              for meta in meta_attr {
+                if meta.nvpair.find(|item| item.name == "priority").value == values.meta_priority { return true; }              
+              }
+            }
+          }
+          return false;
+          } else {
+            false
+          }             
+    failure_message: SAPHana resource has meta attribute priority not correctly configured
