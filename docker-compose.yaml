@@ -12,10 +12,8 @@ services:
       CATALOG_PATH: /app/catalog
       JWT_AUTHENTICATION_ENABLED: "false"
     depends_on:
-      postgres:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
+      - postgres
+      - rabbitmq
     ports:
       - 4000:4000
     entrypoint: /bin/sh -c "/app/bin/wanda eval \"Wanda.Release.init()\" && /app/bin/wanda start"
@@ -27,11 +25,6 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    healthcheck:
-        test: rabbitmq-diagnostics -q status
-        interval: 30s
-        timeout: 30s
-        retries: 10
     environment:
       RABBITMQ_DEFAULT_USER: wanda
       RABBITMQ_DEFAULT_PASS: wanda
@@ -42,15 +35,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
-      retries: 5
-      timeout: 10s
     ports:
       - 5434:5432
     volumes:
       - pg_data:/var/lib/postgresql/data
+
 volumes:
   pg_data:
 

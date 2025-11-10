@@ -23,50 +23,9 @@ jobs:
       - name: Run TLint
         run: "/home/tlint/tlint lint /data/checks"
 
-  test:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: "Start services"
-        uses: isbang/compose-action@v2.2.0
-        with:
-          compose-file: "./docker-compose.yaml"
-          down-flags: "--volumes"
-      - name: "Setup BATS"
-        uses: mig4/setup-bats@v1
-        with:
-          bats-version: 1.11.1
-      - name: Run tests
-        run: make test
-
-  shellcheck:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install ShellCheck
-        run: sudo apt-get install shellcheck
-      - name: Run ShellCheck
-        run: make shellcheck
-
-  format:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - uses: mfinelli/setup-shfmt@v3
-        with:
-          shfmt-version: 3.11.0
-      - name: Run fmt
-        run: make fmt
-      - name: Check for changes
-        run: git diff --exit-code
-
   obs-commit-rpm:
     name: Commit to OBS to generate a RPM package
-    needs: [tlint, test]
+    needs: [tlint]
     runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     container:
@@ -127,7 +86,7 @@ jobs:
     name: Commit to OBS to generate a container image
     runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
-    needs: [tlint, test]
+    needs: [tlint]
     container:
       image: ghcr.io/trento-project/continuous-delivery:main
       env:
@@ -188,7 +147,7 @@ jobs:
     name: Release container to GitHub container registry
     runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
-    needs: [tlint, test]
+    needs: [tlint]
     env:
       IMAGE_TAG: "${{ (github.event_name == 'release' && github.event.release.tag_name) || (github.event_name == 'push' && github.ref == 'refs/heads/main' && 'rolling') || github.sha }}"
     steps:

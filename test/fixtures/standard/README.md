@@ -1,1 +1,0 @@
-This fixture maps a standard Trento agent behavior.
