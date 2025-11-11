@@ -10,7 +10,7 @@ services:
       AMQP_URL: amqp://wanda:wanda@rabbitmq
       CORS_ENABLED: "false"
       CATALOG_PATH: /app/catalog
-      JWT_AUTHENTICATION_ENABLED: "false"
+      TOKEN_AUTHENTICATION_ENABLED: "false"
     depends_on:
       - postgres
       - rabbitmq
