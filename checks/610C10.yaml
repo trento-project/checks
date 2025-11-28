@@ -1,0 +1,62 @@
+id: "610C10"
+name: azure-lb resource is configured
+group: Pacemaker
+description: |
+  azure-lb resource is configured
+remediation: |
+  ## Abstract
+  azure-lb resource is needed for directing network traffic to correct virtual machine where the virtual IP is configured. 
+
+  ## Remediation
+  Edit the crm configuration and make changes as per the best practice guide
+  
+  ## References
+  Azure:
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
+    
+customization_disabled: true
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type:   
+    - hana_scale_up
+    - hana_scale_up
+  architecture_type: 
+    - classic 
+    - angi
+
+  provider: azure
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized
+
+facts:
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources
+
+values:
+  - name: resource_provider
+    default: "heartbeat"
+
+  - name: resource_type
+    default: "azure-lb"
+
+expectations:
+  - name: expectations_lb_configured
+    expect: |
+          let primitives = facts.resources.primitive;
+          for prim in primitives {
+                  let lb = prim.instance_attributes.nvpair.find(|item| item.name == "port");
+                  if lb != () && prim.provider == values.resource_provider && prim.type == values.resource_type { return true; }
+            }
+          let groups = facts.resources.group;
+          for grp in groups {
+          let primitives = grp.primitive;
+          for prim in primitives {
+                  let lb = prim.instance_attributes.nvpair.find(|item| item.name == "port");
+                  if lb != () && prim.provider == values.resource_provider && prim.type == values.resource_type { return true; }
+            }
+            }
+          return false;
+    failure_message: azure-lb resource is not correctly configured            

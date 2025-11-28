@@ -1,0 +1,100 @@
+id: "3D8598"
+name: Colocation constraint is correctly configured
+group: Pacemaker
+description: |
+  Colocation constraint is correctly configured for Scale-Up clusters (Perf-Opt, Cost-Opt, classic, angi)
+remediation: |
+  ## Abstract
+  The virtual address IPaddr2/other-RA-for-virtual-ip resource or the resource group containig this RA resource must move alongside the SAPHanaSR multi state clone resource to enable access to HANA. A colocation constrain must be configured properly to colocate both resources in the same node.
+
+  ## Remediation
+
+  Edit the crm configuration and make changes as per the best practice guide
+
+  ## References
+  Azure:
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
+    
+  AWS:
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-constraints.html
+  
+  GCP:
+    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    
+  SUSE / KVM: 
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
+                  
+  Nutanix:        
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
+
+severity: critical
+metadata:
+  target_type: cluster
+  cluster_type: 
+    - hana_scale_up
+  architecture_type: 
+    - classic
+    - angi
+  hana_scenario:
+    - performance_optimized
+    - cost_optimized  
+
+facts:
+  - name: constraints
+    gatherer: cibadmin@v1
+    argument: cib.configuration.constraints
+  - name: resources
+    gatherer: cibadmin@v1
+    argument: cib.configuration.resources    
+
+values:
+  - name: col_rsc_role
+    customization_disabled: true
+    default: "Started"
+  - name: col_rsc_score
+    default: 2000
+    conditions:
+      - value: 3000
+        when: env.hana_scenario == "cost_optimized"
+  - name: col_with_rsc_role
+    customization_disabled: true
+    default: "Promoted"
+    conditions:
+      - value: "Master"
+        when: env.architecture_type == "classic"
+  - name: msclone
+    customization_disabled: true
+    default: "clone"
+    conditions:
+      - value: "master"
+        when: env.architecture_type == "classic"
+  - name: ms_rsc_type
+    customization_disabled: true
+    default: "SAPHanaController"
+    conditions:
+      - value: "SAPHana"
+        when: env.architecture_type == "classic"
+
+expectations:
+  - name: expectations_colocation_configured
+    expect: |
+        let vip; let vip_prim; let vip_grp;
+        let saphanasr_id = facts.resources[values.msclone].find_map(|ms| if ms.primitive.find(|rsc| rsc.type == values.ms_rsc_type) != () { ms.id });
+        if saphanasr_id == () { return false; }
+        let primitives = facts.resources.primitive;
+        for prim in primitives {
+          vip = prim.instance_attributes.nvpair.find(|item| item.name == "ip");
+          if vip != ()  { vip_prim = prim.id; }
+        }
+        if vip == () {
+          let groups = facts.resources.group;
+          for grp in groups {
+            let primitives = grp.primitive;
+            for prim in primitives {
+              vip = prim.instance_attributes.nvpair.find(|item| item.name == "ip");
+              if vip != ()  { vip_grp = grp.id; }
+            }
+          }
+        }
+        facts.constraints.rsc_colocation.find(|col| (col["rsc"] == vip_prim || col["rsc"] == vip_grp ) && col["rsc-role"] == values.col_rsc_role && col["score"] == values.col_rsc_score && col["with-rsc"] == saphanasr_id && col["with-rsc-role"] == values.col_with_rsc_role) != ()      
+    failure_message: Colocation constraint is not correctly configured
