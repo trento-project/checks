@@ -1,13 +1,16 @@
 id: "2A4BEE"
-name: SAPHanaSR global.ini file configuration is properly done
-group: ini_files
+name: susHanaSR/SAPHanaSR global.ini file configuration is properly done
+group: Ini Files
 description: |
-  SAPHanaSR global.ini file configuration is properly done
+  susHanaSR/SAPHanaSR global.ini file configuration is properly done
 remediation: |
+
   ## Abstract
-  This Trento check verified if SAPHanaSR global.ini file configuration is properly done.
+  The values `provider`,  `path` and `execution_order` of the susHanaSR/SAPHanaSR global.ini must be set according the best practices guide to configure properly the python hook.
+
   ## Remediation
   Edit the global.ini configuration and make changes as per the best practice guide
+
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
@@ -32,6 +35,7 @@ metadata:
     - hana_scale_up
   architecture_type: 
     - classic
+    - angi
   hana_scenario:
     - performance_optimized
     - cost_optimized 
@@ -44,18 +48,38 @@ facts:
 values:
   - name: execution_order
     default: 1
-  - name: path
-    default: "/usr/share/SAPHanaSR/"
+  - name: path1
+    default: "/usr/share/SAPHanaSR-angi/"
+    conditions:
+      - value: "/usr/share/SAPHanaSR/"
+        when: env.architecture_type == "classic"    
+  - name: path2
+    default: "/usr/share/SAPHanaSR-angi"    
+    conditions:
+      - value: "/usr/share/SAPHanaSR"
+        when: env.architecture_type == "classic"    
   - name: provider
     customization_disabled: true
-    default: "SAPHanaSR"    
-
+    default: "susHanaSR"
+    conditions:
+      - value: "SAPHanaSR"
+        when: env.architecture_type == "classic"    
+  - name: provider_text
+    customization_disabled: true
+    default: "ha_dr_provider_sushanasr"
+    conditions:
+      - value: "ha_dr_provider_saphanasr"
+        when: env.architecture_type == "classic"
+    
 expectations:
-  - name: expectations_saphanasr_global_ini_configured
+  - name: expectations_sushanasr_global_ini_configured
     expect: |
       for items in facts.ini_files {
-        let saphanasr = items.content.ha_dr_provider_saphanasr;
-        if saphanasr.execution_order == values.execution_order && saphanasr.path == values.path && saphanasr.provider == values.provider {return true;}
+        let provider_text = values.provider_text;
+        let sushanasr = items.content.provider_text;
+        if sushanasr.path == values.path1 || sushanasr.path == values.path2 {
+          if sushanasr.execution_order == values.execution_order && sushanasr.provider == values.provider {return true;}
+        }
       }
       return false;      
     failure_message: SAPHanaSR section in global.ini is not correctly configured    

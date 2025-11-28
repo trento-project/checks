@@ -1,11 +1,11 @@
 id: "3D8598"
-name: colocation constraint is correctly configured for scale-up perf-optimized cluster
+name: Colocation constraint is correctly configured
 group: Pacemaker
 description: |
-  colocation constraint is correctly configured for scale-up perf-optimized cluster
+  Colocation constraint is correctly configured for Scale-Up clusters (Perf-Opt, Cost-Opt, classic, angi)
 remediation: |
   ## Abstract
-  This Trento check verified if colocation constraint is correctly configured for scale-up perf-optimized cluster
+  The virtual address IPaddr2/other-RA-for-virtual-ip resource or the resource group containig this RA resource must move alongside the SAPHanaSR multi state clone resource to enable access to HANA. A colocation constrain must be configured properly to colocate both resources in the same node.
 
   ## Remediation
 
@@ -37,7 +37,9 @@ metadata:
   target_type: cluster
   cluster_type: 
     - hana_scale_up
-  architecture_type: classic
+  architecture_type: 
+    - classic
+    - angi
   hana_scenario:
     - performance_optimized
     - cost_optimized  
@@ -52,26 +54,52 @@ facts:
 
 values:
   - name: col_rsc_role
-    customization_disabled: true 
+    customization_disabled: true
     default: "Started"
   - name: col_rsc_score
-    customization_disabled: true
     default: 2000
+    conditions:
+      - value: 3000
+        when: env.hana_scenario == "cost_optimized"
   - name: col_with_rsc_role
     customization_disabled: true
     default: "Promoted"
+    conditions:
+      - value: "Master"
+        when: env.architecture_type == "classic"
+  - name: msclone
+    customization_disabled: true
+    default: "clone"
+    conditions:
+      - value: "master"
+        when: env.architecture_type == "classic"
+  - name: ms_rsc_type
+    customization_disabled: true
+    default: "SAPHanaController"
+    conditions:
+      - value: "SAPHana"
+        when: env.architecture_type == "classic"
 
 expectations:
   - name: expectations_colocation_configured
     expect: |
-          let col = facts.constraints.rsc_colocation[0];
-          let vip = facts.resources.primitive.find(|rsc| rsc.type == "IPaddr2").id;
-          let hana_ct = facts.resources.master;
-          for cln in hana_ct {
-            let rsc = cln.primitive;
-            for prim in rsc {
-              if col["rsc"] == vip && col["rsc-role"] == values.col_rsc_role && col["score"] == 2000 && col["with-rsc"] == cln.id && col["with-rsc-role"] == values.col_with_rsc_role {return true;}                  
+        let vip; let vip_prim; let vip_grp;
+        let saphanasr_id = facts.resources[values.msclone].find_map(|ms| if ms.primitive.find(|rsc| rsc.type == values.ms_rsc_type) != () { ms.id });
+        if saphanasr_id == () { return false; }
+        let primitives = facts.resources.primitive;
+        for prim in primitives {
+          vip = prim.instance_attributes.nvpair.find(|item| item.name == "ip");
+          if vip != ()  { vip_prim = prim.id; }
+        }
+        if vip == () {
+          let groups = facts.resources.group;
+          for grp in groups {
+            let primitives = grp.primitive;
+            for prim in primitives {
+              vip = prim.instance_attributes.nvpair.find(|item| item.name == "ip");
+              if vip != ()  { vip_grp = grp.id; }
             }
           }
-          return false;          
+        }
+        facts.constraints.rsc_colocation.find(|col| (col["rsc"] == vip_prim || col["rsc"] == vip_grp ) && col["rsc-role"] == values.col_rsc_role && col["score"] == values.col_rsc_score && col["with-rsc"] == saphanasr_id && col["with-rsc-role"] == values.col_with_rsc_role) != ()      
     failure_message: Colocation constraint is not correctly configured

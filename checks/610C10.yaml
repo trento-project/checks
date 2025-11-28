@@ -2,26 +2,34 @@ id: "610C10"
 name: azure-lb resource is configured
 group: Pacemaker
 description: |
-  azure-lb resource is configured  
+  azure-lb resource is configured
 remediation: |
+    
   ## Abstract
-  This Trento check verifies if azure-lb is configured and not missing. 
+  azure-lb resource is needed for directing network traffic to correct virtual machine where the virtual IP is configured. 
+
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
+  
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
     
+customization_disabled: true
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:   
     - hana_scale_up
-  architecture_type: classic
+    - hana_scale_up
+  architecture_type: 
+    - classic 
+    - angi
+
   provider: azure
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: resources
@@ -30,11 +38,9 @@ facts:
 
 values:
   - name: resource_provider
-    customization_disabled: true    
     default: "heartbeat"
 
   - name: resource_type
-    customization_disabled: true
     default: "azure-lb"
 
 expectations:
@@ -42,7 +48,7 @@ expectations:
     expect: |
           let primitives = facts.resources.primitive;
           for prim in primitives {
-                  let lb = prim.instance_attributes.nvpair.find(|item| item.name == "port"); 
+                  let lb = prim.instance_attributes.nvpair.find(|item| item.name == "port");
                   if lb != () && prim.provider == values.resource_provider && prim.type == values.resource_type { return true; }
             }
           let groups = facts.resources.group;
@@ -52,6 +58,6 @@ expectations:
                   let lb = prim.instance_attributes.nvpair.find(|item| item.name == "port");
                   if lb != () && prim.provider == values.resource_provider && prim.type == values.resource_type { return true; }
             }
-            }            
-          return false;          
-    failure_message: azure-lb resource is not correctly configured    
+            }
+          return false;
+    failure_message: azure-lb resource is not correctly configured            

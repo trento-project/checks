@@ -1,13 +1,16 @@
-id: "XXT304"
-name: virtual IP resource has monitor timeout properly configured
+id: "9CFD2A"
+name: Virtual IP resource has monitor timeout properly configured
 group: Pacemaker
 description: |
-  virtual IP resource has monitor timeout properly configured
+  Virtual IP resource has monitor timeout properly configured
 remediation: |
+
   ## Abstract
-  This Trento check verifies if virtual IP resource has monitor timeout properly configured and not missing.
+  Monitor timeout defines how long to wait for the monitor operation to complete. For example a timeout of 60 seconds means that the cluster waits for the result of monitor operation on a resource for 60 seconds and if doesn't receive a response within that time frame then it starts the corrective actions.
+
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
+
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
@@ -21,21 +24,21 @@ remediation: |
       ## GCP have same resource agent IPaddr2 but different value for interval and timeout for monitor operations.
 
   SUSE / KVM:
-
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
 
   Nutanix:
-
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
+
 severity: critical
 metadata:
   target_type: cluster
   cluster_type:
     - hana_scale_up
-  architecture_type: classic
+  architecture_type:
+    - classic
+    - angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized
 
 facts:
   - name: resources
@@ -78,4 +81,4 @@ expectations:
             }
           }
           return false;
-    failure_message: virtual IP resource has monitor timeout not correctly configured    
+    failure_message: virtual IP resource has monitor timeout not correctly configured                

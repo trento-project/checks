@@ -4,43 +4,41 @@ group: Pacemaker
 description: |
   order constraint is correctly configured for scale-up perf-optimized cluster
 remediation: |
+
   ## Abstract
-  This Trento check verifies if colocation constraint is correctly configured for scale-up perf-optimized cluster
+  SAPHanaTopology resource should always start before the multi state SAPHana/SAPHanaController resource. An order constraint there should be configured that makes sure these resource are started in that order.
 
   ## Remediation
-
   Edit the crm configuration and make changes as per the best practice guide
 
   ## References
   Azure:
-
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
-    
+
   AWS:
-
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-constraints.html
-  
-  GCP:
 
+  GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-    
-  SUSE / KVM: 
-            
+
+  SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
-                  
-  Nutanix:        
-                  
+
+  Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
 
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
-  architecture_type: classic
+    - hana-scale_out
+  architecture_type:
+    - classic
+    - angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: constraints
@@ -48,11 +46,11 @@ facts:
     argument: cib.configuration.constraints
   - name: resources
     gatherer: cibadmin@v1
-    argument: cib.configuration.resources    
+    argument: cib.configuration.resources
 
 values:
   - name: ord_kind
-    customization_disabled: true 
+    customization_disabled: true
     default: "Optional"
 
 expectations:
@@ -78,7 +76,7 @@ expectations:
 
           for resource_group in masters_and_clones {
             for primitive in resource_group.primitive {
-              if primitive.type == "SAPHana" { msl_id = resource_group.id; }
+              if primitive.type == "SAPHana" || primitive.type == "SAPHanaController" { msl_id = resource_group.id; }
               if primitive.type == "SAPHanaTopology" { cln_id = resource_group.id; }
             }
           }
@@ -86,4 +84,4 @@ expectations:
           if ord["first"] == cln_id && ord["kind"] == values.ord_kind && ord["then"] == msl_id { return true; }
 
           return false;
-    failure_message: order constraint is not correctly configured
+    failure_message: order constraint is not correctly configured            

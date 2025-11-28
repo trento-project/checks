@@ -1,20 +1,25 @@
 id: "2A4BEF"
 name: suschksrv global.ini file configuration is properly done
-group: ini_files
+group: Ini Files
 description: |
   suschksrv global.ini file configuration is properly done
 remediation: |
-  ## Abstract
-  This Trento check verified if suschksrv global.ini file configuration is properly done.
+    
+  ## Abstract  
+  Purpose of suschksrv python hook is to detect failing HANA indexserver processes and trigger a fast  takeover to  the  secondary site. With regular configuration of an HANA database, the resource agent (RA) for HANA in a Linux cluster does not trigger a takeover to the secondary site when:
+   - A software failure causes one or more HANA processes to be restarted in place by the  HANA  daemon (hdbdaemon).
+   - A  hardware  error  (e.g.  SIGBUS  from  an uncorrectable memory error) causes the indexserver to restart locally.
+  
   ## Remediation
   Edit the global.ini configuration and make changes as per the best practice guide
+    
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
-
+    
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-implementing-python-hook-saphanasr-in-sles.html
-
+      
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
 
@@ -25,6 +30,7 @@ remediation: |
   Nutanix:
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
+
 severity: critical
 metadata:
   target_type: cluster
@@ -32,9 +38,9 @@ metadata:
     - hana_scale_up
   architecture_type:
     - classic
+    - angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized
 
 facts:
   - name: ini_files
@@ -44,8 +50,16 @@ facts:
 values:
   - name: execution_order
     default: 3
-  - name: path
-    default: "/usr/share/SAPHanaSR/"
+  - name: path1
+    default: "/usr/share/SAPHanaSR-angi/"
+    conditions:
+      - value: "/usr/share/SAPHanaSR/"
+        when: env.architecture_type == "classic"
+  - name: path2
+    default: "/usr/share/SAPHanaSR-angi"
+    conditions:
+      - value: "/usr/share/SAPHanaSR"
+        when: env.architecture_type == "classic"
   - name: provider
     customization_disabled: true
     default: "susChkSrv"
@@ -55,7 +69,7 @@ expectations:
     expect: |
       for items in facts.ini_files {
         let suschksrv = items.content.ha_dr_provider_suschksrv;
-        if suschksrv.execution_order == values.execution_order && suschksrv.path == values.path && suschksrv.provider == values.provider {return true;}
+        if suschksrv.execution_order == values.execution_order && (suschksrv.path == values.path1 || suschksrv.path == values.path2) && suschksrv.provider == values.provider {return true;}
       }
       return false;
-    failure_message: suschksrv section in global.ini is not correctly configured    
+    failure_message: suschksrv section in global.ini is not correctly configured  

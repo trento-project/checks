@@ -1,13 +1,16 @@
 id: "8F6363"
-name: sudoers entry for SAPHanaSR-hookHelper command is correctly configured for susTakeOver Hook
-group: sudoers
+name: Sudoers entry for SAPHanaSR-hookHelper command is correctly configured for susTkOver Hook
+group: Sudoers
 description: |
-  sudoers entry for SAPHanaSR-hookHelper command is correctly configured so that susTakeOver hook(for classic) can properly work
+  Sudoers entry for SAPHanaSR-hookHelper command is correctly configured so that susTkOver hook can properly work
 remediation: |
+
   ## Abstract
-  This Trento check verifies if sudoers entry for SAPHanaSR-hookHelper command is correctly configured.
+  susTkOver hook ensures that takeover can only be initiated when the conditions for takeover are met for example when the multi-state resource is set into maintenance. susTkOver hook relies on the sudoer permission to run the SAPHanaSR-hookHelper script and with correct argument for this script.
+
   ## Remediation
   Edit the sudoers configuration and make changes as per the best practice guide
+
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#set-up-sap-hana-hadr-providers
@@ -21,6 +24,7 @@ remediation: |
   SUSE / KVM /Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-allowing-sidadm-to-access-the-cluster
 
+customization_disabled: true
 severity: critical
 metadata:
   target_type: cluster
@@ -41,10 +45,11 @@ facts:
 
 values:
   - name: command
-    customization_disabled: true
-    default: "/usr/sbin/SAPHanaSR-hookHelper"
+    default: "/usr/bin/SAPHanaSR-hookHelper"
+    conditions:
+      - value: "/usr/sbin/SAPHanaSR-hookHelper"
+        when: env.architecture_type == "classic"
   - name: case1
-    customization_disabled: true
     default: "checkTakeover"
 
 expectations:
@@ -66,8 +71,8 @@ expectations:
         words[word_count] = command[word_start..];
         if sudoers_entries.user == sid+"adm" &&  words[0] == values.command {
           if words[1] == "*" { return true;}
-          else if words[1] == "--sid\\="+SID && words[2] == "--case\\="+values.case1 { return true; }
+          else if words[1] == "--sid\\="+SID && (words[2] == "*" || words[2] == "--case\\="+values.case1) { return true; }
         }
       }
-      return false;
+      return false;      
     failure_message: sudoers entry for command SAPHanaSR-hookHelper is not correctly configured for susTakeOver Hook
