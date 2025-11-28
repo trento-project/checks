@@ -4,7 +4,6 @@ group: Pacemaker
 description: |
   order constraint is correctly configured for scale-up perf-optimized cluster
 remediation: |
-
   ## Abstract
   SAPHanaTopology resource should always start before the multi state SAPHana/SAPHanaController resource. An order constraint there should be configured that makes sure these resource are started in that order.
 

@@ -4,7 +4,6 @@ group: Ini Files
 description: |
   susHanaSR/SAPHanaSR global.ini file configuration is properly done
 remediation: |
-
   ## Abstract
   The values `provider`,  `path` and `execution_order` of the susHanaSR/SAPHanaSR global.ini must be set according the best practices guide to configure properly the python hook.
 

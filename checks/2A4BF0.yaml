@@ -4,7 +4,6 @@ group: Ini Files
 description: |
   sustkover global.ini file configuration is properly done
 remediation: |
-    
   ## Abstract
   sustkover python hook allows manual takeover of the HANA primary if the SAP HANA multi-state  resource  (managed  by  SAPHanaController) is set into maintenance or the Linux cluster is stopped.  Otherwise the manual takeover is blocked.
                   

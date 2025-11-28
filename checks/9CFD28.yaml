@@ -4,7 +4,6 @@ group: Pacemaker
 description: |
   Virtual IP resource is configured
 remediation: |
-  
   ## Abstract
   Virtual IP resource is needed for applications to connect to HANA database. This virtual IP should always point to the Primary HANA Database Server and therefore this virtial IP is a floating IP.
 

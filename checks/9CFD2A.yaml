@@ -4,7 +4,6 @@ group: Pacemaker
 description: |
   Virtual IP resource has monitor timeout properly configured
 remediation: |
-
   ## Abstract
   Monitor timeout defines how long to wait for the monitor operation to complete. For example a timeout of 60 seconds means that the cluster waits for the result of monitor operation on a resource for 60 seconds and if doesn't receive a response within that time frame then it starts the corrective actions.
 

@@ -4,7 +4,6 @@ group: Sudoers
 description: |
   Sudoers entry for SAPHanaSR-hookHelper command is correctly configured so that susTkOver hook can properly work
 remediation: |
-
   ## Abstract
   susTkOver hook ensures that takeover can only be initiated when the conditions for takeover are met for example when the multi-state resource is set into maintenance. susTkOver hook relies on the sudoer permission to run the SAPHanaSR-hookHelper script and with correct argument for this script.
 

@@ -4,7 +4,6 @@ group: Pacemaker
 description: |
   SAPHana resource has meta attribute priority correctly configured 
 remediation: |
-
   ## Abstract
   This Trento check verifies if SAPHana resource SAPHana resource has meta attribute priority correctly configured and not missing for 2 node cluster. 
 

@@ -4,7 +4,6 @@ group: Ini Files
 description: |
   suschksrv global.ini file configuration is properly done
 remediation: |
-    
   ## Abstract  
   Purpose of suschksrv python hook is to detect failing HANA indexserver processes and trigger a fast  takeover to  the  secondary site. With regular configuration of an HANA database, the resource agent (RA) for HANA in a Linux cluster does not trigger a takeover to the secondary site when:
    - A software failure causes one or more HANA processes to be restarted in place by the  HANA  daemon (hdbdaemon).
