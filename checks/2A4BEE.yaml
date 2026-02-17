@@ -75,7 +75,7 @@ expectations:
     expect: |
       for items in facts.ini_files {
         let provider_text = values.provider_text;
-        let sushanasr = items.content.provider_text;
+        let sushanasr = items.content[provider_text];
         if sushanasr.path == values.path1 || sushanasr.path == values.path2 {
           if sushanasr.execution_order == values.execution_order && sushanasr.provider == values.provider {return true;}
         }
