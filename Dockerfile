@@ -1,6 +1,32 @@
-FROM registry.suse.com/bci/bci-base:15.7
-
+ARG OS_VER=15.7
+FROM registry.suse.com/bci/bci-base:${OS_VER}
+ARG DATE
+ARG OS_VER
+ARG VERSION
+# Define labels according to https://en.opensuse.org/Building_derived_containers
+# labelprefix=com.suse.trento
+LABEL org.opencontainers.image.authors="https://github.com/trento-project/checks/graphs/contributors"
+LABEL org.opencontainers.image.title="Trento Checks"
+LABEL org.opencontainers.image.description="Checks for Trento to be executed by Wanda. Previously part of Wanda itself"
+LABEL org.opencontainers.image.documentation="https://www.trento-project.io/docs/checks/README.html"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.url="https://www.suse.com/products/base-container-images/"
+LABEL org.opencontainers.image.created="${DATE}"
+LABEL org.opencontainers.image.vendor="SUSE LLC"
 LABEL org.opencontainers.image.source="https://github.com/trento-project/checks"
+LABEL org.opencontainers.image.ref.name="${OS_VER}-${VERSION}"
+LABEL org.opensuse.reference="registry.suse.com/bci/bci-micro:${OS_VER}"
+LABEL org.openbuildservice.disturl="https://github.com/trento-project/checks/pkgs/container/checks"
+LABEL com.suse.supportlevel="l3"
+LABEL com.suse.supportlevel.until=""
+LABEL com.suse.eula="sle-bci"
+LABEL com.suse.lifecycle-url="https://www.suse.com/lifecycle#suse-linux-enterprise-server-for-sap-applications-15"
+LABEL com.suse.release-stage="released"
+# endlabelprefix
+LABEL org.opencontainers.image.base.name="registry.suse.com/bci/bci-micro:${OS_VER}"
+LABEL org.opencontainers.image.base.digest="latest"
+LABEL io.artifacthub.package.logo-url="https://www.trento-project.io/images/trento-icon.svg"
+LABEL io.artifacthub.package.readme-url="https://raw.githubusercontent.com/trento-project/checks/refs/heads/main/packaging/suse/container/README.md"
 
 # If set to C, LC_ALL takes precedence
 ENV LC_ALL=C.UTF-8
@@ -22,4 +48,3 @@ WORKDIR /
 RUN rm -r /tmp/trento-checks-build
 
 ENTRYPOINT ["/usr/bin/trento-install-checks"]
-
