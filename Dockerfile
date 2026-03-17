@@ -1,6 +1,5 @@
 ARG OS_VER=15.7
 FROM registry.suse.com/bci/bci-base:${OS_VER}
-ARG DATE
 ARG OS_VER
 ARG VERSION
 # Define labels according to https://en.opensuse.org/Building_derived_containers
@@ -11,8 +10,7 @@ LABEL org.opencontainers.image.description="Checks for Trento to be executed by 
 LABEL org.opencontainers.image.documentation="https://www.trento-project.io/docs/checks/README.html"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.url="https://github.com/trento-project/checks"
-LABEL org.opencontainers.image.created="${DATE}"
-LABEL org.opencontainers.image.vendor="SUSE LLC"
+# LABEL org.opencontainers.image.created="" # Set by GHA, no need to set here
 LABEL org.opencontainers.image.source="https://github.com/trento-project/checks"
 LABEL org.opencontainers.image.ref.name="${OS_VER}-${VERSION}"
 LABEL org.opensuse.reference="registry.suse.com/bci/bci-micro:${OS_VER}"
