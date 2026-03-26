@@ -31,6 +31,7 @@ metadata:
     - hana_scale_up
   architecture_type:
     - classic
+    - angi
   hana_scenario:
     - performance_optimized
     - cost_optimized
