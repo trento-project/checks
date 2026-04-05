@@ -35,6 +35,7 @@ RUN install --directory --mode=0755 /usr/src/trento-checks
 RUN install --directory --mode=0755 /usr/src/trento-checks/checks
 RUN install --preserve-timestamps --mode=0644 ./checks/checks/* /usr/src/trento-checks/checks
 RUN install --preserve-timestamps --mode=0755 ./checks/bin/trento-install-checks /usr/bin/trento-install-checks
+RUN printf '%s\n' "${VERSION}" > /usr/src/trento-checks/checks/VERSION && chmod 0644 /usr/src/trento-checks/checks/VERSION
 
 WORKDIR /
 
