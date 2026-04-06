@@ -28,8 +28,8 @@ RUN mkdir --mode=0600 /tmp/trento-checks-build
 
 WORKDIR /tmp/trento-checks-build
 
-# checks.tar.gz is provided by OBS (build.opensuse.org)
-ADD checks.tar.gz .
+COPY bin /tmp/trento-checks-build/checks/bin
+COPY checks /tmp/trento-checks-build/checks/checks
 
 RUN install --directory --mode=0755 /usr/src/trento-checks
 RUN install --directory --mode=0755 /usr/src/trento-checks/checks
