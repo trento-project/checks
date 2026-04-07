@@ -165,6 +165,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}
+      - name: Get version from git history
+        id: get_version
+        run: echo "version=$(hack/get_version_from_git.sh)" >> $GITHUB_OUTPUT
       - name: Create checks tarball
         run: |
           mkdir checks.dist
@@ -181,3 +189,6 @@ jobs:
           push: true # Will only build if this is not here
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VERSION=${{ steps.get_version.outputs.version }}
