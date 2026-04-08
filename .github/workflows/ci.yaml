@@ -143,57 +143,15 @@ jobs:
           osc ar
           osc commit -m "New development version of $NAME released"
 
-  github-release-container:
-    name: Release container to GitHub container registry
-    runs-on: ubuntu-24.04
+  publish-containers:
+    name: Publish GHCR Containers
     if: github.ref == 'refs/heads/main' || github.event_name == 'release'
-    needs: [tlint]
-    env:
-      IMAGE_TAG: "${{ (github.event_name == 'release' && github.event.release.tag_name) || (github.event_name == 'push' && github.ref == 'refs/heads/main' && 'rolling') || github.sha }}"
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa # 0.12.1
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-        with:
-          fetch-depth: 0
-      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v6
-        with:
-          images: ghcr.io/${{ github.repository }}
-      - name: Get version from git history
-        id: get_version
-        run: echo "version=$(hack/get_version_from_git.sh)" >> $GITHUB_OUTPUT
-      - name: Create checks tarball
-        run: |
-          mkdir checks.dist
-          cp -r bin checks.dist
-          cp -r checks checks.dist
-          mv checks checks.orig
-          mv checks.dist checks
-          tar -czf checks.tar.gz checks
-          mv checks.orig checks
-      - name: Compute VERSION
-        id: version
-        run: echo "version=$(./hack/get_version_from_git.sh)" >> "$GITHUB_OUTPUT"
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
-        with:
-          context: .
-          push: true # Will only build if this is not here
-          build-args: |
-            VERSION=${{ steps.version.outputs.version }}
-          tags: |
-            ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
-          labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            VERSION=${{ steps.get_version.outputs.version }}
+    needs:
+      - tlint
+    uses: trento-project/.github/.github/workflows/publish-containers.yaml@b3aa163d3e0872c07ccf3755928f21c070ca0e5b # v1.1.0
+    with:
+      image_name: checks
+      tag: "${{ (github.event_name == 'release' && github.event.release.tag_name) || (github.event_name == 'push' && github.ref == 'refs/heads/main' && 'rolling') || github.sha }}"
+    secrets:
+      gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
+      ssh_key: ${{ secrets.TRENTOBOT_SSH_KEY }}
