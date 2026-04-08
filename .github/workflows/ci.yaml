@@ -182,11 +182,16 @@ jobs:
           mv checks.dist checks
           tar -czf checks.tar.gz checks
           mv checks.orig checks
+      - name: Compute VERSION
+        id: version
+        run: echo "version=$(./hack/get_version_from_git.sh)" >> "$GITHUB_OUTPUT"
       - name: Build and Push Docker Image
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
         with:
           context: .
           push: true # Will only build if this is not here
+          build-args: |
+            VERSION=${{ steps.version.outputs.version }}
           tags: |
             ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
           labels: ${{ steps.meta.outputs.labels }}

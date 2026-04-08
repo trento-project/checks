@@ -43,6 +43,8 @@ BuildArch:      noarch
 install -d -m 0755 %{buildroot}%{trento_dir}
 install -d -m 0755 %{buildroot}%{trento_checks_dir}
 install -p -m 0644 checks/* %{buildroot}%{trento_checks_dir}
+echo "%{version}" > %{buildroot}%{trento_checks_dir}/VERSION
+chmod 0644 %{buildroot}%{trento_checks_dir}/VERSION
 
 %files
 %license LICENSE
