@@ -7,8 +7,8 @@
 #  in regular deployments using docker
 #
 
-checks_src="/usr/src/trento-checks/checks"
 checks_target="/usr/share/trento/checks"
+checks_virtualroot="/virtualroot/${checks_target}"
 
 install -d -m 0755 "$checks_target" || exit $?
 
@@ -16,6 +16,6 @@ install -d -m 0755 "$checks_target" || exit $?
 rm -f "$checks_target"/* || exit $?
 
 # Install new checks
-install -p -m 0644 "$checks_src"/* "$checks_target" || exit $?
+install -p -m 0644 "$checks_virtualroot"/* "$checks_target" || exit $?
 
 exit 0

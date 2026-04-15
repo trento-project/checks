@@ -24,21 +24,13 @@ LABEL io.artifacthub.package.readme-url="https://raw.githubusercontent.com/trent
 # If set to C, LC_ALL takes precedence
 ENV LC_ALL=C.UTF-8
 
-RUN mkdir --mode=0600 /tmp/trento-checks-build
+# We use the /virtualroot prefix to unify handling in the
+# `trento-install-checks` script between our OBS and GHCR images.
+COPY checks/* /virtualroot/usr/share/trento/checks/
+RUN printf '%s\n' "${VERSION}" > /virtualroot/usr/share/trento/checks/VERSION \
+      && chmod 0644 /virtualroot/usr/share/trento/checks/VERSION
 
-WORKDIR /tmp/trento-checks-build
+# Copy the install script into PATH.
+COPY --chmod=755 bin/trento-install-checks /usr/bin/
 
-COPY bin /tmp/trento-checks-build/checks/bin
-COPY checks /tmp/trento-checks-build/checks/checks
-
-RUN install --directory --mode=0755 /usr/src/trento-checks
-RUN install --directory --mode=0755 /usr/src/trento-checks/checks
-RUN install --preserve-timestamps --mode=0644 ./checks/checks/* /usr/src/trento-checks/checks
-RUN install --preserve-timestamps --mode=0755 ./checks/bin/trento-install-checks /usr/bin/trento-install-checks
-RUN printf '%s\n' "${VERSION}" > /usr/src/trento-checks/checks/VERSION && chmod 0644 /usr/src/trento-checks/checks/VERSION
-
-WORKDIR /
-
-RUN rm -r /tmp/trento-checks-build
-
-ENTRYPOINT ["/usr/bin/trento-install-checks"]
+CMD ["/usr/bin/trento-install-checks"]
