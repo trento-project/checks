@@ -6,8 +6,12 @@
 #!BuildVersion: %%VERSION%%
 #!UseOBSRepositories
 #!ExclusiveArch: x86_64
-ARG OS_VER=15.7
-FROM registry.suse.com/bci/bci-base:${OS_VER}
+
+FROM registry.suse.com/bci/bci-base:15.7
+
+# If set to C, LC_ALL takes precedence
+ENV LC_ALL=C.UTF-8
+
 # Define labels according to https://en.opensuse.org/Building_derived_containers
 # labelprefix=com.suse.trento
 LABEL org.opencontainers.image.authors="https://github.com/trento-project/checks/graphs/contributors"
@@ -33,24 +37,26 @@ LABEL org.opencontainers.image.base.digest="%BASE_DIGEST%"
 LABEL io.artifacthub.package.logo-url="https://www.trento-project.io/images/trento-icon.svg"
 LABEL io.artifacthub.package.readme-url="%SOURCEURL_WITH(README.md)%"
 
-# If set to C, LC_ALL takes precedence
-ENV LC_ALL=C.UTF-8
+# Install into `/virtualroot` to preserve backwards-compatibility with
+# Kubernetes deployment expectations -- /usr/share/trento/checks is
+# set as mountPoint and it would shadow the installed files.
+RUN set -euo pipefail; \
+    zypper -n --installroot /virtualroot install --no-recommends trento-checks
 
-RUN mkdir --mode=0600 /tmp/trento-checks-build
+# cleanup logs and temporary files
+RUN set -euo pipefail; zypper -n --installroot /virtualroot clean -a; \
+    rm -rf {/virtualroot,}/var/log/{alternatives.log,lastlog,tallylog,zypper.log,zypp/history,YaST2}; \
+    rm -rf {/virtualroot,}/run/*; \
+    rm -f {/virtualroot,}/etc/{shadow-,group-,passwd-,.pwd.lock}; \
+    rm -f {/virtualroot,}/usr/lib/sysimage/rpm/.rpm.lock; \
+    rm -f {/virtualroot,}/var/lib/zypp/AnonymousUniqueId; \
+    rm -f {/virtualroot,}/var/lib/zypp/AutoInstalled; \
+    rm -f {/virtualroot,}/var/cache/ldconfig/aux-cache
 
-WORKDIR /tmp/trento-checks-build
+# set the day of last password change to empty
+RUN set -euo pipefail; sed -i 's/^\([^:]*:[^:]*:\)[^:]*\(:.*\)$/\1\2/' /etc/shadow
 
-# checks.tar.gz is provided by OBS (build.opensuse.org)
-ADD checks.tar.gz .
-
-RUN install --directory --mode=0755 /usr/src/trento-checks
-RUN install --directory --mode=0755 /usr/src/trento-checks/checks
-RUN install --preserve-timestamps --mode=0644 ./checks/checks/* /usr/src/trento-checks/checks
-RUN install --preserve-timestamps --mode=0755 ./checks/bin/trento-install-checks /usr/bin/trento-install-checks
-RUN printf '%s\n' "%%VERSION%%" > /usr/src/trento-checks/checks/VERSION && chmod 0644 /usr/src/trento-checks/checks/VERSION
-
-WORKDIR /
-
-RUN rm -r /tmp/trento-checks-build
+# Copy the install script to standard PATH
+RUN install --preserve-timestamps --mode=0755 /virtualroot/usr/share/trento/trento-install-checks /usr/bin/trento-install-checks
 
 ENTRYPOINT ["/usr/bin/trento-install-checks"]

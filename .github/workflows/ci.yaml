@@ -1,11 +1,17 @@
-name: CI
+name: Continous Integration
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths-ignore:
+      - "VERSION"
+      - "CHANGELOG.md"
   pull_request:
-  release:
-    types: [published]
+    types: [opened, synchronize, labeled]
+    paths-ignore:
+      - "VERSION"
+  workflow_dispatch:
 
 jobs:
   tlint:
@@ -18,140 +24,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
+
       - name: Run TLint
         run: "/home/tlint/tlint lint /data/checks"
 
-  obs-commit-rpm:
-    name: Commit to OBS to generate a RPM package
-    needs: [tlint]
-    runs-on: ubuntu-24.04
-    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
-    container:
-      image: ghcr.io/trento-project/continuous-delivery:main
-      env:
-        OBS_USER: ${{ secrets.OBS_USER }}
-        OBS_PASS: ${{ secrets.OBS_PASS }}
-        OBS_PROJECT: ${{ secrets.OBS_PROJECT }}
-        OSC_CHECKOUT_DIR: /tmp/trento-checks-package
-        REPOSITORY: ${{ github.repository }}
-        FOLDER: packaging/suse/rpm
-      options: -u 0:0
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
-      - name: Configure OSC
-        run: |
-          mkdir -p $HOME/.config/osc
-          cp /home/osc/.config/osc/oscrc $HOME/.config/osc
-          /scripts/init_osc_creds.sh
-      - name: Prepare _service file
-        run: |
-          git config --global --add safe.directory /__w/checks/checks
-          VERSION=$(./hack/get_version_from_git.sh)
-          sed -i 's~%%REVISION%%~${{ github.sha }}~' $FOLDER/_service && \
-          sed -i 's~%%REPOSITORY%%~'"${REPOSITORY}"'~' $FOLDER/_service && \
-          sed -i 's~%%VERSION%%~'"${VERSION}"'~' $FOLDER/_service
-      - name: Checkout and prepare OBS package
-        run: |
-          osc checkout $OBS_PROJECT trento-checks -o $OSC_CHECKOUT_DIR
-          cp $FOLDER/_service $OSC_CHECKOUT_DIR
-          cp $FOLDER/trento-checks.spec $OSC_CHECKOUT_DIR
-          rm -vf $OSC_CHECKOUT_DIR/*.tar.gz
-          pushd $OSC_CHECKOUT_DIR
-          osc service manualrun
-          rm -vf $OSC_CHECKOUT_DIR/*.tgz
-      - name: Prepare trento-checks.changes file
-        # The .changes file is updated only in release creation. This current task should be improved
-        # in order to add the current rolling release notes
-        if: github.event_name == 'release'
-        run: |
-          git config --global --add safe.directory /__w/checks/checks
-          VERSION=$(./hack/get_version_from_git.sh)
-          TAG=$(echo $VERSION | cut -f1 -d+)
-          hack/gh_release_to_obs_changeset.py $REPOSITORY -a shap-staff@suse.de -t $TAG -f $OSC_CHECKOUT_DIR/trento-checks.changes
-      - name: Commit changes into OBS
-        run: |
-          pushd $OSC_CHECKOUT_DIR
-          osc ar
-          osc commit -m "GitHub Actions automated update to reference ${{ github.sha }}"
-
-  obs-commit-image:
-    name: Commit to OBS to generate a container image
-    runs-on: ubuntu-24.04
-    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
-    needs: [tlint]
-    container:
-      image: ghcr.io/trento-project/continuous-delivery:main
-      env:
-        FOLDER: packaging/suse/container
-        NAME: trento-checks-image
-        OBS_PASS: ${{ secrets.OBS_PASS }}
-        OBS_PROJECT: ${{ secrets.OBS_PROJECT }}
-        OBS_USER: ${{ secrets.OBS_USER }}
-        OSC_CHECKOUT_DIR: /tmp/trento-checks-image
-        REPOSITORY: ${{ github.repository }}
-      options: -u 0:0
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
-      - uses: actions-ecosystem/action-get-latest-tag@b7c32daec3395a9616f88548363a42652b22d435 # v1
-        id: latest-tag
-        with:
-          semver_only: true
-          initial_version: 0.0.1
-      - name: Configure OSC
-        run: |
-          mkdir -p $HOME/.config/osc
-          cp /home/osc/.config/osc/oscrc $HOME/.config/osc
-          /scripts/init_osc_creds.sh
-      - name: Prepare .changes file
-        # The .changes file is updated only in release creation. This current task should be improved
-        # in order to add the current rolling release notes
-        if: github.event_name == 'release'
-        run: |
-          CHANGES_FILE=$NAME.changes
-          osc checkout $OBS_PROJECT $NAME $CHANGES_FILE
-          mv $CHANGES_FILE $FOLDER
-          VERSION=${{ steps.latest-tag.outputs.tag }}
-          hack/gh_release_to_obs_changeset.py $REPOSITORY -a shap-staff@suse.de -t $VERSION -f $FOLDER/$CHANGES_FILE
-      - name: Set version
-        run: |
-          git config --global --add safe.directory /__w/checks/checks
-          VERSION=$(./hack/get_version_from_git.sh)
-          # "+" character is not allowed in OBS dockerfile version strings
-          VERSION=${VERSION//[+]/-}
-          sed -i 's~%%VERSION%%~'"${VERSION}"'~' $FOLDER/Dockerfile
-      - name: Commit on OBS
-        run: |
-          OBS_PACKAGE=$OBS_PROJECT/$NAME
-          osc checkout $OBS_PACKAGE -o $OSC_CHECKOUT_DIR
-          cp -r $FOLDER/* $OSC_CHECKOUT_DIR
-          tar --transform 's,^./,/checks/,' -zcvf $OSC_CHECKOUT_DIR/checks.tar.gz --exclude=./.git ./*
-          cd $OSC_CHECKOUT_DIR
-          osc ar
-          osc commit -m "New development version of $NAME released"
-
   publish-containers:
     name: Publish GHCR Containers
-    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
     needs:
       - tlint
-    uses: trento-project/.github/.github/workflows/publish-containers.yaml@b3aa163d3e0872c07ccf3755928f21c070ca0e5b # v1.1.0
+    if: >-
+      github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    uses: trento-project/.github/.github/workflows/publish-containers.yaml@26f5627e586f437be10eb1b00f87426e39940ce8 # v1.5.0
     with:
       image_name: checks
-      tag: "${{ (github.event_name == 'release' && github.event.release.tag_name) || (github.event_name == 'push' && github.ref == 'refs/heads/main' && 'rolling') || github.sha }}"
+      tag: rolling
     secrets:
       gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
       ssh_key: ${{ secrets.TRENTOBOT_SSH_KEY }}
+
+  obs-sync:
+    name: OBS sync
+    if: >-
+      fromJSON(vars.OBS_ENABLED)
+      && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    uses: trento-project/.github/.github/workflows/obs-sync.yaml@26f5627e586f437be10eb1b00f87426e39940ce8 # v1.5.0
+    needs:
+      - tlint
+    with:
+      obs_project: ${{ vars.OBS_PROJECT_ROLLING }}
+      obs_package: ${{ vars.OBS_PACKAGE }}
+    secrets:
+      gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
+      obs_user: ${{ secrets.OBS_USER }}
+      obs_pass: ${{ secrets.OBS_PASS }}
+      obs_ssh_key: ${{ secrets.OBS_SSH_KEY }}

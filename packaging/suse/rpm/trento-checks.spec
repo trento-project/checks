@@ -18,6 +18,7 @@
 
 %define         trento_dir %{_datadir}/trento
 %define         trento_checks_dir %{trento_dir}/checks
+
 Name:           trento-checks
 # Set by _service via OBS and GitHub action "CI"
 Version:        0
@@ -42,13 +43,18 @@ BuildArch:      noarch
 %install
 install -d -m 0755 %{buildroot}%{trento_dir}
 install -d -m 0755 %{buildroot}%{trento_checks_dir}
+
+install -p -m 0755 bin/trento-install-checks %{buildroot}%{trento_dir}
 install -p -m 0644 checks/* %{buildroot}%{trento_checks_dir}
+
+# XXX: Install VERSION file from the upstream tarball after release following the 1.2.0 one.
 echo "%{version}" > %{buildroot}%{trento_checks_dir}/VERSION
 chmod 0644 %{buildroot}%{trento_checks_dir}/VERSION
 
 %files
 %license LICENSE
 %dir %{trento_dir}
+%{trento_dir}/trento-install-checks
 %dir %{trento_checks_dir}
 %{trento_checks_dir}/*
 

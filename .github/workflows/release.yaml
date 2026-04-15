@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - release
+    paths:
+      - "VERSION"
+
+jobs:
+  release:
+    name: Git Release
+    uses: trento-project/.github/.github/workflows/git-release.yaml@26f5627e586f437be10eb1b00f87426e39940ce8 # v1.5.0
+    with:
+      triggering_branch: ${{ github.ref_name }}
+    secrets:
+      gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
+      ssh_key: ${{ secrets.TRENTOBOT_SSH_KEY }}
+      gpg_key: ${{ secrets.TRENTOBOT_GPG_KEY }}
+
+  publish-containers:
+    name: Publish GHCR Containers
+    needs:
+      - release
+    strategy:
+      matrix:
+        include:
+          - tag: ${{ needs.release.outputs.version }}
+            branch: ${{ github.ref_name }}
+          - tag: rolling
+            branch: main
+    uses: trento-project/.github/.github/workflows/publish-containers.yaml@26f5627e586f437be10eb1b00f87426e39940ce8 # v1.5.0
+    with:
+      branch: ${{ matrix.branch }}
+      image_name: checks
+      tag: ${{ matrix.tag }}
+    secrets:
+      gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
+      ssh_key: ${{ secrets.TRENTOBOT_SSH_KEY }}
+
+  obs-sync:
+    name: Update OBS package (${{ matrix.name }})
+    needs:
+      - release
+    if: fromJSON(vars.OBS_ENABLED)
+    strategy:
+      matrix:
+        include:
+          - obs_project: ${{ vars.OBS_PROJECT_STABLE }}
+            name: stable
+          - obs_project: ${{ vars.OBS_PROJECT_ROLLING }}
+            name: rolling
+    uses: trento-project/.github/.github/workflows/obs-sync.yaml@26f5627e586f437be10eb1b00f87426e39940ce8 # v1.5.0
+    with:
+      update_changelog: true
+      obs_project: ${{ matrix.obs_project }}
+      obs_package: ${{ vars.OBS_PACKAGE }}
+    secrets:
+      gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
+      obs_user: ${{ secrets.OBS_USER }}
+      obs_pass: ${{ secrets.OBS_PASS }}
+      obs_ssh_key: ${{ secrets.OBS_SSH_KEY }}
