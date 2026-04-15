@@ -47,7 +47,7 @@ install -d -m 0755 %{buildroot}%{trento_checks_dir}
 install -p -m 0755 bin/trento-install-checks %{buildroot}%{trento_dir}
 install -p -m 0644 checks/* %{buildroot}%{trento_checks_dir}
 
-# XXX: Install VERSION file from the upstream tarball after release following the 1.2.0 one.
+# TODO: Install VERSION file from the upstream tarball after release following the 1.2.0 one.
 echo "%{version}" > %{buildroot}%{trento_checks_dir}/VERSION
 chmod 0644 %{buildroot}%{trento_checks_dir}/VERSION
 
