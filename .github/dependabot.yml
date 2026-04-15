@@ -6,3 +6,5 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 14
+      exclude:
+        - "trento-project/.github*"
