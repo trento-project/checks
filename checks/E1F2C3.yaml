@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "E1F2C3"
 name: SAPHanaController roles correctly configured
 group: Pacemaker
@@ -20,7 +23,7 @@ remediation: |
   AWS:
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-1.11.7.12.3
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanacontroller  
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanacontroller
 
   GCP:
 
@@ -30,7 +33,7 @@ remediation: |
   SUSE / KVM:
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-1.11.7.12.3
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanacontroller   
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanacontroller
 
   Nutanix:
 
@@ -41,13 +44,13 @@ remediation: |
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
   architecture_type: angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: controller_roles
@@ -56,10 +59,10 @@ facts:
 
 values:
   - name: promoted_role
-    customization_disabled: true  
+    customization_disabled: true
     default: "Promoted"
   - name: unpromoted_role
-    customization_disabled: true  
+    customization_disabled: true
     default: "Unpromoted"
 
 expectations:
@@ -79,4 +82,4 @@ expectations:
           }
         }
         return false;
-    failure_message:  Roles configured for SAPHanaController Monitor Operations are not correct              
+    failure_message:  Roles configured for SAPHanaController Monitor Operations are not correct

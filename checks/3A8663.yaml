@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3A8663"
 name: saptune is configured correctly service-wise
 group: saptune
@@ -37,7 +40,7 @@ expectations:
       if result.services.tuned == ["disabled", "inactive"] || result.services.tuned.is_empty {
          tuned_serv = true  // OK
       }
-    
+
       if  result.services.saptune == ["enabled", "active"] & sapconf_serv & tuned_serv {
          "passing"
       } else if result.services.saptune.contains("inactive") || ! sapconf_serv {

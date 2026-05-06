@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "73BB51"
 name: sidadm is in sapsys
 group: OS users/groups
@@ -28,5 +31,5 @@ expectations:
         let result = group.users.contains(sidadm);
         if result == false { return false; }
       }
-      return true;      
+      return true;
     failure_message: The sidadm user is not in the sapsys group for every managed SID on all cluster nodes

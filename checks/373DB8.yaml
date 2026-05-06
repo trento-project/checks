@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "373DB8"
 name: fencing timeout
 group: Pacemaker
@@ -44,10 +47,10 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - ascs_ers
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
 facts:

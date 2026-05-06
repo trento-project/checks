@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "AF7D5C"
 name: Clustered SAP instances in Instance List
 group: Sapcontrol
@@ -28,9 +31,9 @@ expectations:
         if !facts.system_instance_list.contains(sid) { return false; }
         for cl_inst in facts.cluster_sids[sid].instances {
           if cl_inst.local && facts.system_instance_list[sid].find(|sap_inst| sap_inst.name == cl_inst.name) == () {
-            return false;  
+            return false;
           }
         }
       }
-      return true;      
+      return true;
     failure_message: Sapcontrol GetSystemInstanceList does not include all clustered SAP instances

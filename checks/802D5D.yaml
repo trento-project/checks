@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "802D5D"
 name: ASCS and ERS Filesystem resources - resource_managed
 group: ASCS / ERS Cluster - cluster resources
@@ -11,7 +14,7 @@ remediation: |
   Create the missing filesystem resources.
 
   ```
-  crm configure show rsc_fs_NW1_ASCS00 
+  crm configure show rsc_fs_NW1_ASCS00
 
   primitive rsc_fs_NW1_ASCS00 Filesystem \
   	params device="..." directory="/usr/sap/NW1/ASCS00" fstype=xfs \
@@ -19,7 +22,7 @@ remediation: |
   	op stop timeout=60s interval=0 \
   	op monitor interval=20s timeout=40s
 
-  crm configure show rsc_fs_NW1_ERS10 
+  crm configure show rsc_fs_NW1_ERS10
 
   primitive rsc_fs_NW1_ERS10 Filesystem \
   	params device="..." directory="/usr/sap/NW1/ERS10" fstype=xfs \
@@ -84,7 +87,7 @@ facts:
 values:
   - name: resource_type
     default: Filesystem
-expectations:  
+expectations:
   ## check will always return true if no fs resource is found due to the way the gatherer sets `filesystem_based`
   - name: ascs_resource_in_group
     expect: |
@@ -117,7 +120,7 @@ expectations:
           .find(|nv| nv.name == check_key && nv.value == check_value);
         if result != () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ASCS ${values.resource_type} resource found outside of resource group
   ## check will always return true if no fs resource is found due to the way the gatherer sets `filesystem_based`
   - name: ers_resource_in_group
@@ -151,5 +154,5 @@ expectations:
           .find(|nv| nv.name == check_key && nv.value == check_value);
         if result != () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ERS ${values.resource_type} resource found outside of resource group

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "D78671"
 name: Check Corosync two_node value during runtime
 group: Corosync
@@ -49,10 +52,10 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - ascs_ers
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
 facts:
@@ -66,7 +69,7 @@ facts:
 
   - name: cib_num_nodes
     gatherer: cibadmin@v1
-    argument: cib.configuration.nodes.node      
+    argument: cib.configuration.nodes.node
 
 values:
   - name: expected_runtime_two_node
@@ -79,14 +82,14 @@ expectations:
   - name: num_nodes_equal_in_corosync_and_cib
     expect: facts.corosync_num_nodes.len == facts.cib_num_nodes.len
     failure_message: Number of nodes mentioned in corosync.conf and cib.xml are not equal
-  
+
   - name: expectations_two_node
     expect: |
-     if facts.corosync_num_nodes.len == 2 { 
-       facts.runtime_two_node == values.expected_runtime_two_node 
-     } else if facts.corosync_num_nodes.len >= 3 { 
-       facts.runtime_two_node == values.expected_runtime_threeormore 
+     if facts.corosync_num_nodes.len == 2 {
+       facts.runtime_two_node == values.expected_runtime_two_node
+     } else if facts.corosync_num_nodes.len >= 3 {
+       facts.runtime_two_node == values.expected_runtime_threeormore
      } else {
        false
      }
-    failure_message: Corosync 'two_node' value was expected to be 1 when there are 2 nodes and 0 when there 3 or more nodes but configured value is '${facts.runtime_two_node}' when there are '${facts.corosync_num_nodes.len}' number of nodes    
+    failure_message: Corosync 'two_node' value was expected to be 1 when there are 2 nodes and 0 when there 3 or more nodes but configured value is '${facts.runtime_two_node}' when there are '${facts.corosync_num_nodes.len}' number of nodes

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "31BDCB"
 name: supported SAPHanaSR version
 group: OS and package versions
@@ -18,7 +21,7 @@ metadata:
   target_type: cluster
   cluster_type: hana_scale_up
   architecture_type: classic
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
 facts:

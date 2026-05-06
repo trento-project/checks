@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "AE0C68"
 name: default_primary_timeout
 group: Pacemaker
@@ -5,7 +8,7 @@ description: |
   DUPLICATE_PRIMARY_TIMEOUT has correct value
 remediation: |
   ## Abstract
-  DUPLICATE_PRIMARY_TIMEOUT should have recommended value in cluster configuration. 
+  DUPLICATE_PRIMARY_TIMEOUT should have recommended value in cluster configuration.
 
   ## Remediation
   Edit the crm configuration and change the value for this parameter to 7200.
@@ -34,15 +37,15 @@ remediation: |
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
-  architecture_type: 
+  architecture_type:
     - angi
     - classic
   hana_scenario:
     - performance_optimized
-    - cost_optimized    
+    - cost_optimized
 
 facts:
   - name: resources
@@ -51,7 +54,7 @@ facts:
 
 values:
   - name: expected_default_primary_timeout
-    default: 7200      
+    default: 7200
 
 expectations:
   - name: expectations_default_primary
@@ -81,4 +84,4 @@ expectations:
           }
         }
         return false;
-    failure_message: The value of DUPLICATE_PRIMARY_TIMEOUT configured is non-standard/non-default. 
+    failure_message: The value of DUPLICATE_PRIMARY_TIMEOUT configured is non-standard/non-default.

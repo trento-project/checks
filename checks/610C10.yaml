@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "610C10"
 name: azure-lb resource is configured
 group: Pacemaker
@@ -5,24 +8,24 @@ description: |
   azure-lb resource is configured
 remediation: |
   ## Abstract
-  azure-lb resource is needed for directing network traffic to correct virtual machine where the virtual IP is configured. 
+  azure-lb resource is needed for directing network traffic to correct virtual machine where the virtual IP is configured.
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
-  
+
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
-    
+
 customization_disabled: true
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type:   
+  cluster_type:
     - hana_scale_up
     - hana_scale_up
-  architecture_type: 
-    - classic 
+  architecture_type:
+    - classic
     - angi
 
   provider: azure
@@ -59,4 +62,4 @@ expectations:
             }
             }
           return false;
-    failure_message: azure-lb resource is not correctly configured            
+    failure_message: azure-lb resource is not correctly configured

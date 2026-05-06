@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "0AA227"
 name: Cluster priority-fencing-delay
 group: Pacemaker
@@ -48,7 +51,7 @@ facts:
 values:
   - name: priority_fencing_delay
     default: 30
-expectations:  
+expectations:
   - name: priority_fencing_delay
     expect: |
       if facts.cib_configuration.nodes.node.len != 2 { return true; } // only run on 2 node cluster

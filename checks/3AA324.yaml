@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3AA324"
 name: sapping/sappong enabled - simple_mount
 group: OS services
@@ -39,7 +42,7 @@ expectations:
       if (facts.cluster_sids.values().some(|sid| sid.instances.some(|instance| !instance.filesystem_based))) {
           return facts.service_sapping["unit_file_state"] == "enabled";
       }
-      return true;      
+      return true;
     failure_message: The sapping service is not enabled at boot time
   - name: sappong_enabled_on_simple_mount
     expect: |
@@ -47,5 +50,5 @@ expectations:
       if (facts.cluster_sids.values().some(|sid| sid.instances.some(|instance| !instance.filesystem_based))) {
           return facts.service_sappong["unit_file_state"] == "enabled";
       }
-      return true;      
+      return true;
     failure_message: The sappong service is not enabled at boot time

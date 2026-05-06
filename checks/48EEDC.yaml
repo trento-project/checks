@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "48EEDC"
 name: supported sap_suse_cluster_connector version
 group: OS and package versions

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "95B405"
 name: Instance Status
 group: Sapcontrol
@@ -26,7 +29,7 @@ expectations:
   - name: instance_status_green
     expect: |
       for sid in facts.cluster_sids.keys() {
-        if !facts.system_instance_list.contains(sid) || 
+        if !facts.system_instance_list.contains(sid) ||
           !facts.system_instance_list[sid].all(|inst| inst.output.all(|o| o.dispstatus == values.expected_instance_status)) {
             return false;
         }

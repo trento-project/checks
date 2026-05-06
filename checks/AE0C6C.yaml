@@ -1,11 +1,14 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "AE0C6C"
 name: SAPHana resource has meta attribute priority correctly configured
 group: Pacemaker
 description: |
-  SAPHana resource has meta attribute priority correctly configured 
+  SAPHana resource has meta attribute priority correctly configured
 remediation: |
   ## Abstract
-  This Trento check verifies if SAPHana resource SAPHana resource has meta attribute priority correctly configured and not missing for 2 node cluster. 
+  This Trento check verifies if SAPHana resource SAPHana resource has meta attribute priority correctly configured and not missing for 2 node cluster.
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
@@ -13,30 +16,30 @@ remediation: |
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_6_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphana.html
-  
+
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-    
-  SUSE / KVM:       
+
+  SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphana
-                  
-  Nutanix:            
+
+  Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphana
 
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
-  architecture_type: 
+  architecture_type:
     - classic
     - angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: resources
@@ -49,7 +52,7 @@ facts:
 
   - name: cib_num_nodes
     gatherer: cibadmin@v1
-    argument: cib.configuration.nodes.node    
+    argument: cib.configuration.nodes.node
 
 values:
   - name: meta_priority
@@ -78,20 +81,20 @@ expectations:
             return false;
           }
 
-          if facts.corosync_num_nodes.len == 2 { 
+          if facts.corosync_num_nodes.len == 2 {
           for cln in masters_and_clones {
             let msl = cln.primitive;
             for prim in msl {
-              if prim.type == "SAPHana" || prim.type == "SAPHanaController" {              
+              if prim.type == "SAPHana" || prim.type == "SAPHanaController" {
                 let meta_attr = prim.meta_attributes;
                 for meta in meta_attr {
-                  if meta.nvpair.find(|item| item.name == "priority").value == values.meta_priority { return true; }              
+                  if meta.nvpair.find(|item| item.name == "priority").value == values.meta_priority { return true; }
                 }
-            }  
+            }
             }
           }
           return false;
           } else {
             false
-          }             
+          }
     failure_message: SAPHana/SAPHanaController resource has meta attribute priority not correctly configured

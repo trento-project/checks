@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "F98557"
 name: ASCS instance failure-timeout and migration-threshold - ENSA1
 group: ASCS / ERS Cluster - cluster resources
@@ -54,7 +57,7 @@ values:
     default: 1
   - name: resource_type
     default: ASCS
-expectations:  
+expectations:
   - name: resource_failure_timeout
     expect: |
       let sids = facts.cluster_sids.keys();
@@ -70,7 +73,7 @@ expectations:
           .find(|nv| nv.name == "failure-timeout" && nv.value == values.resource_failure_timeout);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ${values.resource_type} resource does not have correct failure-timeout of ${values.resource_failure_timeout}
   - name: resource_migration_threshold
     expect: |
@@ -87,5 +90,5 @@ expectations:
           .find(|nv| nv.name == "migration-threshold" && nv.value == values.resource_migration_threshold);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ${values.resource_type} resource does not have correct migration-threshold of ${values.resource_migration_threshold}

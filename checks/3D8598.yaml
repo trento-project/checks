@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3D8598"
 name: Colocation constraint is correctly configured
 group: Pacemaker
@@ -14,30 +17,30 @@ remediation: |
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-constraints.html
-  
+
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-    
-  SUSE / KVM: 
+
+  SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
-                  
-  Nutanix:        
+
+  Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
 
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
-  architecture_type: 
+  architecture_type:
     - classic
     - angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: constraints
@@ -45,7 +48,7 @@ facts:
     argument: cib.configuration.constraints
   - name: resources
     gatherer: cibadmin@v1
-    argument: cib.configuration.resources    
+    argument: cib.configuration.resources
 
 values:
   - name: col_rsc_role
@@ -96,5 +99,5 @@ expectations:
             }
           }
         }
-        facts.constraints.rsc_colocation.find(|col| (col["rsc"] == vip_prim || col["rsc"] == vip_grp ) && col["rsc-role"] == values.col_rsc_role && col["score"] == values.col_rsc_score && col["with-rsc"] == saphanasr_id && col["with-rsc-role"] == values.col_with_rsc_role) != ()      
+        facts.constraints.rsc_colocation.find(|col| (col["rsc"] == vip_prim || col["rsc"] == vip_grp ) && col["rsc-role"] == values.col_rsc_role && col["score"] == values.col_rsc_score && col["with-rsc"] == saphanasr_id && col["with-rsc-role"] == values.col_with_rsc_role) != ()
     failure_message: Colocation constraint is not correctly configured

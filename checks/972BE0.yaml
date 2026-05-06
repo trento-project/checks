@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "972BE0"
 name: ASCS and ERS instance autostart disabled
 group: OS services
@@ -39,5 +42,5 @@ expectations:
               }
           }
       }
-      return true;      
+      return true;
     failure_message: ASCS or ERS systemd services are not disabled at boot time for a clustered SAP instance

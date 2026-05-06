@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3A361F"
 name: Systemd system state is running
 group: saptune
@@ -34,7 +37,7 @@ expectations:
       let expected_systemd_state = ["running"];
       let warning_systemd_state = ["initializing", "starting", "maintenance", "stopping"];
 
-      if facts.saptune_status.result != () && 
+      if facts.saptune_status.result != () &&
          facts.saptune_status.result.systemd_system_state in expected_systemd_state {
         "passing"
       } else if facts.saptune_status.result != () &&

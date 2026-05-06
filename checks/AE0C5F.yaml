@@ -1,8 +1,11 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "AE0C5F"
 name: SAPHana resource is configured
 group: Pacemaker
 description: |
-  SAPHana resource is configured and with correct provider i.e. SUSE 
+  SAPHana resource is configured and with correct provider i.e. SUSE
 remediation: |
   ## Abstract
   This Trento check verified if SAPHana resource is configured and not missing. It also checks whether the RA provider is SUSE and not say for example heartbeat or anything else.
@@ -15,32 +18,32 @@ remediation: |
   Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_6_saphanasr
-    
+
   AWS:
 
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphana.html
-  
+
   GCP:
 
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-    
-  SUSE / KVM: 
-            
+
+  SUSE / KVM:
+
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphana
-                  
-  Nutanix:        
-                  
+
+  Nutanix:
+
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphana
 
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
   architecture_type: classic
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: resources
@@ -62,8 +65,8 @@ expectations:
           for cln in hana_ct {
             let msl = cln.primitive;
             for prim in msl {
-              if prim.provider == values.resource_provider && prim.type == values.resource_type {return true;}                  
+              if prim.provider == values.resource_provider && prim.type == values.resource_type {return true;}
             }
           }
-          return false;          
+          return false;
     failure_message: SAPHana resource is not correctly configured

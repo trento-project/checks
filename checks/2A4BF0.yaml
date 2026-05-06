@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "2A4BF0"
 name: sustkover global.ini file configuration is properly done
 group: Ini Files
@@ -6,20 +9,20 @@ description: |
 remediation: |
   ## Abstract
   sustkover python hook allows manual takeover of the HANA primary if the SAP HANA multi-state  resource  (managed  by  SAPHanaController) is set into maintenance or the Linux cluster is stopped.  Otherwise the manual takeover is blocked.
-                  
+
   ## Remediation
   Edit the global.ini configuration and make changes as per the best practice guide
 
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-implementing-python-hook-saphanasr-in-sles.html
-        
-  GCP:  
+
+  GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
-    
+
   SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
 

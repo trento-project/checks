@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "979BF8"
 name: Sapservices start with systemd or SysVinit
 group: Sapservices

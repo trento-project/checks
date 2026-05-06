@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "B3DA7E"
 name: Cluster resource-stickiness and migration-threshold
 group: Pacemaker
@@ -49,7 +52,7 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - ascs_ers
   hana_scenario: performance_optimized

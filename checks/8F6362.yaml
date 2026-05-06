@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "8F6362"
 name: Sudoers entry for crm_attribute command is correctly configured
 group: Sudoers
@@ -23,7 +26,7 @@ remediation: |
   SUSE / KVM /Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-allowing-sidadm-to-access-the-cluster
 
-customization_disabled: true    
+customization_disabled: true
 severity: critical
 metadata:
   target_type: cluster
@@ -80,4 +83,4 @@ expectations:
           }
       }
       return false;
-    failure_message: sudoers entry for command crm_attribute is not correctly configured          
+    failure_message: sudoers entry for command crm_attribute is not correctly configured

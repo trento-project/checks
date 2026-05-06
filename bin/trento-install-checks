@@ -1,5 +1,8 @@
 #!/bin/sh
 #
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 #  trento-install-checks
 #
 #  This script installs the checks into the directory Wanda expects them.  It

@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: SUSE LLC
 # SPDX-License-Identifier: GPL-3.0-or-later
 #!BuildTag: trento/trento-checks:latest
 #!BuildTag: trento/trento-checks:%%VERSION%%

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "801E6A"
 name: supported sapstartsrv-resource-agents version
 group: OS and package versions

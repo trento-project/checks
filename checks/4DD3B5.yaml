@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "4DD3B5"
 name: ASCS and ERS location - ENSA1
 group: ASCS / ERS Cluster - cluster resources
@@ -20,22 +23,22 @@ remediation: |
   ## References
 
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
@@ -51,7 +54,7 @@ facts:
 values:
   - name: location_score
     default: 2000
-expectations:  
+expectations:
   - name: location_ascs_ers_exists
     expect: |
       let sids = facts.cluster_sids.keys();
@@ -69,5 +72,5 @@ expectations:
             l.rule.score == values.location_score);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one Location constraint for this ENSA1 ASCS/ERS setup is not configured correctly with the score ${values.location_score}

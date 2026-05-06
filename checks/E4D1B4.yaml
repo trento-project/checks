@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "E4D1B4"
 name: SAPHanaTopology monitor interval has correct value
 group: Pacemaker
@@ -5,7 +8,7 @@ description: |
   SAPHanaTopology monitor interval has correct value
 remediation: |
   ## Abstract
-  SAPHanaTopology monitor interval should have recommended value in cluster configuration. 
+  SAPHanaTopology monitor interval should have recommended value in cluster configuration.
 
   ## Remediation
 
@@ -30,23 +33,23 @@ remediation: |
   SUSE / KVM:
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-1.11.7.10.4
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanatopology    
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanatopology
 
   Nutanix:
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-1.11.7.10.4
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanatopology    
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanatopology
 
 severity: warning
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
   architecture_type: angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: topology_monitor
@@ -55,7 +58,7 @@ facts:
 
 values:
   - name: topology_interval
-    default: 50      
+    default: 50
 
 expectations:
   - name: expectations_topology_monitor_interval
@@ -70,5 +73,5 @@ expectations:
               }
             }
           }
-          return false;          
-    failure_message: Interval for "Monitor" Operation for SAPHanaTopology resource is not set correctly              
+          return false;
+    failure_message: Interval for "Monitor" Operation for SAPHanaTopology resource is not set correctly
