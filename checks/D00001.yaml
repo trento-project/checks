@@ -1,0 +1,46 @@
+id: "D00001"
+name: "Test: exclude majority maker via host_data predicate"
+group: Test
+description: |
+  End-to-end smoke check for the host-level `exclude:` predicate feature. 
+  It uses the always-succeeding
+  `status@v1` gatherer so it can run in any environment, and asserts that
+  no contributing host is the HANA scale-out majority maker.
+
+  The `exclude:` predicate filters out hosts that web has marked as the
+  majority maker via `host_data.is_majority_maker`. When the exclusion
+  plumbing works end-to-end the majority maker is dropped before fact
+  gathering and the expectation only ever evaluates against the two
+  remaining hosts (both of which pass).
+
+  When the plumbing is broken (host_data missing, predicate not
+  evaluated, or filter not applied) the third host shows up in the
+  results, its agent_id matches the hard-coded majority-maker agent_id
+  from `container_fixtures/hosts/helm/values.yaml`, and the check fails
+  on that host - giving a visible 3-host failure instead of the expected
+  2-host pass plus 1 excluded entry.
+
+  This check is tightly coupled to the `hana-scale-out` fixture and is
+  not intended for catalog rollout.
+exclude: |
+  host["is_majority_maker"] == true
+remediation: |
+  This is a test check. There is nothing to remediate. If this check
+  fails, the host_data exclusion path is broken end-to-end (web did not
+  attach is_majority_maker, contracts dropped it, or wanda did not
+  evaluate the predicate). Investigate wanda logs for the
+  `evaluate_exclusions` step.
+metadata:
+  target_type: cluster
+facts:
+  - name: status
+    gatherer: status@v1
+expectations:
+  - name: not_majority_maker
+    expect: facts.status.agent_id != "c3e072f3-9c1e-65e3-a975-ff3d46db2736"
+    failure_message: |
+      Host with agent_id ${facts.status.agent_id} reported in the result
+      set, but it is the HANA majority maker and should have been
+      excluded by the host_data.is_majority_maker predicate. Either web
+      did not attach host_data, wanda did not evaluate exclude, or the
+      filtered (host, check) pair was not dropped before dispatch.
