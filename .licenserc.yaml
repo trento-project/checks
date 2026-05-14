@@ -12,18 +12,6 @@ header:
       SPDX-License-Identifier: GPL-3.0-or-later
   paths-ignore:
     - "**/*.adoc"
-    # - "**/*.example"
-    # - "**/*.json"
     - "**/*.md"
-    # - "**/*.pem"
-    # - "**/*.service"
-    # - "**/*.svg"
-    # - "**/*.txt"
-    # - ".github/CODEOWNERS"
     - ".github/dependabot.yml"
-    # - ".tool-versions"
-    # - "CHANGELOG.md"
     - "LICENSE"
-    # - "VERSION"
-    # - "go.sum"
-    # - "bin/**"
