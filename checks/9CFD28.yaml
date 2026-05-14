@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "9CFD28"
 name: Virtual IP resource is configured
 group: Pacemaker
@@ -9,19 +12,19 @@ remediation: |
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
-  
+
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-move-the-ip-resource.html
       ## AWS have different resource agent for virtual IP and different values for interval and timeout for monitor operation for virtual IP resource configured
-          
-  GCP:    
+
+  GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
       ## GCP have same resource agent IPaddr2 but different value for interval and timeout for monitor operations.
-                  
+
   SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
 
@@ -76,4 +79,4 @@ expectations:
             }
             }
           return false;
-    failure_message: virtual IP resource is not correctly configured                  
+    failure_message: virtual IP resource is not correctly configured

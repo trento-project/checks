@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "0D636F"
 name: ASCS Enqueue server restart is disabled - ENSA2
 group: SAP profiles
@@ -49,12 +52,12 @@ expectations:
         let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ASCS${inst.instance_number}`);
         if inst == () { return false; }
         let result = facts.sap_profiles[sid].profiles.find(|p| {
-          p.content.contains("INSTANCE_NAME") && 
+          p.content.contains("INSTANCE_NAME") &&
           p.content["INSTANCE_NAME"] == inst.name &&
           !p.content.contains("Restart_Program_01") && // check restart is disabled
           p.content.contains("Start_Program_01")       // check start is enabled
         });
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one enqueue server restart is enabled and has to be disabled.

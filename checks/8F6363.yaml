@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "8F6363"
 name: Sudoers entry for SAPHanaSR-hookHelper command is correctly configured for susTkOver Hook
 group: Sudoers
@@ -74,5 +77,5 @@ expectations:
           else if words[1] == "--sid\\="+SID && (words[2] == "*" || words[2] == "--case\\="+values.case1) { return true; }
         }
       }
-      return false;      
+      return false;
     failure_message: sudoers entry for command SAPHanaSR-hookHelper is not correctly configured for susTakeOver Hook

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "E215A6"
 name: SAPHanaFilesystem resource configured
 group: Pacemaker
@@ -34,13 +37,13 @@ remediation: |
 severity: warning
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
   architecture_type: angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: resource_filesystem
@@ -50,7 +53,7 @@ facts:
 values:
   - name: resource_type
     customization_disabled: true
-    default: "SAPHanaFilesystem"      
+    default: "SAPHanaFilesystem"
 
 expectations:
   - name: expectations_resource_filesystem
@@ -59,8 +62,8 @@ expectations:
             for cln in hana_ct {
               let fil = cln.primitive;
               for prim in fil {
-                if prim.type == values.resource_type {return true;}       
+                if prim.type == values.resource_type {return true;}
               }
             }
             return false;
-    failure_message: SAPHanaFilesystem resource is not configured            
+    failure_message: SAPHanaFilesystem resource is not configured

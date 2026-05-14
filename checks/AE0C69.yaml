@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "AE0C69"
 name: prefer_site_takeover
 group: Pacemaker
@@ -5,7 +8,7 @@ description: |
   PREFER_SITE_TAKEOVER has correct value
 remediation: |
   ## Abstract
-  PREFER_SITE_TAKEOVER should have recommended value in cluster configuration. 
+  PREFER_SITE_TAKEOVER should have recommended value in cluster configuration.
 
   ## Remediation
   Edit the crm configuration and change the value for this parameter to as per best practices recommendation.
@@ -34,15 +37,15 @@ remediation: |
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
-  architecture_type: 
+  architecture_type:
     - angi
     - classic
   hana_scenario:
     - performance_optimized
-    - cost_optimized    
+    - cost_optimized
 
 facts:
   - name: resources
@@ -56,7 +59,7 @@ values:
       - value: true
         when: env.hana_scenario == "performance_optimized"
       - value: false
-        when: env.hana_scenario == "cost_optimized"    
+        when: env.hana_scenario == "cost_optimized"
 
 expectations:
   - name: expectations_prefer_site_takeover
@@ -86,4 +89,4 @@ expectations:
           }
         }
         return false;
-    failure_message: The value of PREFER_SITE_TAKEOVER configured is non-standard/non-default. 
+    failure_message: The value of PREFER_SITE_TAKEOVER configured is non-standard/non-default.

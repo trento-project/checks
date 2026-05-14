@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 ARG OS_VER=15.7
 FROM registry.suse.com/bci/bci-base:${OS_VER}
 ARG OS_VER

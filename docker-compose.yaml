@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 version: "3.7"
 
 services:
@@ -42,4 +45,3 @@ services:
 
 volumes:
   pg_data:
-

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "7E7F18"
 name: IPaddr2 resources
 group: ASCS / ERS Cluster - cluster resources
@@ -12,13 +15,13 @@ remediation: |
 
   ```
   crm configure show rsc_ip_NW1_ASCS00
-  
+
   primitive rsc_ip_NW1_ASCS00 IPaddr2 \
     params ip=X.X.X.X cidr_netmask=24 nic=ethX \
     op monitor interval=10s timeout=20s
 
   crm configure show rsc_ip_NW1_ERS10
-  
+
   primitive rsc_ip_NW1_ERS10 IPaddr2 \
     params ip=X.X.X.X cidr_netmask=24 nic=ethX \
     op monitor interval=10s timeout=20s
@@ -78,7 +81,7 @@ facts:
 values:
   - name: resource_type
     default: IPaddr2
-expectations:  
+expectations:
   - name: ascs_resource_in_group
     expect: |
       let sids = facts.cluster_sids.keys();

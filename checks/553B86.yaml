@@ -1,11 +1,14 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "553B86"
 name: SAPHanaTopology resource has start timeout correctly configured
 group: Pacemaker
 description: |
-  SAPHanaTopology resource has start timeout correctly configured 
+  SAPHanaTopology resource has start timeout correctly configured
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHanaTopoloy resource has start timeout correctly configured and the configuration is not missing. 
+  This Trento check verified if SAPHanaTopoloy resource has start timeout correctly configured and the configuration is not missing.
 
   ## Remediation
 
@@ -15,32 +18,32 @@ remediation: |
   Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_5_saphanasr
-    
+
   AWS:
 
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphanatopology.html
-  
+
   GCP:
 
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-    
-  SUSE / KVM: 
-            
+
+  SUSE / KVM:
+
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphanatopology
-                  
-  Nutanix:        
-                  
+
+  Nutanix:
+
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphanatopology
 
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
   architecture_type: classic
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: resources
@@ -64,7 +67,7 @@ expectations:
                 if op == () {return false};
                 if op.timeout == values.start_timeout {return true;}
               }
-             }                  
+             }
             }
-          return false;          
+          return false;
     failure_message: SAPHanaTopology resource has start timeout  not correctly configured

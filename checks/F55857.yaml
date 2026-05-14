@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "F55857"
 name: ERS Enqueue replication server restart is disabled - ENSA2
 group: SAP profiles
@@ -49,8 +52,8 @@ expectations:
         let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ERS${inst.instance_number}`);
         if inst == () { return false; }
         let result = facts.sap_profiles[sid].profiles.find(|p| {
-          p.content.contains("INSTANCE_NAME") && 
-          p.content["INSTANCE_NAME"] == inst.name && 
+          p.content.contains("INSTANCE_NAME") &&
+          p.content["INSTANCE_NAME"] == inst.name &&
           !p.content.contains("Restart_Program_00") && // check restart is disabled
           p.content.contains("Start_Program_00")       // check start is enabled
         });

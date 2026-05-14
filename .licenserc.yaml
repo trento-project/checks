@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+header:
+  comment: on-failure
+  license:
+    spdx-id: GPL-3.0-or-later
+    copyright-owner: SUSE LLC
+    software-name: trento-checks
+    content: |
+      SPDX-FileCopyrightText: SUSE LLC
+      SPDX-License-Identifier: GPL-3.0-or-later
+  paths-ignore:
+    - "**/*.adoc"
+    - "**/*.md"
+    - ".github/dependabot.yml"
+    - "LICENSE"

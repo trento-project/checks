@@ -1,24 +1,27 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "2A4BEF"
 name: suschksrv global.ini file configuration is properly done
 group: Ini Files
 description: |
   suschksrv global.ini file configuration is properly done
 remediation: |
-  ## Abstract  
+  ## Abstract
   Purpose of suschksrv python hook is to detect failing HANA indexserver processes and trigger a fast  takeover to  the  secondary site. With regular configuration of an HANA database, the resource agent (RA) for HANA in a Linux cluster does not trigger a takeover to the secondary site when:
    - A software failure causes one or more HANA processes to be restarted in place by the  HANA  daemon (hdbdaemon).
    - A  hardware  error  (e.g.  SIGBUS  from  an uncorrectable memory error) causes the indexserver to restart locally.
-  
+
   ## Remediation
   Edit the global.ini configuration and make changes as per the best practice guide
-    
+
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-implementing-python-hook-saphanasr-in-sles.html
-      
+
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
 
@@ -71,4 +74,4 @@ expectations:
         if suschksrv.execution_order == values.execution_order && (suschksrv.path == values.path1 || suschksrv.path == values.path2) && suschksrv.provider == values.provider {return true;}
       }
       return false;
-    failure_message: suschksrv section in global.ini is not correctly configured  
+    failure_message: suschksrv section in global.ini is not correctly configured

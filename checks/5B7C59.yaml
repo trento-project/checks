@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "5B7C59"
 name: sidadm and root are in sapinst
 group: OS users/groups

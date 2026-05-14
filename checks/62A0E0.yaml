@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "62A0E0"
 name: ERS instance MINIMAL_PROBE - simple_mount
 group: ASCS / ERS Cluster - cluster resources
@@ -54,12 +57,12 @@ facts:
 values:
   - name: resource_type
     default: ERS
-expectations:  
+expectations:
   - name: resource_minimal_probe
     expect: |
       let sids = facts.cluster_sids.keys();
       for sid in sids {
-        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);        
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
         if inst == () { return false; }
         if inst.filesystem_based { continue; } // skip instance if resource_managed
         let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group);
@@ -70,5 +73,5 @@ expectations:
           .find(|nv| nv.name == "MINIMAL_PROBE" && nv.value == true);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ${values.resource_type} resource does not have MINIMAL_PROBE set to true in simple mount setup

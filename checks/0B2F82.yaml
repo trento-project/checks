@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "0B2F82"
 name: SAPHanaSR-angi version identical on all nodes
 group: OS and package versions
@@ -14,7 +17,7 @@ remediation: |
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
   architecture_type: angi

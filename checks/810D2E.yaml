@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "810D2E"
 name: ASCS and ERS instance profiles load HA script connector
 group: SAP profiles
@@ -49,16 +52,16 @@ expectations:
         let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ASCS${inst.instance_number}`);
         if inst == () { return false; }
         let result = facts.sap_profiles[sid].profiles.find(|p| {
-          p.content.contains("INSTANCE_NAME") && 
+          p.content.contains("INSTANCE_NAME") &&
           p.content["INSTANCE_NAME"] == inst.name &&
           p.content.contains("service/halib") &&
           p.content["service/halib"] == "$(DIR_CT_RUN)/saphascriptco.so" &&
           p.content.contains("service/halib_cluster_connector") &&
-          p.content["service/halib_cluster_connector"] == "/usr/bin/sap_suse_cluster_connector";            
+          p.content["service/halib_cluster_connector"] == "/usr/bin/sap_suse_cluster_connector";
         });
-        if result == () { return false; }    
+        if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least for one SID the HA script connectors are not loaded correctly inside the ASCS instance profile
   - name: ers_halib_enabled
     expect: |
@@ -67,14 +70,14 @@ expectations:
         let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ERS${inst.instance_number}`);
         if inst == () { return false; }
         let result = facts.sap_profiles[sid].profiles.find(|p| {
-          p.content.contains("INSTANCE_NAME") && 
+          p.content.contains("INSTANCE_NAME") &&
           p.content["INSTANCE_NAME"] == inst.name &&
           p.content.contains("service/halib") &&
           p.content["service/halib"] == "$(DIR_CT_RUN)/saphascriptco.so" &&
           p.content.contains("service/halib_cluster_connector") &&
-          p.content["service/halib_cluster_connector"] == "/usr/bin/sap_suse_cluster_connector";            
+          p.content["service/halib_cluster_connector"] == "/usr/bin/sap_suse_cluster_connector";
         });
-        if result == () { return false; }    
+        if result == () { return false; }
       }
       return true;
     failure_message: At least for one SID the HA script connectors are not loaded correctly inside the ERS instance profile

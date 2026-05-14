@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "481552"
 name: hana_call_timeout
 group: Pacemaker
@@ -34,15 +37,15 @@ remediation: |
 severity: warning
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
-  architecture_type: 
+  architecture_type:
     - angi
     - classic
   hana_scenario:
     - performance_optimized
-    - cost_optimized    
+    - cost_optimized
 
 facts:
   - name: resources
@@ -51,7 +54,7 @@ facts:
 
 values:
   - name: expected_hana_call_timeout
-    default: 60      
+    default: 60
 
 expectations:
   - name: expectations_hana_call

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "F306C2"
 name: ERS instance priority
 group: ASCS / ERS Cluster - cluster resources
@@ -67,7 +70,7 @@ values:
     default: ERS
   - name: resource_priority
     default: 1000
-expectations:  
+expectations:
   - name: resource_priority
     expect: |
       if facts.cib_configuration.nodes.node.len != 2 { return true; } // only run on 2 node cluster
@@ -79,10 +82,10 @@ expectations:
         if group == () { return false; }
         let prim = group.primitive.find(|p| p.type == "SAPInstance" && p.contains("meta_attributes"));
         if prim == () { return false; }
-        
+
         let result = prim.meta_attributes[0].nvpair
           .find(|nv| nv.name == "priority" && nv.value == values.resource_priority);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ${values.resource_type} resource does not have correct priority ${values.resource_priority_ascs}

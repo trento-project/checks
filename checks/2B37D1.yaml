@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "2B37D1"
 name: Polkit rules for SAP instance systemd services
 group: Sapservices

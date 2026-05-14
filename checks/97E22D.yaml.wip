@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "97E22D"
 name: ASCS and ERS virtual hostnames are reachable
 group: OS services
@@ -21,7 +24,7 @@ expectations:
     expect: |
       let sids = facts.cluster_sids.keys();
       for sid in sids {
-          for inst in facts.cluster_sids[sid].instances { 
+          for inst in facts.cluster_sids[sid].instances {
               if ! facts.sapinstance_hostname_resolver[sid]
                       .find(|i| i.instance_name == inst.name)
                       .reachability {

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "0B0F87"
 name: SAPHanaSR version identical on all nodes
 group: OS and package versions
@@ -35,7 +38,7 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: hana_scale_up
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
   architecture_type: classic

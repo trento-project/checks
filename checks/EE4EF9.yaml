@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "EE4EF9"
 name: ASCS Message server restart is enabled
 group: SAP profiles
@@ -45,12 +48,12 @@ expectations:
         let inst = facts.cluster_sids[sid].instances.find(|inst| inst.name == `ASCS${inst.instance_number}`);
         if inst == () { return false; }
         let result = facts.sap_profiles[sid].profiles.find(|p| {
-          p.content.contains("INSTANCE_NAME") && 
-          p.content["INSTANCE_NAME"] == inst.name && 
+          p.content.contains("INSTANCE_NAME") &&
+          p.content["INSTANCE_NAME"] == inst.name &&
           !p.content.contains("Start_Program_00") && // check start is disabled
           p.content.contains("Restart_Program_00")   // check restart is enabled
         });
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one the message server restart is disabled and has to be enabled.

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "CCEF3B"
 name: ASCS group order - resource_managed
 group: ASCS / ERS Cluster - cluster resources
@@ -69,7 +72,7 @@ values:
           - anything
           - IPaddr2
           - SAPInstance
-expectations:  
+expectations:
   - name: check_group_order
     expect: |
       for sid in facts.cluster_sids.keys() {
@@ -81,5 +84,5 @@ expectations:
           let found_types = group.primitive.map(|p| p.type);
           if found_types != values.resource_order { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ${values.resource_type} group has wrong resource order, correct order would be ${values.resource_order}

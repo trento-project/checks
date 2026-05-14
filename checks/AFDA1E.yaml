@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "AFDA1E"
 name: ASCS instance failure-timeout and migration-threshold - ENSA2
 group: ASCS / ERS Cluster - cluster resources
@@ -43,7 +46,7 @@ facts:
 values:
   - name: resource_type
     default: ASCS
-expectations:  
+expectations:
   - name: resource_failure_timeout
     expect: |
       let sids = facts.cluster_sids.keys();

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "9CFD29"
 name: virtual IP resource has monitor interval properly configured
 group: Pacemaker
@@ -80,4 +83,4 @@ expectations:
             }
           }
           return false;
-    failure_message: virtual IP resource has monitor interval not correctly configured                  
+    failure_message: virtual IP resource has monitor interval not correctly configured

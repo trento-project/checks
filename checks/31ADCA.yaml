@@ -1,5 +1,8 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "31ADCA"
-name: supported SAPHanaSR-angi version 
+name: supported SAPHanaSR-angi version
 group: OS and package versions
 description: |
   SAPHanaSR-angi version is supported
@@ -12,7 +15,7 @@ remediation: |
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
   architecture_type: angi

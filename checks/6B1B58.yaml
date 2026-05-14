@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "6B1B58"
 name: ASCS group resource-stickiness
 group: ASCS / ERS Cluster - cluster resources
@@ -48,12 +51,12 @@ values:
     default: 3000
   - name: resource_type
     default: ASCS
-expectations:  
+expectations:
   - name: group_resource_stickiness
     expect: |
       let sids = facts.cluster_sids.keys();
       for sid in sids {
-        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);        
+        let inst = facts.cluster_sids[sid].instances.find(|i| i.name == `${values.resource_type}${i.instance_number}`);
         if inst == () { return false; }
         let group = facts.cib_configuration.resources.group.find(|g| g.id == inst.resource_group && g.contains("meta_attributes"));
         if group == () { return false; }
@@ -61,5 +64,5 @@ expectations:
           .find(|nv| nv.name == "resource-stickiness" && nv.value == values.resource_stickiness_group);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ${values.resource_type} group does not have correct resource-stickiness of ${values.resource_stickiness_group}

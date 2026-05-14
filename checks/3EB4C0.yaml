@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3EB4C0"
 name: SAPStartSrv resources - simple_mount
 group: ASCS / ERS Cluster - cluster resources
@@ -58,7 +61,7 @@ facts:
 values:
   - name: resource_type
     default: SAPStartSrv
-expectations:  
+expectations:
   - name: ascs_resource_in_group
     expect: |
       let sids = facts.cluster_sids.keys();
@@ -90,7 +93,7 @@ expectations:
           .find(|nv| nv.name == check_key && nv.value == check_value);
         if result != () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ASCS ${values.resource_type} resource found outside of resource group
   - name: ascs_resource_monitor_operation
     expect: |
@@ -144,7 +147,7 @@ expectations:
           .find(|nv| nv.name == check_key && nv.value == check_value);
         if result != () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one ERS ${values.resource_type} resource found outside of resource group
   - name: ers_resource_monitor_operation
     expect: |

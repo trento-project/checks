@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "BA215C"
 name: corosync.conf files are identical
 group: Corosync
@@ -18,11 +21,11 @@ remediation: |
 
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#create_the_corosync_configuration_files
-  
+
   Nutanix:
 
     - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-for-etccorosynccorosync-conf
-  
+
   SUSE / KVM:
 
     - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-for-etccorosynccorosync-conf
@@ -34,11 +37,11 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
 facts:

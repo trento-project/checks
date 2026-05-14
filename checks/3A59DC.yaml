@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3A59DC"
 name: The recommended Solution is enabled
 group: saptune
@@ -42,7 +45,7 @@ expectations:
   - name: recommended_solution
     expect: |
       // handle custom solutions like 'HANA_mySol' too
-      let current_solution = 
+      let current_solution =
         if ! facts.saptune_status.result.solution_enabled.is_empty {
             facts.saptune_status.result.solution_enabled[0]
         } else {

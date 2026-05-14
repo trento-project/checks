@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3AD734"
 name: All nodes have the same Solution and Notes enabled
 group: saptune

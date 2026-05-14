@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "9CFD2A"
 name: Virtual IP resource has monitor timeout properly configured
 group: Pacemaker
@@ -80,4 +83,4 @@ expectations:
             }
           }
           return false;
-    failure_message: virtual IP resource has monitor timeout not correctly configured                
+    failure_message: virtual IP resource has monitor timeout not correctly configured

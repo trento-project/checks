@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "733ED3"
 name: ASCS and ERS colocation
 group: ASCS / ERS Cluster - cluster resources
@@ -11,13 +14,13 @@ remediation: |
   Correct the ASCS and ERS colocation constraint according to the best practices.
 
   ```
-  crm configure show col_sap_NW1_not_both 
-  
+  crm configure show col_sap_NW1_not_both
+
   colocation col_sap_NW1_not_both -5000: grp_NW1_ERS10 grp_NW1_ASCS00
   ```
 
   ## References
-  - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers    
+  - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
   - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
 metadata:
@@ -32,12 +35,12 @@ facts:
 values:
   - name: colocation_score
     default: -5000
-expectations:  
+expectations:
   - name: colocation_ascs_ers
     expect: |
       let sids = facts.cluster_sids.keys();
       if !facts.cib_configuration.contains("constraints") { return false; } // a colocation is expected
-      if !facts.cib_configuration.constraints.contains("rsc_colocation") { return false; } // a colocation is expected      
+      if !facts.cib_configuration.constraints.contains("rsc_colocation") { return false; } // a colocation is expected
       for sid in sids {
         let group_ascs = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}` ).resource_group;
         if group_ascs == () { return false; } // without an ASCS group we cannot check colocation
@@ -47,5 +50,5 @@ expectations:
           .find(|c| c.rsc == group_ers && c["with-rsc"] == group_ascs && c.score == values.colocation_score);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: At least one colocation to separate ASCS and ERS is not configured correctly with the score ${values.colocation_score}

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "57C663"
 name: ASCS instance resource-stickiness
 group: ASCS / ERS Cluster - cluster resources
@@ -49,7 +52,7 @@ values:
     default: 5000
   - name: resource_type
     default: ASCS
-expectations:  
+expectations:
   - name: ascs_resource_resource_stickiness
     expect: |
       let sids = facts.cluster_sids.keys();

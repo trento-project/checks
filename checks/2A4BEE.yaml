@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "2A4BEE"
 name: susHanaSR/SAPHanaSR global.ini file configuration is properly done
 group: Ini Files
@@ -13,31 +16,31 @@ remediation: |
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-implementing-python-hook-saphanasr-in-sles.html
-  
+
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
-    
-  SUSE / KVM: 
-            
+
+  SUSE / KVM:
+
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
-                  
-  Nutanix:        
-                  
+
+  Nutanix:
+
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
-  architecture_type: 
+  architecture_type:
     - classic
     - angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized 
+    - cost_optimized
 
 facts:
   - name: ini_files
@@ -51,25 +54,25 @@ values:
     default: "/usr/share/SAPHanaSR-angi/"
     conditions:
       - value: "/usr/share/SAPHanaSR/"
-        when: env.architecture_type == "classic"    
+        when: env.architecture_type == "classic"
   - name: path2
-    default: "/usr/share/SAPHanaSR-angi"    
+    default: "/usr/share/SAPHanaSR-angi"
     conditions:
       - value: "/usr/share/SAPHanaSR"
-        when: env.architecture_type == "classic"    
+        when: env.architecture_type == "classic"
   - name: provider
     customization_disabled: true
     default: "susHanaSR"
     conditions:
       - value: "SAPHanaSR"
-        when: env.architecture_type == "classic"    
+        when: env.architecture_type == "classic"
   - name: provider_text
     customization_disabled: true
     default: "ha_dr_provider_sushanasr"
     conditions:
       - value: "ha_dr_provider_saphanasr"
         when: env.architecture_type == "classic"
-    
+
 expectations:
   - name: expectations_sushanasr_global_ini_configured
     expect: |
@@ -80,5 +83,5 @@ expectations:
           if sushanasr.execution_order == values.execution_order && sushanasr.provider == values.provider {return true;}
         }
       }
-      return false;      
-    failure_message: SAPHanaSR section in global.ini is not correctly configured    
+      return false;
+    failure_message: SAPHanaSR section in global.ini is not correctly configured

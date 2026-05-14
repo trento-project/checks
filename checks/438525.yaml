@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "438525"
 name: Cluster hostnames resolution
 group: Miscellaneous
@@ -42,11 +45,11 @@ severity: warning
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
 facts:
@@ -63,4 +66,3 @@ expectations:
       node_names.sort();
       node_names.map(|node_name| facts.hosts[node_name]);
     failure_message: /etc/hosts file is missing some of the cluster nodes
-      

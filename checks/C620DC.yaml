@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "C620DC"
 name: Check Corosync expected_votes value
 group: Corosync
@@ -47,10 +50,10 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - ascs_ers
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
 facts:
@@ -64,7 +67,7 @@ facts:
 
   - name: cib_num_nodes
     gatherer: cibadmin@v1
-    argument: cib.configuration.nodes.node    
+    argument: cib.configuration.nodes.node
 
 expectations:
   - name: num_nodes_equal_in_corosync_and_cib

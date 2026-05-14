@@ -1,4 +1,7 @@
-name: Continous Integration
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Continuous Integration
 
 on:
   push:
@@ -14,6 +17,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  license-headers:
+    name: Ensure license headers are present and correct
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: Check license Headers
+        uses: apache/skywalking-eyes/header@61275cc80d0798a405cb070f7d3a8aaf7cf2c2c1 # v0.8.0
+
   tlint:
     name: Lint checks
     runs-on: ubuntu-24.04
@@ -24,13 +38,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
       - name: Run TLint
         run: "/home/tlint/tlint lint /data/checks"
 
   publish-containers:
     name: Publish GHCR Containers
     needs:
+      - license-headers
       - tlint
     if: >-
       github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -49,6 +63,7 @@ jobs:
       && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     uses: trento-project/.github/.github/workflows/obs-sync.yaml@406be0972195864a87ed454458eaa0856d0c5457 # v1.6.0
     needs:
+      - license-headers
       - tlint
     with:
       obs_project: ${{ vars.OBS_PROJECT_ROLLING }}

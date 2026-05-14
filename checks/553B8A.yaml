@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "553B8A"
 name: SAPHanaTopology resource has monitor interval correctly configured
 group: Pacemaker
@@ -6,20 +9,20 @@ description: |
 remediation: |
   ## Abstract
   Monitor interval of a resource defines how often the monitor operation will run for that resources. For example an interval of 10 seconds means that the monitor operation will run every 10 seconds for that resource.
-  
+
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
 
   ## References
   Azure:
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_5_saphanasr
-    
+
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphanatopology.html
-  
+
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-  
+
   SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-saphanatopology
 
@@ -87,4 +90,4 @@ expectations:
 
       if SAPHanaTopo_interval == values.monitor_interval && SAPHanaTopo_interval < SAPHana_interval { return true; }
       return false;
-    failure_message: SAPHanaTopology resource has monitor interval not correctly configured            
+    failure_message: SAPHanaTopology resource has monitor interval not correctly configured

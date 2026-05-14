@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "53D33E"
 name: sbd version identical on all nodes
 group: OS and package versions
@@ -17,11 +20,11 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
     - ascs_ers
-  hana_scenario: 
+  hana_scenario:
     - performance_optimized
     - cost_optimized
   provider: [azure, nutanix, kvm, vmware]

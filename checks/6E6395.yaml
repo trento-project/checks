@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "6E6395"
 name: HA interface is active
 group: Sapcontrol
@@ -10,10 +13,10 @@ remediation: |
 
   ## Remediation
   Above problem could happen due to several reasons. E.g.
-  
+
     1. The <SID>adm user in not part of haclient group.
     2. The cluster use ACL to control access and haclient doesn't have the needed rights.
-    3. The ASCS/ERS resource contains wrong parameters. 
+    3. The ASCS/ERS resource contains wrong parameters.
     4. The ownership of the <SID>adm user /home/<SID>adm/.config directory is not set correctly to <SID>adm:sapsys.
     5. On SLE15 SP5 the packages crmsh and crmsh-scripts are not on the latest patch level and should have at least version crmsh-4.4.0+20221028.3e41444-150400.3.9.1
     6. /var/lib/heartbeat/cores/hacluster directory needs group read/execute permission (chmod 750 /var/lib/heartbeat/cores/hacluster)
@@ -61,7 +64,7 @@ expectations:
   - name: ha_active_true
     expect: |
       for sid in facts.cluster_sids.keys() {
-        if !facts.ha_get_failover_config.contains(sid) || 
+        if !facts.ha_get_failover_config.contains(sid) ||
           !facts.ha_get_failover_config[sid].all(|i| i.output.ha_active) { return false; }
       }
       return true;

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "87EE50"
 name: supported systemd version
 group: OS and package versions
@@ -16,7 +19,7 @@ remediation: |
 
 metadata:
   target_type: cluster
-  cluster_type: ascs_ers  
+  cluster_type: ascs_ers
 
 facts:
   - name: compare_systemd

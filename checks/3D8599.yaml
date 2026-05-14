@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "3D8599"
 name: order constraint is correctly configured for scale-up perf-optimized cluster
 group: Pacemaker
@@ -83,4 +86,4 @@ expectations:
           if ord["first"] == cln_id && ord["kind"] == values.ord_kind && ord["then"] == msl_id { return true; }
 
           return false;
-    failure_message: order constraint is not correctly configured            
+    failure_message: order constraint is not correctly configured

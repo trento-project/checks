@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "1F877F"
 name: users sidadm and sapadm
 group: OS users/groups
@@ -30,5 +33,5 @@ expectations:
         let result = facts.passwd.find(|u| u.user == sidadm);
         if result == () { return false; }
       }
-      return true;      
+      return true;
     failure_message: The sidadm user does not exist for every managed SID on all cluster nodes

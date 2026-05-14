@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "58002B"
 name: ASCS and ERS order
 group: ASCS / ERS Cluster - cluster resources
@@ -11,7 +14,7 @@ remediation: |
   Correct the ASCS and ERS order constraint according to the best practices.
 
   ```
-  crm configure show ord_sap_NW1_first_start_ascs 
+  crm configure show ord_sap_NW1_first_start_ascs
   order ord_sap_NW1_first_start_ascs \
     Optional: rsc_sap_NW1_ASCS00:start rsc_sap_NW1_ERS10:stop symmetrical=false
   ```
@@ -48,7 +51,7 @@ facts:
     gatherer: cibadmin@v1
     argument: cib.configuration
 
-expectations:  
+expectations:
   - name: order_ascs_ers
     expect: |
       let sids = facts.cluster_sids.keys();

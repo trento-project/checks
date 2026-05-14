@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 id: "EB24D1"
 name: SAPHanaController is configured as Clone
 group: Pacemaker
@@ -31,7 +34,7 @@ remediation: |
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-1.11.7.12.3
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-saphanacontroller
-                  
+
   Nutanix:
 
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-1.11.7.1
@@ -40,13 +43,13 @@ remediation: |
 severity: critical
 metadata:
   target_type: cluster
-  cluster_type: 
+  cluster_type:
     - hana_scale_up
     - hana_scale_out
   architecture_type: angi
   hana_scenario:
     - performance_optimized
-    - cost_optimized  
+    - cost_optimized
 
 facts:
   - name: resources
@@ -71,5 +74,5 @@ expectations:
                 }
               }
             }
-            return false;            
-    failure_message: The multi-state resource is either not configured as "clone" or the meta attribute "promotable" is not set to "true"            
+            return false;
+    failure_message: The multi-state resource is either not configured as "clone" or the meta attribute "promotable" is not set to "true"
