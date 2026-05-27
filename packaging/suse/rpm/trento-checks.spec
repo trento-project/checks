@@ -1,8 +1,7 @@
 #
 # spec file for package trento-checks
 #
-# SPDX-FileCopyrightText: SUSE LLC
-# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
