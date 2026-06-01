@@ -5,7 +5,7 @@ id: "9FAAD0"
 name: unsupported pacemaker version
 group: OS and package versions
 description: |
-  Pacemaker version is the/a recommended value
+  The Pacemaker version matches the recommended value(s)
 remediation: |
   ## Abstract
   Installed Pacemaker version must not be equal to version 2.0.3+20200511.2b248d828
