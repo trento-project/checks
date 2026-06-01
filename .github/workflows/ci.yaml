@@ -48,9 +48,12 @@ jobs:
       - tlint
     if: >-
       github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    strategy:
+      matrix:
+        imgname: ["checks", "trento-checks"]
     uses: trento-project/.github/.github/workflows/publish-containers.yaml@406be0972195864a87ed454458eaa0856d0c5457 # v1.6.0
     with:
-      image_name: checks
+      image_name: ${{ matrix.imgname }}
       tag: rolling
     secrets:
       gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
