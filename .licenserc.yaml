@@ -15,4 +15,5 @@ header:
     - "**/*.md"
     - ".github/dependabot.yml"
     - "LICENSE"
+    - "VERSION"
     - "packaging/suse/rpm/trento-checks.spec"
