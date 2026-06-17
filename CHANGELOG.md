@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/trento-project/checks/tree/1.2.0/compare/1.3.0...1.3.1) - 2026-06-17
+
+### What's Changed
+
+* Changing description ofcheck 9FAAD0 (#73) @balanza
+
+**Full Changelog**: https://github.com/trento-project/checks/compare/1.3.0...1.3.1
+
 ## [1.3.0](https://github.com/trento-project/checks/tree/1.2.0/compare/1.2.0...1.3.0) - 2026-05-19
 
 ### What's Changed
