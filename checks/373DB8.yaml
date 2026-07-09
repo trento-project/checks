@@ -5,17 +5,21 @@ id: "373DB8"
 name: fencing timeout
 group: Pacemaker
 description: |
-  Cluster fencing timeout is configured correctly in the cluster properties 'cib-bootstrap-options': stonith-timeout
+  Cluster fencing timeout is configured correctly in the cluster properties 'cib-bootstrap-options': fencing-timeout (Pacemaker 3.0.2+) or stonith-timeout (Pacemaker < 3.0.2)
 remediation: |
   ## Abstract
-  The fencing timeout (`stonith-timeout`) determines the time Pacemaker will wait for fencing to succeed.
-  The remommended default value is at least `150` seconds for SBD.
+  The fencing timeout (`fencing-timeout` in Pacemaker 3.0.2+, `stonith-timeout` in older versions) determines the time Pacemaker will wait for fencing to succeed.
+  The recommended default value is at least `150` seconds for SBD.
   The recommended values on Azure are at least `144` seconds for SBD only or `900` seconds when using SBD combined with the Azure Fence agent.
   The recommended value on AWS is at least `600` seconds.
   The recommended value on GCP is at least `300` seconds.
 
   ## Remediation
   Execute the following command to adjust the timeout for your usecase:
+  ```crm configure property fencing-timeout=144```
+  or
+  ```crm configure property fencing-timeout=900```
+  On Pacemaker versions older than 3.0.2:
   ```crm configure property stonith-timeout=144```
   or
   ```crm configure property stonith-timeout=900```
@@ -78,10 +82,12 @@ values:
 expectations:
   - name: expectations_fencing_timeout
     expect: |
-      let fencing_timeout =
-          facts.crm_config_properties
-               .find(|item| item.id == "cib-bootstrap-options").nvpair
-               .find(|prop| prop.name == "stonith-timeout");
+      let bootstrap_nvpairs = facts.crm_config_properties
+          .find(|item| item.id == "cib-bootstrap-options").nvpair;
+      let fencing_timeout = bootstrap_nvpairs.find(|prop| prop.name == "fencing-timeout");
+      if fencing_timeout == () {
+        fencing_timeout = bootstrap_nvpairs.find(|prop| prop.name == "stonith-timeout");
+      }
 
       let fence_azure_arm_detected =
           facts.resources_primitives
@@ -92,4 +98,4 @@ expectations:
       } else {
         fencing_timeout != () && fencing_timeout.value >= values.expected_fencing_timeout;
       }
-    failure_message: Cluster fencing timeout 'stonith-timeout' is not configured correctly
+    failure_message: Cluster fencing timeout ('fencing-timeout' in Pacemaker 3.0.2+, 'stonith-timeout' in older versions) is not configured correctly
