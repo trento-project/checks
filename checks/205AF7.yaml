@@ -5,7 +5,7 @@ id: "205AF7"
 name: fencing enabled
 group: Pacemaker
 description: |
-  Fencing is enabled in the cluster properties 'cib-bootstrap-options': stonith-enabled
+  Fencing is enabled in the cluster properties 'cib-bootstrap-options': fencing-enabled (Pacemaker 3.0.2+) or stonith-enabled (Pacemaker < 3.0.2)
 remediation: |
   ## Abstract
   Fencing is mandatory to guarantee data integrity for your SAP Applications.
@@ -13,6 +13,10 @@ remediation: |
 
   ## Remediation
   Execute the following command to enable it:
+  ```
+  crm configure property fencing-enabled=true
+  ```
+  On Pacemaker versions older than 3.0.2:
   ```
   crm configure property stonith-enabled=true
   ```
@@ -62,7 +66,11 @@ facts:
 expectations:
   - name: expectations_fencing_enabled
     expect: |
-      facts.crm_config_properties
-           .find(|item| item.id == "cib-bootstrap-options").nvpair
-           .find(|prop| prop.name == "stonith-enabled").value
-    failure_message: Fencing was expected to be enabled in the cluster configuration, but property 'stonith-enabled' is set to false or missing.
+      let bootstrap = facts.crm_config_properties
+          .find(|item| item.id == "cib-bootstrap-options").nvpair;
+      let prop = bootstrap.find(|prop| prop.name == "fencing-enabled");
+      if prop == () {
+        prop = bootstrap.find(|prop| prop.name == "stonith-enabled");
+      }
+      prop != () && prop.value == "true"
+    failure_message: Fencing was expected to be enabled in the cluster configuration, but neither 'fencing-enabled' nor 'stonith-enabled' is set to true.
