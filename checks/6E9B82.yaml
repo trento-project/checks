@@ -13,7 +13,7 @@ remediation: |
   ## Remediation
   Adjust the corosync two_node parameter to `1` to make sure Pacemaker calculates the actions properly for a two-node cluster.
 
-  1. Set the correct `two_node` value in the `quorum` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated in all nodes of the cluster.
+  1. Set the correct `two_node` value in the `quorum` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated on all nodes of the cluster.
      ```
      [...]
      quorum {
@@ -91,4 +91,4 @@ expectations:
      } else {
        false
      }
-    failure_message: Corosync 'two_node' value was expected to be 1 when there are 2 nodes and 0 when there 3 or more nodes but configured value is '${facts.corosync_twonode}' when there are '${facts.corosync_num_nodes.len}' number of nodes
+    failure_message: Corosync 'two_node' value was expected to be 1 when there are 2 nodes and 0 when there are 3 or more nodes but configured value is '${facts.corosync_twonode}' when there are '${facts.corosync_num_nodes.len}' number of nodes

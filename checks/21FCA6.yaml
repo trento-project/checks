@@ -8,13 +8,13 @@ description: |
   Corosync `token_retransmits_before_loss_const` is set to expected value
 remediation: |
   ## Abstract
-  The Corosync `token_retransmits_before_loss_const` is set as recommended.
+  The Corosync `token_retransmits_before_loss_const` is not set as recommended.
 
   ## Remediation
 
-  Adjust the corosync `token_retransmits_before_loss_const` count as recommended on the best practices, and reload the corosync configuration
+  Adjust the corosync `token_retransmits_before_loss_const` count as recommended in the best practices, and reload the corosync configuration
 
-  1. Set the correct `token_retransmits_before_loss_const` count in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated in all nodes of the cluster.
+  1. Set the correct `token_retransmits_before_loss_const` count in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated on all nodes of the cluster.
      ```
      [...]
      totem {

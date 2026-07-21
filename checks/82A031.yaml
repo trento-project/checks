@@ -11,7 +11,7 @@ remediation: |
   Installed Pacemaker version must be identical on all nodes of the cluster
 
   ## Remediation
-  Install identical Pacemaker version on all nodes of the cluster
+  Install an identical Pacemaker version on all nodes of the cluster
 
   ## Reference
   - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software

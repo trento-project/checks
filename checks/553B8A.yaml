@@ -8,7 +8,7 @@ description: |
   SAPHanaTopology resource has monitor interval correctly configured
 remediation: |
   ## Abstract
-  Monitor interval of a resource defines how often the monitor operation will run for that resources. For example an interval of 10 seconds means that the monitor operation will run every 10 seconds for that resource.
+  Monitor interval of a resource defines how often the monitor operation will run for that resource. For example, an interval of 10 seconds means that the monitor operation will run every 10 seconds for that resource.
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide

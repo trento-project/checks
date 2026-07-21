@@ -15,7 +15,7 @@ remediation: |
   Make sure to change `Restart_Program_00 = local $(_ER) pf=$(_PFL) NR=$(SCSID)` to `Start_Program_00 = local $(_ER) pf=$(_PFL) NR=$(SCSID)` in the ERS profile.
 
   ## References
-  AZURE:
+  Azure:
     - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 
   AWS:

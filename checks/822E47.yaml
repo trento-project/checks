@@ -8,12 +8,12 @@ description: |
   Corosync is running with `join` timeout set to the recommended value
 remediation: |
   ## Abstract
-  The runtime value of the Corosync `join` tiemout parameter is not set as recommended.
+  The runtime value of the Corosync `join` timeout parameter is not set as recommended.
 
   ## Remediation
-  Adjust the corosync `join` timeout as recommended on the best practices, and reload the corosync service.
+  Adjust the corosync `join` timeout as recommended in the best practices, and reload the corosync service.
 
-  1. Set the correct `join` timeout in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated in all nodes of the cluster.
+  1. Set the correct `join` timeout in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated on all nodes of the cluster.
      ```
      [...]
      totem {
@@ -25,7 +25,7 @@ remediation: |
      `crm corosync reload`
 
   ## References
-  AZURE:
+  Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#install-the-cluster
 

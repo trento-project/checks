@@ -8,13 +8,13 @@ description: |
   Corosync version is supported
 remediation: |
   ## Abstract
-  Installed Corosync version must be equal or higher than the recommended version (2.4.5)
+  Installed Corosync version must be equal to or higher than the recommended version (2.4.5)
 
   ## Remediation
   Install or upgrade to a supported Corosync version
 
   ## Reference
-  The recommended minimal version of the corosync package is 2.4.5 as we had seen some 'split brain' situations and other communication problems with corosync versions older than 2.4.5.
+  The recommended minimal version of the corosync package is 2.4.5 as we have seen some 'split brain' situations and other communication problems with corosync versions older than 2.4.5.
   It is the *first* version supported with SUSE Linux Enterprise Server for SAP Applications 15 SP2 and it is also available as a maintenance update in SUSE Linux Enterprise Server for SAP Applications 15 SP1.
   - https://www.suse.com/support/kb/doc/?id=000020407
 

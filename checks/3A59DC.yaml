@@ -15,7 +15,7 @@ remediation: |
 
   ## Remediation
   Enable the recommended Solution with `saptune solution change <SOLUTION>`.
-  If you running an individual configuration, please create a custom solution starting with the name of the recommended solution, followed by an individual text separated by  **_**  and enable it.
+  If you are running an individual configuration, please create a custom Solution starting with the name of the recommended Solution, followed by an individual text separated by **_** and enable it.
   Such a Solution is considered equivalent to the recommendation.
 
   ## References

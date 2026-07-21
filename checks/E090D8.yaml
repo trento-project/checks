@@ -30,4 +30,4 @@ expectations:
         line.mount_point == "/usr/sap" &&
         line.file_system_type.starts_with("nfs")
       ) == ();
-    failure_message: There are fstab entries for /usr/sap on a NFS filesystem.
+    failure_message: There are fstab entries for /usr/sap on an NFS filesystem.

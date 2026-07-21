@@ -5,7 +5,7 @@ id: "0AA227"
 name: Cluster priority-fencing-delay
 group: Pacemaker
 description: |
-  Check if global cluster property `priority-fencing-delay` is set on 2-node ASCS/ERS cluster.
+  Check if global cluster property `priority-fencing-delay` is set on a 2-node ASCS/ERS cluster.
 remediation: |
   ## Abstract
   The value `priority-fencing-delay` must be set according to the best practices to enable priority fencing.

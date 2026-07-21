@@ -8,7 +8,7 @@ description: |
   SAPHanaTopology monitor interval has correct value
 remediation: |
   ## Abstract
-  SAPHanaTopology monitor interval should have recommended value in cluster configuration.
+  SAPHanaTopology monitor interval should have the recommended value in cluster configuration.
 
   ## Remediation
 

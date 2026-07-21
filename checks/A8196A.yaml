@@ -8,21 +8,21 @@ description: |
   HA interface Config Checks return "SAPControl-HA-SUCCESS".
 remediation: |
   ## Abstract
-  The HA interface Config Check must return "SAPControl-HA-SUCCESS" for all configurations on all SIDS and instances.
+  The HA interface Config Check must return "SAPControl-HA-SUCCESS" for all configurations on all SIDs and instances.
   `sapcontrol -function HACheckConfig` returns "SAPControl-HA-SUCCESS".
 
   ## Remediation
-  Above problem could happen due to several reasons. E.g.
+  The above problem could happen due to several reasons, e.g.:
 
-    1. The <SID>adm user in not part of haclient group.
-    2. The cluster use ACL to control access and haclient doesn't have the needed rights.
+    1. The <SID>adm user is not part of the haclient group.
+    2. The cluster uses ACL to control access and haclient doesn't have the needed rights.
     3. The ASCS/ERS resource contains wrong parameters.
-    4. The ownership of the <SID>adm user /home/<SID>adm/.config directory is not set correctly to <SID>adm:sapsys.
+    4. The ownership of the <SID>adm user's /home/<SID>adm/.config directory is not set correctly to <SID>adm:sapsys.
     5. On SLE15 SP5 the packages crmsh and crmsh-scripts are not on the latest patch level and should have at least version crmsh-4.4.0+20221028.3e41444-150400.3.9.1
     6. /var/lib/heartbeat/cores/hacluster directory needs group read/execute permission (chmod 750 /var/lib/heartbeat/cores/hacluster)
 
   ## References
-  AZURE:
+  Azure:
     - https://www.suse.com/support/kb/doc/?id=000019924
     - https://www.suse.com/support/kb/doc/?id=000019613
     - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector

@@ -9,7 +9,7 @@ description: |
 remediation: |
   ## Abstract
   Fencing is mandatory to guarantee data integrity for your SAP Applications.
-  Running a HA Cluster without fencing is not supported and might cause data loss.
+  Running an HA cluster without fencing is not supported and might cause data loss.
 
   ## Remediation
   Execute the following command to enable it:
@@ -18,7 +18,7 @@ remediation: |
   ```
 
   ## References
-  AZURE:
+  Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#create-a-fencing-device-on-the-pacemaker-cluster
 
