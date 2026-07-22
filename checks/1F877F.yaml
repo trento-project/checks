@@ -8,7 +8,7 @@ description: |
   A user for each SID (sidadm) and a sapadm user should exist on every cluster node.
 remediation: |
   ## Abstract
-  sidadm and a sapadm user must exist for every cluster managed SID on every cluster node.
+  A sidadm user and a sapadm user must exist for every cluster managed SID on every cluster node.
 
   ## Remediation
   Create the missing sidadm and sapadm users for every cluster managed SID on every cluster node.

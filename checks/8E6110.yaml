@@ -5,7 +5,7 @@ id: "8E6110"
 name: saphostagent enabled and started
 group: Saphostagent
 description: |
-  The Saphostagent systemd services is enabled and started.
+  The saphostagent systemd service is enabled and started.
 remediation: |
   ## Abstract
   The saphostagent systemd service must be enabled and started on every cluster node.

@@ -5,7 +5,7 @@ id: "3A9890"
 name: saptune overrides are identical on all nodes
 group: saptune
 description: |
-  If overrides exists we assume that these overrides are identical on all nodes.
+  If overrides exist, we assume that these overrides are identical on all nodes.
 
 remediation: |
   ## Abstract
@@ -15,7 +15,7 @@ remediation: |
   Note: This check cannot be used on clusters with majority maker.
 
   ## Remediation
-  Run  `saptune note verify`  on all nodes and compare the overrides.
+  Run `saptune note verify` on all nodes and compare the overrides.
   If there are differences please fix the related override file.
 
   ## References

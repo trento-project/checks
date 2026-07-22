@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 id: "3D8599"
-name: order constraint is correctly configured for scale-up perf-optimized cluster
+name: Order constraint is correctly configured for scale-up perf-optimized cluster
 group: Pacemaker
 description: |
-  order constraint is correctly configured for scale-up perf-optimized cluster
+  Order constraint is correctly configured for scale-up perf-optimized cluster
 remediation: |
   ## Abstract
-  SAPHanaTopology resource should always start before the multi state SAPHana/SAPHanaController resource. An order constraint there should be configured that makes sure these resource are started in that order.
+  SAPHanaTopology resource should always start before the multi state SAPHana/SAPHanaController resource. An order constraint should be configured there that makes sure these resources are started in that order.
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide
@@ -86,4 +86,4 @@ expectations:
           if ord["first"] == cln_id && ord["kind"] == values.ord_kind && ord["then"] == msl_id { return true; }
 
           return false;
-    failure_message: order constraint is not correctly configured
+    failure_message: Order constraint is not correctly configured

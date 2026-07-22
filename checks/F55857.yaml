@@ -15,7 +15,7 @@ remediation: |
   Make sure to change `Restart_Program_00 = local $(_ENQR) pf=$(_PF) NR=$(SCSID)` to `Start_Program_00 = local $(_ENQR) pf=$(_PF) NR=$(SCSID)` in the ERS profile.
 
   ## References
-  AZURE:
+  Azure:
     - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 
   AWS:

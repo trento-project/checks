@@ -8,7 +8,7 @@ description: |
   Check if the location constraint to move ASCS to ERS after failover exists for ENSA1.
 remediation: |
   ## Abstract
-  A location constraint must exists for ASCS and ERS according to the best practices of the ENSA1 setup.
+  A location constraint must exist for ASCS and ERS according to the best practices of the ENSA1 setup.
 
   ## Remediation
   Correct the ASCS and ERS location constraint according to the best practices for an ENSA1 setup.

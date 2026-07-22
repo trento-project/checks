@@ -11,11 +11,11 @@ remediation: |
   Installed SBD version must be identical on all nodes of the cluster
 
   ## Remediation
-  Install identicel SBD version on all nodes of the cluster
+  Install identical SBD version on all nodes of the cluster
 
   ## Reference
   - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
-    (EXAMPLE 1:Installing additional software for the HA cluster)
+    (EXAMPLE 1: Installing additional software for the HA cluster)
 
 
 metadata:

@@ -15,7 +15,7 @@ remediation: |
   The SBD is not used in GCP or AWS environments.
 
   ## Remediation
-  Make sure you configure your the SBD msgwait to 2 * (SBD Watchdog Timeout) as recommended on the best practices.
+  Make sure you configure the SBD msgwait to 2 * (SBD Watchdog Timeout) as recommended in the best practices.
 
   ## References
   - https://www.suse.com/support/kb/doc/?id=000017952

@@ -8,13 +8,13 @@ description: |
   PREFER_SITE_TAKEOVER has correct value
 remediation: |
   ## Abstract
-  PREFER_SITE_TAKEOVER should have recommended value in cluster configuration.
+  PREFER_SITE_TAKEOVER should have the recommended value in the cluster configuration.
 
   ## Remediation
-  Edit the crm configuration and change the value for this parameter to as per best practices recommendation.
+  Edit the crm configuration and change the value for this parameter as per best practices recommendation.
 
   ## References
-  AZURE:
+  Azure:
 
     - https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-pacemaker
 

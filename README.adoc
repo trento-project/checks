@@ -1,43 +1,33 @@
 = Trento Checks
 
-Trento Checks are the way Trento provides continous infractructure
-compliance.
+Trento Checks are the way Trento provides continuous infrastructure compliance.
 
-They are implemented with a declarative, YAML-based DSL aiming at
-expressing some expectations on the configuration of a target system, or
-a group of target systems.
+They are implemented with a declarative, YAML-based DSL aiming at expressing some expectations on the configuration of a target system, or a group of target systems.
 
-The Checks are then executed by our Trento checks engine,
-https://github.com/trento-project/wanda[Wanda].
+The Checks are then executed by our Trento checks engine, https://github.com/trento-project/wanda[Wanda].
 
 == Usage
 
-The Checks code was originally hosted together with Wanda itself and
-only later decoupled in this repository, so most of the related
-documentation will remain
-https://github.com/trento-project/wanda/blob/main/guides/[there] until
-migrated somewhere else (if ever).
+The Checks code was originally hosted together with Wanda itself and only later decoupled in this repository, so most of the related documentation will remain https://github.com/trento-project/wanda/blob/main/guides/[there] until migrated somewhere else (if ever).
 
 You can start learning more by consulting the
-https://github.com/trento-project/wanda/blob/main/guides/specification.adoc[specification
-document] # Developing Checks
+https://github.com/trento-project/wanda/blob/main/guides/specification.adoc[specification document]
 
-Wanda architecture aims to simplify
-https://github.com/trento-project/wanda/blob/main/README.adoc#testing-executions[testing
-Checks Executions] and link:#adding-new-checks[adding new ones].
+== Developing Checks
+
+Wanda architecture aims to simplify https://github.com/trento-project/wanda/blob/main/README.adoc#testing-executions[testing Checks Executions] and link:#adding-new-checks[adding new ones].
 
 == Requirements
 
 * https://www.gnu.org/software/make/manual/make.html[Make]
-* https://www.docker.com/products/cli/[Docker CLI] or https://podman-desktop.io/docs/migrating-from-docker/managing-docker-compatibility[Podman]
-using the Docker compatibility feature
+* https://www.docker.com/products/cli/[Docker CLI] or https://podman-desktop.io/docs/migrating-from-docker/managing-docker-compatibility[Podman] using the Docker compatibility feature
 * https://asdf-vm.com/guide/getting-started.html[Asdf]
 
 == Setup
 
 [source,sh]
 ----
-# add all rered plugins
+# add all required plugins
 asdf plugin add bats jq shellcheck shfmt
 # install development software
 asdf install
@@ -52,11 +42,9 @@ Start the environment with:
 $ docker-compose up -d
 ----
 
-Wanda is exposed on port `+4000+` and the API documentation is available
-at http://localhost:4000/swaggerui
+Wanda is exposed on port `+4000+` and the API documentation is available at http://localhost:4000/api/doc
 
-*Note* that the https://www.rabbitmq.com/[message broker] *must* be
-reachable by Wanda and all the targets.
+*Note* that the https://www.rabbitmq.com/[message broker] *must* be reachable by Wanda and all the targets.
 
 == Adding new Checks
 
@@ -64,13 +52,9 @@ Built-in Checks can be found in the Catalog directory at `+./checks/+`
 
 To implement new checks and test them:
 
-* write a new
-https://github.com/trento-project/wanda/blob/main/guides/specification.adoc[Check
-Specification] file
+* write a new https://github.com/trento-project/wanda/blob/main/guides/specification.adoc[Check Specification] file
 * locate the newly created Check in the Catalog directory `+./checks/+`
-* test the execution as
-https://github.com/trento-project/wanda/blob/main/README.adoc#testing-executions[described
-in the check engine]
+* test the execution as https://github.com/trento-project/wanda/blob/main/README.adoc#testing-executions[described in the check engine]
 
 == Static code analysis
 
@@ -104,38 +88,31 @@ WANDA_URL=http://wanda.example \
 
 === Write a test
 
-Tests are written in `+bash+` scripting using the
-https://bats-core.readthedocs.io/en/stable/[Bats] test framework.
+Tests are written in `+bash+` scripting using the https://bats-core.readthedocs.io/en/stable/[Bats] test framework.
 
-A test suite is a file with `+.bats+` extension and they should be named
-after the check that is the subject of the test (for example,
-`+test/156F64.bats+` contains the tests for the check
-`+checks/156F64.yaml+`).
+A test suite is a file with a `+.bats+` extension and it should be named after the check that is the subject of the test (for example, `+test/156F64.bats+` contains the tests for the check `+checks/156F64.yaml+`).
 
 Every `+.bats+` file under `+./test+` folder is executed.
 
-The anatomy of a typical test is: * an instance of Trento agent that
-simulates the exepcted behaviour is spinned-up with a known agent id; *
-the instance must connect to the running development environment (Wanda
-and RabbitMQ); * a check execution is requested to Wanda for the current
-check on the given agent id; * the check result is requested to Wanda *
-the check result is evaluated by the test script according to the
-expectations * the Trento agent instance is tore down.
+The anatomy of a typical test is:
+
+ * an instance of the Trento agent that simulates the expected behavior is spun up with a known agent ID;
+ * the instance must connect to the running development environment (Wanda and RabbitMQ);
+ * a check execution is requested from Wanda for the current check on the given agent ID;
+ * the check result is requested from Wanda
+ * the check result is evaluated by the test script according to the expectations
+ * the Trento agent instance is torn down.
 
 === Test fixtures
 
-To simulate different Trento agent behaviours, a containerized version
-is provided by https://github.com/trento-project/barbecue[Trento
-Barbecue], which defines file-based, ephemeral execution contexts for
-the Trento agent.
+To simulate different Trento agent behaviors, a containerized version is provided by https://github.com/trento-project/barbecue[Trento Barbecue], which defines file-based, ephemeral execution contexts for the Trento agent.
 
-The `+./test/fixtures+` folder contains a folder for each scenario we
-want to test our checks against.
+The `+./test/fixtures+` folder contains a folder for each scenario we want to test our checks against.
 
-To create a new fixture: * create a folder named by the fixture; * add
-all files to override the basic behavior; * optionally, add a
-`+setup.sh+` script to run manual modification to the image at build
-time.
+To create a new fixture:
+ * create a folder named by the fixture;
+ * add all files to override the basic behavior;
+ * optionally, add a `+setup.sh+` script to run manual modifications to the image at build-time.
 
 == Contributing
 

@@ -11,9 +11,9 @@ remediation: |
   The runtime value of the corosync `token_retransmits_before_loss_const` parameter is not set as recommended
 
   ## Remediation
-  Adjust the corosync `token_retransmits_before_loss_const` parameter as recommended on the best practices, and reload the corosync service.
+  Adjust the corosync `token_retransmits_before_loss_const` parameter as recommended in the best practices, and reload the corosync service.
 
-  1. Set the correct `token_retransmits_before_loss_const` count in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated in all nodes of the cluster.
+  1. Set the correct `token_retransmits_before_loss_const` count in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated on all nodes of the cluster.
      ```
      [...]
      totem {
@@ -25,7 +25,7 @@ remediation: |
      `crm corosync reload`
 
   ## References
-  AZURE:
+  Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker#install-the-cluster
 

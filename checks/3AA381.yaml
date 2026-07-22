@@ -8,9 +8,9 @@ description: |
   Installed saptune package version is identical on all nodes
 remediation: |
   ## Abstract
-  The version of the installed saptune package must be identical on all cluster nodes. This is the base of having the same configuration even it does not guarantees identical Notes (e.g. staging is used or override file exists).
+  The version of the installed saptune package must be identical on all cluster nodes. This is the base of having the same configuration even though it does not guarantee identical Notes (e.g. staging is used or override file exists).
   But the version of the installed saptune package differs on the cluster nodes.
-  Also make sure, that "SAPTUNE_VERSION" in /etc/sysconfig/saptune has identical values on all nodes.
+  Also make sure that "SAPTUNE_VERSION" in /etc/sysconfig/saptune has identical values on all nodes.
 
   Note: This check cannot be used on clusters with majority maker.
 

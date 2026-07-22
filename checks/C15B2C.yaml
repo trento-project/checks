@@ -5,7 +5,7 @@ id: "C15B2C"
 name: ASCS instance priority
 group: ASCS / ERS Cluster - cluster resources
 description: |
-  Check if priority meta attribute is set for ASCS instance resource on 2-node ASCS/ERS cluster.
+  Check if priority meta attribute is set for ASCS instance resource on a 2-node ASCS/ERS cluster.
 remediation: |
   ## Abstract
   ASCS resources must have correct priority set to enable priority fencing.

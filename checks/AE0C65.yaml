@@ -8,7 +8,7 @@ description: |
   SAPHana resource has stop timeout correctly configured
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHana resource has stop timeout correctly configured and the configuration is not missing.
+  This Trento check verifies if SAPHana resource has stop timeout correctly configured and the configuration is not missing.
 
   ## Remediation
 

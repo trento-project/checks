@@ -8,11 +8,11 @@ description: |
   GetSystemInstanceList returns "SAPControl-GREEN".
 remediation: |
   ## Abstract
-  GetSystemInstanceList returns "SAPControl-GREEN" for all configurations on all SIDs and Instances.
+  GetSystemInstanceList returns "SAPControl-GREEN" for all configurations on all SIDs and instances.
   `sapcontrol -function GetSystemInstanceList` returns "SAPControl-GREEN" on "dispstatus".
 
   ## Remediation
-  Check why your Instances are having issues by looking at the systems and Instances log files.
+  Check why your instances are having issues by looking at the system and instance log files.
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

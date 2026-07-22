@@ -5,17 +5,17 @@ id: "3A361F"
 name: Systemd system state is running
 group: saptune
 description: |
-  Check, if the systemd system state reports running and therefore the system is sound from systemd's point of view
+  Check if the systemd system state reports running and therefore the system is sound from systemd's point of view
 remediation: |
   ## Abstract
-  Check, if the systemd system state reported by `systemctl is-system-running` is **running**.
-  Even that the systemd system state does not directly affect saptune other systemd services - especially the SAP related services - may be suffer from a **NOT** running state.
+  Check if the systemd system state reported by `systemctl is-system-running` is **running**.
+  Even though the systemd system state does not directly affect saptune, other systemd services - especially the SAP-related services - may suffer from a **NOT** running state.
   If the systemd system state is **running**, the check is passing.
   If the systemd system state is **initializing** or **starting** or **maintenance** or **stopping**, the check will report a warning.
   And if the systemd system state is **degraded** or **offline** or **unknown**, the check will report a critical error.
 
   ## Remediation
-  Check the man page of **systemctl** to get a detailed explanation, what the reported state means. A `systemctl list-units --failed` list failed services and can assist to track down the cause.
+  Check the man page of **systemctl** to get a detailed explanation of what the reported state means. A `systemctl list-units --failed` lists failed services and can assist in tracking down the cause.
 
   ## References
   - https://documentation.suse.com/sles/15-SP6/single-html/SLES-administration/#sec-boot-systemd-debug-review
