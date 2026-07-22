@@ -5,7 +5,7 @@ id: "3A8663"
 name: saptune is configured correctly service-wise
 group: saptune
 description: |
-  saptune should be configured correctly service-wise, that is it currently runs, will run after a reboot and no conflicting services (will) interfere.
+  saptune should be configured correctly service-wise, that is, it currently runs, will run after a reboot and no conflicting services (will) interfere.
 
 remediation: |
   ## Abstract

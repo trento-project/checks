@@ -8,7 +8,7 @@ description: |
   SBD_STARTMODE is set to the expected value
 remediation: |
   ## Abstract
-  If not set to always, SBD will not automatically start if the node was previously fenced as it will expect the cluster in a clean state.
+  If not set to always, SBD will not automatically start if the node was previously fenced as it will expect the cluster to be in a clean state.
   **IMPORTANT**: Always verify these steps in a testing environment before doing so in production ones!
 
   The SBD is not used in GCP or AWS environments.
@@ -19,15 +19,15 @@ remediation: |
      ```crm configure property maintenance-mode=true```
   2. Stop the cluster:
      ```crm cluster stop```
-  2. Set the SBD_STARTMODE parameter to `always` on `/etc/sysconfig/sbd`:
+  3. Set the SBD_STARTMODE parameter to `always` on `/etc/sysconfig/sbd`:
      ```
      [...]
      SBD_STARTMODE="always"
      [...]
      ```
-  3. Restart the cluster:
+  4. Restart the cluster:
      ```crm cluster start```
-  4. Put cluster out of maintenance mode:
+  5. Put cluster out of maintenance mode:
      ```crm configure property maintenance-mode=false```
 
   ## References

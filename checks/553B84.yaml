@@ -5,10 +5,10 @@ id: "553B84"
 name: SAPHanaTopology resource is configured
 group: Pacemaker
 description: |
-  SAPHanaTopology resource is configured and with correct provider i.e. SUSE
+  SAPHanaTopology resource is configured with the correct provider, i.e. SUSE
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHanaTopoloy resource is configured and not missing. It also checks whether the RA provider is SUSE and not say for example heartbeat or anything else.
+  This Trento check verifies if SAPHanaTopology resource is configured and not missing. It also checks whether the RA provider is SUSE and not, for example, heartbeat or anything else.
 
   ## Remediation
 

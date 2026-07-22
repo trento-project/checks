@@ -15,7 +15,7 @@ remediation: |
   The SBD is not used in GCP or AWS environments.
 
   ## Remediation
-  Make sure you configure your SBD Watchdog Timeout to `the recommended value` seconds as recommended on the best practices.
+  Make sure you configure your SBD watchdog timeout to `the recommended value` seconds as recommended in the best practices.
 
   ## References
   Azure:

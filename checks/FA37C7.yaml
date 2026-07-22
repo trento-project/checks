@@ -5,14 +5,14 @@ id: "FA37C7"
 name: no ban and move locations
 group: Pacemaker
 description: |
-  Check if automatically created location preference or location ban constraint starting with "cli" do not exist.
+  Check if automatically created location preference or location ban constraint starting with "cli-" does not exist.
   These constraints are usually created by `crm ban` or `crm move` commands.
 remediation: |
   ## Abstract
   Ban and move constraint should not exist.
 
   ## Remediation
-  Check for these constrains with e.g. `crm configure show | grep cli-`.
+  Check for these constraints with e.g. `crm configure show | grep cli-`.
   Remove these constraints by editing the CIB or using `crm resource clear $resource`
 
   ## References
@@ -35,4 +35,4 @@ expectations:
       if !facts.cib_configuration.contains("constraints") { return true; } // constraints do not exist
       if !facts.cib_configuration.constraints.contains("rsc_location") { return true; } // locations do not exist
       facts.cib_configuration.constraints.rsc_location.filter(|l| l.id.starts_with("cli-")).len == 0;
-    failure_message: At least one ban/move location constraints (starting with "cli-") was found
+    failure_message: At least one ban/move location constraint (starting with "cli-") was found

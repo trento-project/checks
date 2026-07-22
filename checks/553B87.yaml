@@ -8,7 +8,7 @@ description: |
   SAPHanaTopology resource has stop timeout correctly configured
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHanaTopoloy resource has stop timeout correctly configured and the configuration is not missing.
+  This Trento check verifies if SAPHanaTopology resource has stop timeout correctly configured and the configuration is not missing.
 
   ## Remediation
 
@@ -70,4 +70,4 @@ expectations:
              }
             }
           return false;
-    failure_message: SAPHanaTopology resource has stop timeout  not correctly configured
+    failure_message: SAPHanaTopology resource has stop timeout not correctly configured

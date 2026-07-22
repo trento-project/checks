@@ -5,7 +5,7 @@ id: "E1F2C3"
 name: SAPHanaController roles correctly configured
 group: Pacemaker
 description: |
-  SAPHanaController roles correctly configured
+  SAPHanaController roles are correctly configured
 remediation: |
   ## Abstract
   SAPHanaController roles should be configured as "Promoted" and "Unpromoted" and not as "Master" and "Slave".
@@ -82,4 +82,4 @@ expectations:
           }
         }
         return false;
-    failure_message:  Roles configured for SAPHanaController Monitor Operations are not correct
+    failure_message: Roles configured for SAPHanaController Monitor Operations are not correct

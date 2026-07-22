@@ -10,9 +10,9 @@ remediation: |
   ## Abstract
   The value of the corosync `expected_votes` parameter is not set as recommended.
   ## Remediation
-  Adjust the corosync `expected_votes` parameter to 2 to make sure pacemaker calculates the actions properly for a two-node cluster.
+  Adjust the corosync `expected_votes` parameter to 2 to make sure Pacemaker calculates the actions properly for a two-node cluster.
 
-  1. Set the correct `expected_votes` value in the `quorum` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated in all nodes of the cluster.
+  1. Set the correct `expected_votes` value in the `quorum` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated on all nodes of the cluster.
      ```
      [...]
      quorum {

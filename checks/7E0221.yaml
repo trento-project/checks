@@ -8,7 +8,7 @@ description: |
   Corosync is running with `transport` set to the recommended value
 remediation: |
   ## Remediation
-  To change the corosync MCAST transport to UCAST edit the /etc/corosync/corosync.conf
+  To change the corosync MCAST transport to UCAST, edit the /etc/corosync/corosync.conf
   as in the example
   ```
       max_messages: 20
@@ -36,9 +36,9 @@ remediation: |
   ```
   1. Stop the already running cluster by using **crm cluster stop**
   2. In the totem section, in the interface subsection remove the
-  keys-value pairs **bindnetaddr** and **mcastaddr**
+  key-value pairs **bindnetaddr** and **mcastaddr**
   3. In the totem section add key-value pair **transport: udpu**
-  4. Add section nodelist and subsections node for each nodes of the
+  4. Add a nodelist section and node subsections for each node of the
   cluster, where the **ring0_addr** is the IP address of the node
   5. Start the cluster by using **crm cluster start**
 

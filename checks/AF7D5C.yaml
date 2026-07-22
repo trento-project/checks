@@ -12,7 +12,7 @@ remediation: |
   `sapcontrol -function GetSystemInstanceList` returns all clustered instances.
 
   ## Remediation
-  Check why your Instances are not configured correctly or are having issues by looking at the systems configuration and Instances log files.
+  Check why your instances are not configured correctly or are having issues by looking at the system's configuration and instance log files.
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

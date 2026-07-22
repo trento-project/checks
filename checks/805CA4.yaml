@@ -8,7 +8,7 @@ description: |
   The simple mount fstab entries exist.
 remediation: |
   ## Abstract
-  The Simple Mount fstab entries must exist.
+  The simple mount fstab entries must exist.
   /usr/sap/<sid> and /sapmnt/<sid> must have fstab entries with filesystem type NFS on simple mount setups.
 
   ## Remediation

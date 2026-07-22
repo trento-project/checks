@@ -16,7 +16,7 @@ remediation: |
 
   Name resolution of cluster nodes and virtual IPs is recommended to be local.
 
-  ## Remedation
+  ## Remediation
   Specify IP addresses of all cluster nodes in the /etc/hosts.
 
   ## References

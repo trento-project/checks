@@ -5,7 +5,7 @@ id: "810D2E"
 name: ASCS and ERS instance profiles load HA script connector
 group: SAP profiles
 description: |
-  The HA Script connector has to be loaded by the ASCS and ERS instance profiles.
+  The HA script connector has to be loaded by the ASCS and ERS instance profiles.
 remediation: |
   ## Abstract
   HA script connectors must be loaded in the ASCS and ERS instance profiles.
@@ -19,7 +19,7 @@ remediation: |
   ```
 
   ## References
-  AZURE:
+  Azure:
     - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
   AWS:

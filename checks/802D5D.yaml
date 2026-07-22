@@ -5,7 +5,7 @@ id: "802D5D"
 name: ASCS and ERS Filesystem resources - resource_managed
 group: ASCS / ERS Cluster - cluster resources
 description: |
-  Check if filesystems resources are present for ASCS and ERS in the resource_managed setup.
+  Check if filesystem resources are present for ASCS and ERS in the resource_managed setup.
 remediation: |
   ## Abstract
   Filesystem resources for ASCS and ERS must be configured according to the best practices of a resource_managed setup.

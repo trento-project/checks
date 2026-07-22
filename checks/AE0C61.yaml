@@ -8,7 +8,7 @@ description: |
   SAPHana resource has monitor interval correctly configured for slave role
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHana resource has monitor interval correctly configured for slave role and the configuration is not missing.
+  This Trento check verifies if SAPHana resource has monitor interval correctly configured for slave role and the configuration is not missing.
 
   ## Remediation
 

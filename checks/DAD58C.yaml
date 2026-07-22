@@ -11,7 +11,7 @@ remediation: |
   ASCS resource groups must have the correct order according to the best practice documentation.
 
   ## Remediation
-  Create the resource group or correct its order according the the best practices documentation.
+  Create the resource group or correct its order according to the best practices documentation.
 
   ## References
   Azure:

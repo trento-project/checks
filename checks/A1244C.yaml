@@ -11,9 +11,9 @@ remediation: |
   The value of the Corosync `consensus` timeout is not set as recommended.
 
   ## Remediation
-  Adjust the corosync `consensus` timeout as recommended on the best practices, and reload the corosync configuration
+  Adjust the corosync `consensus` timeout as recommended in the best practices, and reload the corosync configuration
 
-  1. Set the correct `consensus` timeout in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated in all nodes of the cluster.
+  1. Set the correct `consensus` timeout in the `totem` section in the corosync configuration file `/etc/corosync/corosync.conf`. This action must be repeated on all nodes of the cluster.
      ```
      [...]
      totem {

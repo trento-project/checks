@@ -8,7 +8,7 @@ description: |
   Check if the order constraint exists with score as `optional` (numeric score is deprecated) and if the ASCS starts first (but does not have to stop first, `symmetrical=false`).
 remediation: |
   ## Abstract
-  An order constraint must exists for ASCS and ERS according to the best practices.
+  An order constraint must exist for ASCS and ERS according to the best practices.
 
   ## Remediation
   Correct the ASCS and ERS order constraint according to the best practices.
