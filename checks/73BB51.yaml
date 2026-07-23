@@ -8,7 +8,7 @@ description: |
   The sidadm user has to be in the sapsys group.
 remediation: |
   ## Abstract
-  The sidadm must be in the sapsys group for every cluster managed SID on every cluster node.
+  The sidadm user must be in the sapsys group for every cluster managed SID on every cluster node.
 
   ## Remediation
   Add every sidadm user to the sapsys group for every cluster managed SID on every cluster node.

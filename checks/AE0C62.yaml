@@ -8,7 +8,7 @@ description: |
   SAPHana resource has monitor timeout correctly configured for master role
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHana resource has monitor timeout correctly configured for master role and the configuration is not missing.
+  This Trento check verifies if SAPHana resource has monitor timeout correctly configured for master role and the configuration is not missing.
 
   ## Remediation
 
@@ -70,4 +70,4 @@ expectations:
              }
             }
           return false;
-    failure_message: SAPHana resource has monitor timeout not correctly configured for Master role
+    failure_message: SAPHana resource has monitor timeout not correctly configured for master role

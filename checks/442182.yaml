@@ -8,7 +8,7 @@ description: |
   patterns-sap-nw version is supported
 remediation: |
   ## Abstract
-  Installed patterns-sap-nw version must be equal or higher than the recommended value
+  Installed patterns-sap-nw version must be equal to or higher than the recommended value
 
   ## Remediation
   Install or upgrade to a supported patterns-sap-nw version

@@ -5,7 +5,7 @@ id: "FB95CD"
 name: sapinit generated and started
 group: Saphostagent
 description: |
-  The Sapinit systemd services is generated and started.
+  The sapinit systemd service is generated and started.
 remediation: |
   ## Abstract
   Make sure sapinit is generated and started.

@@ -8,7 +8,7 @@ description: |
   Colocation constraint is correctly configured for Scale-Up clusters (Perf-Opt, Cost-Opt, classic, angi)
 remediation: |
   ## Abstract
-  The virtual address IPaddr2/other-RA-for-virtual-ip resource or the resource group containig this RA resource must move alongside the SAPHanaSR multi state clone resource to enable access to HANA. A colocation constrain must be configured properly to colocate both resources in the same node.
+  The virtual address IPaddr2/other-RA-for-virtual-ip resource or the resource group containing this RA resource must move alongside the SAPHanaSR multi state clone resource to enable access to HANA. A colocation constraint must be configured properly to colocate both resources on the same node.
 
   ## Remediation
 

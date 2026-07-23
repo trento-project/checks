@@ -5,9 +5,9 @@
 #
 #  trento-install-checks
 #
-#  This script installs the checks into the directory Wanda expects them.  It
-#  is required, for Kubernetes style sidecar containers and should not be used
-#  in regular deployments using docker
+#  This script installs the checks into the directory Wanda expects them. It
+#  is required for Kubernetes-style sidecar containers and should not be used
+#  in regular deployments using Docker
 #
 
 checks_target="/usr/share/trento/checks"

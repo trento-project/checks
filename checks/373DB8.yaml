@@ -15,10 +15,11 @@ remediation: |
   The recommended value on GCP is at least `300` seconds.
 
   ## Remediation
-  Execute the following command to adjust the timeout for your usecase:
+  Execute the following command to adjust the timeout for your use case:
   ```crm configure property fencing-timeout=144```
   or
   ```crm configure property fencing-timeout=900```
+
   On Pacemaker versions older than 3.0.2:
   ```crm configure property stonith-timeout=144```
   or

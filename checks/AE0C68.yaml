@@ -8,13 +8,13 @@ description: |
   DUPLICATE_PRIMARY_TIMEOUT has correct value
 remediation: |
   ## Abstract
-  DUPLICATE_PRIMARY_TIMEOUT should have recommended value in cluster configuration.
+  DUPLICATE_PRIMARY_TIMEOUT should have the recommended value in the cluster configuration.
 
   ## Remediation
   Edit the crm configuration and change the value for this parameter to 7200.
 
   ## References
-  AZURE:
+  Azure:
 
     - https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-pacemaker
 

@@ -11,7 +11,7 @@ remediation: |
   These global cluster parameters "resource-stickiness" and "migration-threshold" should be configured as per the best practices of the respective cluster scenarios.
 
   ## Remediation
-  Execute the following command to enable it for SAP HANA Scale-Up cluster and the values can be adapted for other cluster scenarios:
+  Execute the following command to enable it for a SAP HANA Scale-Up cluster and the values can be adapted for other cluster scenarios:
   ```
   crm configure rsc_defaults resource-stickiness=1000
   crm configure rsc_defaults migration-threshold=5000

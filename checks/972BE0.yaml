@@ -5,7 +5,7 @@ id: "972BE0"
 name: ASCS and ERS instance autostart disabled
 group: OS services
 description: |
-  The ASCS and ERS autostart is disabled on for cluster managed instances.
+  The ASCS and ERS autostart is disabled for cluster managed instances.
 remediation: |
   ## Abstract
   The ASCS and ERS systemd service must be disabled as their start is handled by the cluster.

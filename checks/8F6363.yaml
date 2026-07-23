@@ -5,10 +5,10 @@ id: "8F6363"
 name: Sudoers entry for SAPHanaSR-hookHelper command is correctly configured for susTkOver Hook
 group: Sudoers
 description: |
-  Sudoers entry for SAPHanaSR-hookHelper command is correctly configured so that susTkOver hook can properly work
+  Sudoers entry for SAPHanaSR-hookHelper command is correctly configured so that the susTkOver hook can properly work
 remediation: |
   ## Abstract
-  susTkOver hook ensures that takeover can only be initiated when the conditions for takeover are met for example when the multi-state resource is set into maintenance. susTkOver hook relies on the sudoer permission to run the SAPHanaSR-hookHelper script and with correct argument for this script.
+  The susTkOver hook ensures that takeover can only be initiated when the conditions for takeover are met, for example when the multi-state resource is set into maintenance. The susTkOver hook relies on the sudoers permission to run the SAPHanaSR-hookHelper script with the correct argument for this script.
 
   ## Remediation
   Edit the sudoers configuration and make changes as per the best practice guide
@@ -23,7 +23,7 @@ remediation: |
   GCP:
     - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
 
-  SUSE / KVM /Nutanix:
+  SUSE / KVM / Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-allowing-sidadm-to-access-the-cluster
 
 customization_disabled: true
@@ -78,4 +78,4 @@ expectations:
         }
       }
       return false;
-    failure_message: sudoers entry for command SAPHanaSR-hookHelper is not correctly configured for susTakeOver Hook
+    failure_message: sudoers entry for command SAPHanaSR-hookHelper is not correctly configured for susTkOver Hook

@@ -11,10 +11,10 @@ remediation: |
   `/usr/sap/sapservices` must contain entries for every clustered SAP instance.
 
   ## Remediation
-  Make sure you put all clustered SAP instances to `/usr/sap/sapservices` for compatibility reasons.
+  Make sure you put all clustered SAP instances in `/usr/sap/sapservices` for compatibility reasons.
 
   ## References
-  AZURE:
+  Azure:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
 
   AWS:

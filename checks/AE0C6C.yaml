@@ -8,7 +8,7 @@ description: |
   SAPHana resource has meta attribute priority correctly configured
 remediation: |
   ## Abstract
-  This Trento check verifies if SAPHana resource SAPHana resource has meta attribute priority correctly configured and not missing for 2 node cluster.
+  This Trento check verifies if SAPHana resource has meta attribute priority correctly configured and not missing for a 2-node cluster.
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide

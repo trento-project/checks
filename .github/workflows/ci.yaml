@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
       - name: Check license Headers
@@ -37,7 +37,7 @@ jobs:
         - ${{ github.workspace }}:/data
     steps:
       - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Run TLint
         run: "/home/tlint/tlint lint /data/checks"
 
@@ -51,7 +51,7 @@ jobs:
     strategy:
       matrix:
         imgname: ["checks", "trento-checks"]
-    uses: trento-project/.github/.github/workflows/publish-containers.yaml@406be0972195864a87ed454458eaa0856d0c5457 # v1.6.0
+    uses: trento-project/.github/.github/workflows/publish-containers.yaml@7ea6a8a1c3ed8a1f2185328219be4a724dd3686e # v1.8.0
     with:
       image_name: ${{ matrix.imgname }}
       tag: rolling
@@ -64,7 +64,7 @@ jobs:
     if: >-
       fromJSON(vars.OBS_ENABLED)
       && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    uses: trento-project/.github/.github/workflows/obs-sync.yaml@406be0972195864a87ed454458eaa0856d0c5457 # v1.6.0
+    uses: trento-project/.github/.github/workflows/obs-sync.yaml@7ea6a8a1c3ed8a1f2185328219be4a724dd3686e # v1.8.0
     needs:
       - license-headers
       - tlint

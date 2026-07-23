@@ -8,7 +8,7 @@ description: |
   SAPHana resource has promote timeout correctly configured
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHana resource has promote timeout correctly configured and the configuration is not missing.
+  This Trento check verifies if SAPHana resource has promote timeout correctly configured and the configuration is not missing.
 
   ## Remediation
 
@@ -70,4 +70,4 @@ expectations:
              }
             }
           return false;
-    failure_message: SAPHana resource has ptomote timeout not correctly configured
+    failure_message: SAPHana resource has promote timeout not correctly configured

@@ -5,10 +5,10 @@ id: "F98557"
 name: ASCS instance failure-timeout and migration-threshold - ENSA1
 group: ASCS / ERS Cluster - cluster resources
 description: |
-  Check if meta attributes `failure-timeout` and `migration-threshold` are properly configured for ASCS instance resource in an ENSA1 setup.
+  Check if meta attributes `failure-timeout` and `migration-threshold` are properly configured for the ASCS instance resource in an ENSA1 setup.
 remediation: |
   ## Abstract
-  The meta attributes `failure-timeout` and `migration-threshold` must be configured according to the best practices fir the ASCS instance resource in an ENSA1 setup.
+  The meta attributes `failure-timeout` and `migration-threshold` must be configured according to the best practices for the ASCS instance resource in an ENSA1 setup.
 
   ## Remediation
   Configure a `failure-timeout` of `60` and `migration-threshold` of `1`, e.g.
