@@ -65,6 +65,9 @@ facts:
   - name: resources_primitives
     gatherer: cibadmin@v1
     argument: cib.configuration.resources.primitive
+  - name: crm_feature_set
+    gatherer: cibadmin@v1
+    argument: cib.crm_feature_set
 
 values:
   - name: expected_fencing_timeout
@@ -77,26 +80,50 @@ values:
       - value: 144
         when: env.provider == "azure"
 
-  - name: expected_azure_fencing_timeout
+  - name: expected_azure_arm_fencing_timeout
     default: 900
+
+  - name: expected_crm_feature_set_pacemaker_302
+    default: "3.20.0"
 
 expectations:
   - name: expectations_fencing_timeout
-    expect: |
-      let bootstrap_nvpairs = facts.crm_config_properties
-          .find(|item| item.id == "cib-bootstrap-options").nvpair;
+    expect_enum: |
+      let bootstrap_nvpairs = facts.crm_config_properties.find(|item| item.id == "cib-bootstrap-options").nvpair;
       let fencing_timeout = bootstrap_nvpairs.find(|prop| prop.name == "fencing-timeout");
-      if fencing_timeout == () {
-        fencing_timeout = bootstrap_nvpairs.find(|prop| prop.name == "stonith-timeout");
-      }
+      let stonith_timeout = bootstrap_nvpairs.find(|prop| prop.name == "stonith-timeout");
 
-      let fence_azure_arm_detected =
-          facts.resources_primitives
-               .filter(|item| item.type == "fence_azure_arm").len() != 0;
+      let fence_azure_arm_detected = facts.resources_primitives.filter(|item| item.type == "fence_azure_arm").len() != 0;
 
-      if fence_azure_arm_detected {
-        fencing_timeout != () && fencing_timeout.value == values.expected_azure_fencing_timeout;
+      let expected_timeout = if fence_azure_arm_detected {
+        values.expected_azure_arm_fencing_timeout
       } else {
-        fencing_timeout != () && fencing_timeout.value >= values.expected_fencing_timeout;
+        values.expected_fencing_timeout
+      };
+
+      let fencing_timeout_ok = fencing_timeout != () && fencing_timeout.value >= expected_timeout;
+      let stonith_timeout_ok = stonith_timeout != () && stonith_timeout.value >= expected_timeout;
+
+      let feature_set = facts.crm_feature_set.split(".").map(|part| parse_int(part));
+      let threshold = values.expected_crm_feature_set_pacemaker_302.split(".").map(|part| parse_int(part));
+      let is_pacemaker_302_or_newer = feature_set[0] > threshold[0] || (feature_set[0] == threshold[0] && feature_set[1] >= threshold[1]);
+
+      if is_pacemaker_302_or_newer {
+        // fencing-timeout is the effective property here: if present, its value is authoritative
+        if fencing_timeout != () {
+          if fencing_timeout_ok { "passing" } else { "critical" }
+        } else if stonith_timeout_ok {
+          "warning"
+        } else {
+          "critical"
+        }
+      } else {
+        // stonith-timeout is the effective property here; fencing-timeout is unrecognized
+        if stonith_timeout_ok {
+          if fencing_timeout != () { "warning" } else { "passing" }
+        } else {
+          "critical"
+        }
       }
-    failure_message: Cluster fencing timeout ('fencing-timeout' in Pacemaker 3.0.2+, 'stonith-timeout' in older versions) is not configured correctly
+    warning_message: Cluster fencing timeout is configured using a deprecated or unrecognized property for the detected Pacemaker version ('stonith-timeout' is deprecated on Pacemaker 3.0.2+, 'fencing-timeout' is not recognized before it). The cluster is functional but the configuration should be migrated to the property matching the running Pacemaker version.
+    failure_message: Cluster fencing timeout ('fencing-timeout' in Pacemaker 3.0.2+, 'stonith-timeout' in older versions) is not configured correctly for the detected Pacemaker version

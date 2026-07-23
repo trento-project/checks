@@ -62,15 +62,44 @@ facts:
   - name: crm_config_properties
     gatherer: cibadmin@v1
     argument: cib.configuration.crm_config.cluster_property_set
+  - name: crm_feature_set
+    gatherer: cibadmin@v1
+    argument: cib.crm_feature_set
+
+values:
+  - name: expected_crm_feature_set_pacemaker_302
+    default: "3.20.0"
 
 expectations:
   - name: expectations_fencing_enabled
-    expect: |
-      let bootstrap = facts.crm_config_properties
-          .find(|item| item.id == "cib-bootstrap-options").nvpair;
-      let prop = bootstrap.find(|prop| prop.name == "fencing-enabled");
-      if prop == () {
-        prop = bootstrap.find(|prop| prop.name == "stonith-enabled");
+    expect_enum: |
+      let bootstrap = facts.crm_config_properties.find(|item| item.id == "cib-bootstrap-options").nvpair;
+      let fencing_enabled = bootstrap.find(|prop| prop.name == "fencing-enabled");
+      let stonith_enabled = bootstrap.find(|prop| prop.name == "stonith-enabled");
+
+      let fencing_enabled_ok = fencing_enabled != () && fencing_enabled.value == true;
+      let stonith_enabled_ok = stonith_enabled != () && stonith_enabled.value == true;
+
+      let feature_set = facts.crm_feature_set.split(".").map(|part| parse_int(part));
+      let threshold = values.expected_crm_feature_set_pacemaker_302.split(".").map(|part| parse_int(part));
+      let is_pacemaker_302_or_newer = feature_set[0] > threshold[0] || (feature_set[0] == threshold[0] && feature_set[1] >= threshold[1]);
+
+      if is_pacemaker_302_or_newer {
+        // fencing-enabled is the effective property here: if present, its value is authoritative
+        if fencing_enabled != () {
+          if fencing_enabled_ok { "passing" } else { "critical" }
+        } else if stonith_enabled_ok {
+          "warning"
+        } else {
+          "critical"
+        }
+      } else {
+        // stonith-enabled is the effective property here; fencing-enabled is unrecognized
+        if stonith_enabled_ok {
+          if fencing_enabled != () { "warning" } else { "passing" }
+        } else {
+          "critical"
+        }
       }
-      prop != () && prop.value == "true"
-    failure_message: Fencing was expected to be enabled in the cluster configuration, but neither 'fencing-enabled' nor 'stonith-enabled' is set to true.
+    warning_message: Fencing is enabled using a deprecated or unrecognized property for the detected Pacemaker version ('stonith-enabled' is deprecated on Pacemaker 3.0.2+, 'fencing-enabled' is not recognized before it). The cluster is functional but the configuration should be migrated to the property matching the running Pacemaker version.
+    failure_message: Fencing was expected to be enabled in the cluster configuration, but neither 'fencing-enabled' nor 'stonith-enabled' is correctly set to true for the detected Pacemaker version.
