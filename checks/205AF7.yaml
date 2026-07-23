@@ -83,22 +83,30 @@ expectations:
       let threshold = values.expected_crm_feature_set_pacemaker_302.split(".").map(|part| parse_int(part));
       let is_pacemaker_302_or_newer = feature_set[0] > threshold[0] || (feature_set[0] == threshold[0] && feature_set[1] >= threshold[1]);
 
-      if is_pacemaker_302_or_newer {
-        // fencing-enabled is the effective property here: if present, its value is authoritative
-        if fencing_enabled != () {
-          if fencing_enabled_ok { "passing" } else { "critical" }
-        } else if stonith_enabled_ok {
-          "warning"
+      // On Pacemaker 3.0.2+, "fencing-enabled" is the authoritative property and "stonith-enabled" is deprecated.
+      // Before Pacemaker 3.0.2 it is the other way round: "stonith-enabled" is authoritative and "fencing-enabled" is not even recognized by Pacemaker.
+
+      let authoritative_property = if is_pacemaker_302_or_newer { fencing_enabled } else { stonith_enabled };
+      let authoritative_property_enabled = if is_pacemaker_302_or_newer { fencing_enabled_ok } else { stonith_enabled_ok };
+      let deprecated_property = if is_pacemaker_302_or_newer { stonith_enabled } else { fencing_enabled };
+      let deprecated_property_enabled = if is_pacemaker_302_or_newer { stonith_enabled_ok } else { fencing_enabled_ok };
+
+      // - passing:  the authoritative property is correctly set to true, and the deprecated property is not present.
+      // - warning:  the authoritative property is correctly set to true, but the deprecated property is also present and should be cleaned up;
+      //             or the authoritative property is absent, but fencing still works because the deprecated property is correctly set to true.
+      // - critical: the authoritative property is present but not set to true; or the authoritative property is absent and the deprecated property isn't correctly set to true either.
+
+      if authoritative_property != () {
+        if authoritative_property_enabled {
+          if deprecated_property != () { "warning" } else { "passing" }
         } else {
           "critical"
         }
+      } else if deprecated_property_enabled {
+        "warning"
       } else {
-        // stonith-enabled is the effective property here; fencing-enabled is unrecognized
-        if stonith_enabled_ok {
-          if fencing_enabled != () { "warning" } else { "passing" }
-        } else {
-          "critical"
-        }
+        "critical"
       }
-    warning_message: Fencing is enabled using a deprecated or unrecognized property for the detected Pacemaker version ('stonith-enabled' is deprecated on Pacemaker 3.0.2+, 'fencing-enabled' is not recognized before it). The cluster is functional but the configuration should be migrated to the property matching the running Pacemaker version.
+
+    warning_message: Fencing is enabled, but the cluster properties do not fully match the convention for the detected Pacemaker version. Either fencing relies on the deprecated/unrecognized property, or a leftover property from the other convention is still present alongside the correct one. The cluster is functional but the configuration should be migrated to only use the property matching the running Pacemaker version.
     failure_message: Fencing was expected to be enabled in the cluster configuration, but neither 'fencing-enabled' nor 'stonith-enabled' is correctly set to true for the detected Pacemaker version.
