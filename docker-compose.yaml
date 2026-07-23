@@ -1,8 +1,6 @@
 # SPDX-FileCopyrightText: SUSE LLC
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-version: "3.7"
-
 services:
 
   wanda:
@@ -24,16 +22,24 @@ services:
       - ./checks:/usr/share/trento/checks:ro
 
   rabbitmq:
-    image: rabbitmq:3.10.5-management-alpine
+    # Keep versions in sync with
+      # .github/workflows/ci.yaml
+      # https://github.com/trento-project/helm-charts/blob/main/charts/trento-server/charts/rabbitmq/values.yaml
+    image: rabbitmq:3.12.6-management-alpine # https://hub.docker.com/_/rabbitmq/tags
     ports:
-      - 5672:5672
-      - 15672:15672
+      - 5676:5671
+      - 5674:5672
+      - 15674:15672
     environment:
       RABBITMQ_DEFAULT_USER: wanda
       RABBITMQ_DEFAULT_PASS: wanda
 
   postgres:
-    image: postgres:15
+    # Keep versions in sync with
+      # .github/workflows/ci.yaml
+      # https://github.com/trento-project/helm-charts/blob/main/charts/trento-server/values.yaml
+      # https://documentation.suse.com/sles-sap/trento/single-html/SLES-SAP-trento/SLES-SAP-trento.html#id-install-postgresql
+    image: registry.suse.com/suse/postgres:17.5 # https://registry.suse.com/repositories/suse-postgres17?tag=17.5
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
