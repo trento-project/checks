@@ -3,6 +3,8 @@
 
 id: "3AA381"
 name: The saptune package version is identical on all nodes
+exclude: |
+  host.is_majority_maker == true
 group: saptune
 description: |
   Installed saptune package version is identical on all nodes
@@ -12,7 +14,7 @@ remediation: |
   But the version of the installed saptune package differs on the cluster nodes.
   Also make sure that "SAPTUNE_VERSION" in /etc/sysconfig/saptune has identical values on all nodes.
 
-  Note: This check cannot be used on clusters with majority maker.
+  Note: Majority maker nodes are excluded from execution when they exist in the cluster.
 
   ## Remediation
   Update the saptune package to get the same version on all cluster nodes
