@@ -3,8 +3,6 @@
 
 id: "ABA3CA"
 name: SAP Host Agent is running
-exclude: |
-  host.is_majority_maker == true
 group: OS and package versions
 description: |
   SAP Host Agent is running
@@ -12,7 +10,7 @@ remediation: |
   ## Abstract
   SAP Host Agent should be running on all cluster nodes
 
-  Note: Majority maker nodes are excluded from execution when they exist in the cluster.
+  Note: This check cannot be used on clusters with majority maker.
 
   ## Remediation
   Install and start SAP Host Agent on all nodes.
