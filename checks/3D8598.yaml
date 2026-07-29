@@ -59,18 +59,6 @@ values:
     conditions:
       - value: 3000
         when: env.hana_scenario == "cost_optimized"
-  - name: col_with_rsc_role
-    customization_disabled: true
-    default: "Promoted"
-    conditions:
-      - value: "Master"
-        when: env.architecture_type == "classic"
-  - name: msclone
-    customization_disabled: true
-    default: "clone"
-    conditions:
-      - value: "master"
-        when: env.architecture_type == "classic"
   - name: ms_rsc_type
     customization_disabled: true
     default: "SAPHanaController"
@@ -81,8 +69,19 @@ values:
 expectations:
   - name: expectations_colocation_configured
     expect: |
+        let resources = facts.resources;
+        let masters = [];
+        let clones = [];
+        if "master" in resources {
+          masters = resources.master;
+        }
+        if "clone" in resources {
+          clones = resources.clone;
+        }
+        let masters_and_clones = masters + clones;
+
         let vip; let vip_prim; let vip_grp;
-        let saphanasr_id = facts.resources[values.msclone].find_map(|ms| if ms.primitive.find(|rsc| rsc.type == values.ms_rsc_type) != () { ms.id });
+        let saphanasr_id = masters_and_clones.find_map(|ms| if ms.primitive.find(|rsc| rsc.type == values.ms_rsc_type) != () { ms.id });
         if saphanasr_id == () { return false; }
         let primitives = facts.resources.primitive;
         for prim in primitives {
@@ -99,5 +98,5 @@ expectations:
             }
           }
         }
-        facts.constraints.rsc_colocation.find(|col| (col["rsc"] == vip_prim || col["rsc"] == vip_grp ) && col["rsc-role"] == values.col_rsc_role && col["score"] == values.col_rsc_score && col["with-rsc"] == saphanasr_id && col["with-rsc-role"] == values.col_with_rsc_role) != ()
+        facts.constraints.rsc_colocation.find(|col| (col["rsc"] == vip_prim || col["rsc"] == vip_grp ) && col["rsc-role"] == values.col_rsc_role && col["score"] == values.col_rsc_score && col["with-rsc"] == saphanasr_id && (col["with-rsc-role"] == "Promoted" || col["with-rsc-role"] == "Master")) != ()
     failure_message: Colocation constraint is not correctly configured
