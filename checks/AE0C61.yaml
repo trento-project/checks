@@ -63,7 +63,7 @@ expectations:
             let rsc = cln.primitive;
             for prim in rsc {
               if prim.type == "SAPHana" {
-                let op = prim.operations.op.find(|oname| oname.name == "monitor" && oname.role == "Slave");
+                let op = prim.operations.op.find(|oname| oname.name == "monitor" && (oname.role == "Slave" || oname.role == "Unpromoted"));
                 if op == () {return false};
                 if op.interval == values.monitor_interval {return true;}
               }
