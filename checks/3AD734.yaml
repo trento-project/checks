@@ -3,8 +3,6 @@
 
 id: "3AD734"
 name: All nodes have the same Solution and Notes enabled
-exclude: |
-  host.is_majority_maker == true
 group: saptune
 description: |
   The enabled and applied Solution and Notes are the same on all nodes
@@ -13,7 +11,7 @@ remediation: |
   ## Abstract
   The same Solution and Notes must be enabled and applied on all cluster nodes. This is the base of having the same configuration even though it does not guarantee identical tuning (e.g. staging is used or active diverging overrides)!
 
-  Note: Majority maker nodes are excluded from execution when they exist in the cluster.
+  Note: Majority maker nodes are excluded from execution when they exist in the target cluster.
 
   ## Remediation
   Enable and apply the same Solution and/or Notes on all nodes with the appropriate saptune commands.
@@ -27,6 +25,8 @@ remediation: |
 
 metadata:
   target_type: cluster
+
+exclude: host.is_majority_maker == true
 
 facts:
   - name: saptune_status

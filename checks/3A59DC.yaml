@@ -3,8 +3,6 @@
 
 id: "3A59DC"
 name: The recommended Solution is enabled
-exclude: |
-  host.is_majority_maker == true
 group: saptune
 description: |
   Check if the recommended Solution is enabled on the system. The recommendation is based on the SAP product detection of Trento.
@@ -13,7 +11,7 @@ remediation: |
   ## Abstract
   The enabled Solution is **not** the recommended one.
 
-  Note: Majority maker nodes are excluded from execution when they exist in the cluster.
+  Note: Majority maker nodes are excluded from execution when they exist in the target cluster.
 
   ## Remediation
   Enable the recommended Solution with `saptune solution change <SOLUTION>`.
@@ -26,6 +24,8 @@ remediation: |
 
 metadata:
   target_type: cluster
+
+exclude: host.is_majority_maker == true
 
 facts:
   - name: saptune_status
