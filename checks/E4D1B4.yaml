@@ -27,8 +27,8 @@ remediation: |
 
   GCP:
 
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-scaleout-config-sles#create_the_saphanatopology_primitive_resource
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#create_the_saphanatopology_primitive_resource
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-scaleout-config-sles#create_the_saphanatopology_primitive_resource
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#create_the_saphanatopology_primitive_resource
 
   SUSE / KVM:
 

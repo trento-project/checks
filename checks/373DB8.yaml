@@ -31,7 +31,7 @@ remediation: |
 
   GCP:
 
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#configure_the_general_cluster_properties
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#configure_the_general_cluster_properties
 
   Nutanix:
 
