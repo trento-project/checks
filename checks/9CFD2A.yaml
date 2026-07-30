@@ -26,10 +26,12 @@ remediation: |
       ## GCP has the same resource agent IPaddr2 but different values for interval and timeout for monitor operations.
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-adding-a-virtual-ip-address-for-the-primary-site
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-adding-a-virtual-ip-address-for-the-primary-site
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-adding-a-virtual-ip-address-for-the-primary-site
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-adding-a-virtual-ip-address-for-the-primary-site
 
 severity: critical
 metadata:

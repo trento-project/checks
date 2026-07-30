@@ -14,7 +14,7 @@ remediation: |
   Install or upgrade to a supported patterns-sap-nw version
 
   ## Reference
-  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/
 
 
 metadata:

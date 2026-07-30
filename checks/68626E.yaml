@@ -18,7 +18,7 @@ remediation: |
   Make sure you configure the SBD msgwait to 2 * (SBD Watchdog Timeout) as recommended in the best practices.
 
   ## References
-  - https://www.suse.com/support/kb/doc/?id=000017952
+  - https://support.scc.suse.com/s/redirect?id=000017952
 
   Azure:
 
@@ -26,15 +26,15 @@ remediation: |
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-verifying-the-sbd-device
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-verifying-the-sbd-device
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-verifying-the-sbd-device
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-verifying-the-sbd-device
 
   VMware:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-verifying-the-sbd-device
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-verifying-the-sbd-device
 
 metadata:
   target_type: cluster

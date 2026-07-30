@@ -15,7 +15,7 @@ remediation: |
   Create the local directory structure on all nodes that should run the SAP resource.
 
   ## Reference
-  - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-creating-mount-points-and-nfs-shares
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-creating-mount-points-and-nfs-shares
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
