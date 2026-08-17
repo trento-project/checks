@@ -34,7 +34,7 @@ metadata:
   target_type: cluster
   cluster_type:
     - hana_scale_up
-    - hana-scale_out
+    - hana_scale_out
   architecture_type:
     - classic
     - angi
