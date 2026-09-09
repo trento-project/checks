@@ -50,7 +50,7 @@ expectations:
           }
       }
       return true;
-    failure_message: At least one ASCS instance directory is not owned by the sidadm and sapsys
+    failure_message: At least one ASCS instance directory is not owned by the sidadm user and the sapsys group
   - name: ers_dir_ownership
     expect: |
       for sid in facts.cluster_sids.keys() {
@@ -67,4 +67,4 @@ expectations:
           }
       }
       return true;
-    failure_message: At least one ERS instance directory is not owned by the sidadm and sapsys
+    failure_message: At least one ERS instance directory is not owned by the sidadm user and the sapsys group

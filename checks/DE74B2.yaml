@@ -8,10 +8,10 @@ description: |
   Azure Fence agent configuration parameters are correct
 remediation: |
   ## Abstract
-  The Azure SAP Clustering best practices determines specific timing and retries parameter values for proper functioning of the Azure Fence agent.
+  The Azure SAP Clustering best practices determine specific timing and retries parameter values for proper functioning of the Azure Fence agent.
 
   ## Remediation
-  Please, make sure to set the following values for the fence-agent parameter:
+  Please make sure to set the following values for the fence-agent parameter:
   ```
   pcmk_monitor_retries=4
   pcmk_action_limit=3

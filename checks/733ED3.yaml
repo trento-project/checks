@@ -45,7 +45,7 @@ expectations:
         let group_ascs = facts.cluster_sids[sid].instances.find(|i| i.name == `ASCS${i.instance_number}` ).resource_group;
         if group_ascs == () { return false; } // without an ASCS group we cannot check colocation
         let group_ers = facts.cluster_sids[sid].instances.find(|i| i.name == "ERS" + i.instance_number ).resource_group;
-        if group_ers == () { return false }; // without a ERS group we cannot check colocation
+        if group_ers == () { return false }; // without an ERS group we cannot check colocation
         let result = facts.cib_configuration.constraints.rsc_colocation
           .find(|c| c.rsc == group_ers && c["with-rsc"] == group_ascs && c.score == values.colocation_score);
         if result == () { return false; }

@@ -8,7 +8,7 @@ description: |
   sap_suse_cluster_connector version is supported
 remediation: |
   ## Abstract
-  Installed sap_suse_cluster_connector version must be equal or higher than the recommended value
+  Installed sap_suse_cluster_connector version must be equal to or higher than the recommended value
 
   ## Remediation
   Install or upgrade to a supported sap_suse_cluster_connector version

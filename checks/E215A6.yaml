@@ -8,7 +8,7 @@ description: |
   SAPHanaFilesystem resource is configured
 remediation: |
   ## Abstract
-  SAPHanaFilesystem resource should be configured especially for hana_scale_out clusters. So, that problems with HANA filesystem can be monitored and remediative steps can be taken by the cluster if the resource is hung due to the fileystem unavailability.
+  SAPHanaFilesystem resource should be configured especially for hana_scale_out clusters, so that problems with the HANA filesystem can be monitored and remediation steps can be taken by the cluster if the resource is hung due to the filesystem unavailability.
   ## Remediation
 
   Configure SAPHanaFilesystem resource.

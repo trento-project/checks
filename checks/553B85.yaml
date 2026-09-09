@@ -8,7 +8,7 @@ description: |
   SAPHanaTopology resource has monitor timeout correctly configured
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHanaTopoloy resource has monitor timeout correctly configured and the configuration is not missing.
+  This Trento check verifies if SAPHanaTopology resource has monitor timeout correctly configured and the configuration is not missing.
 
   ## Remediation
 

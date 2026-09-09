@@ -8,13 +8,13 @@ description: |
   HANA_CALL_TIMEOUT has correct value
 remediation: |
   ## Abstract
-  HANA_CALL_TIMEOUT should have recommended value in cluster configuration. No configuration is also allowed as it will then use the default value.
+  HANA_CALL_TIMEOUT should have the recommended value in cluster configuration. No configuration is also allowed as it will then use the default value.
 
   ## Remediation
   Edit the crm configuration and change the value for this parameter to 60.
 
   ## References
-  AZURE:
+  Azure:
 
     - https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-pacemaker
 

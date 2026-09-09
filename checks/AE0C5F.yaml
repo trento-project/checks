@@ -5,10 +5,10 @@ id: "AE0C5F"
 name: SAPHana resource is configured
 group: Pacemaker
 description: |
-  SAPHana resource is configured and with correct provider i.e. SUSE
+  SAPHana resource is configured with the correct provider, i.e. SUSE
 remediation: |
   ## Abstract
-  This Trento check verified if SAPHana resource is configured and not missing. It also checks whether the RA provider is SUSE and not say for example heartbeat or anything else.
+  This Trento check verifies if SAPHana resource is configured and not missing. It also checks whether the RA provider is SUSE and not, for example, heartbeat or anything else.
 
   ## Remediation
 

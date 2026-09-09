@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 id: "9CFD29"
-name: virtual IP resource has monitor interval properly configured
+name: Virtual IP resource has monitor interval properly configured
 group: Pacemaker
 description: |
-  virtual IP resource has monitor interval properly configured
+  Virtual IP resource has monitor interval properly configured
 remediation: |
   ## Abstract
   Monitor interval defines how often the monitor operations run for a particular resource. An interval of 10s means that the monitor operation runs every 10 seconds.
@@ -19,11 +19,11 @@ remediation: |
 
   AWS:
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-move-the-ip-resource.html
-      ## AWS have different resource agent for virtual IP and different values for interval and timeout for monitor operation for virtual IP resource configured
+      ## AWS has a different resource agent for virtual IP and different values for interval and timeout for monitor operation for virtual IP resource configured
 
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
-      ## GCP have same resource agent IPaddr2 but different value for interval and timeout for monitor operations.
+      ## GCP has the same resource agent IPaddr2 but different values for interval and timeout for monitor operations.
 
   SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-adding-a-virtual-ip-address-for-the-primary-site

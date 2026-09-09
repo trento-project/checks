@@ -5,10 +5,10 @@ id: "BE3C0E"
 name: sapsys and sapinst groups exist
 group: OS users/groups
 description: |
-  The groups sapsys ans sapinst should exist on every cluster node.
+  The groups sapsys and sapinst should exist on every cluster node.
 remediation: |
   ## Abstract
-  Make sure the groups sapsys and sapinst exist exist on every cluster node.
+  Make sure the groups sapsys and sapinst exist on every cluster node.
 
   ## Remediation
   Create the missing groups.

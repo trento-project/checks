@@ -8,7 +8,7 @@ description: |
   SAPHanaSR-angi version is supported
 remediation: |
   ## Abstract
-  Installed SAPHanaSR-angi version must be equal or higher than the recommended value
+  Installed SAPHanaSR-angi version must be equal to or higher than the recommended value
   ## Remediation
   Install or upgrade to a supported SAPHanaSR-angi version
 

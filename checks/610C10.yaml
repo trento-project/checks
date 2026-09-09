@@ -8,7 +8,7 @@ description: |
   azure-lb resource is configured
 remediation: |
   ## Abstract
-  azure-lb resource is needed for directing network traffic to correct virtual machine where the virtual IP is configured.
+  azure-lb resource is needed for directing network traffic to the correct virtual machine where the virtual IP is configured.
 
   ## Remediation
   Edit the crm configuration and make changes as per the best practice guide

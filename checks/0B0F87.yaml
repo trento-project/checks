@@ -13,7 +13,7 @@ remediation: |
   ## Remediation
   Install identical SAPHanaSR version on all nodes of the cluster
 
-  ## Reference
+  ## References
   Azure:
 
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability#implement-hana-hooks-saphanasr-and-suschksrv

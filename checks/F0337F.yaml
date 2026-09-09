@@ -5,10 +5,10 @@ id: "F0337F"
 name: ASCS and ERS location - ENSA2
 group: ASCS / ERS Cluster - cluster resources
 description: |
-  Check that the location constraint to move ASCS to ERS after failover does not exists for ENSA2.
+  Check that the location constraint to move ASCS to ERS after failover does not exist for ENSA2.
 remediation: |
   ## Abstract
-  There must not not any location constraint for ASCS and ERS in the ENSA2 setup.
+  There must not be any location constraint for ASCS and ERS in the ENSA2 setup.
 
   ## Remediation
   Delete the ASCS and ERS location constraint according to the best practices for an ENSA2 setup.
