@@ -29,16 +29,16 @@ jobs:
     strategy:
       matrix:
         imgname: ["checks", "trento-checks"]
-        include:
+        config:
           - tag: ${{ needs.release.outputs.version }}
             branch: ${{ github.ref_name }}
           - tag: rolling
             branch: main
     uses: trento-project/.github/.github/workflows/publish-containers.yaml@7bdd3e4e59084a0edca7da6ece0456490defafb2 # v1.9.0
     with:
-      branch: ${{ matrix.branch }}
+      branch: ${{ matrix.config.branch }}
       image_name: ${{ matrix.imgname }}
-      tag: ${{ matrix.tag }}
+      tag: ${{ matrix.config.tag }}
     secrets:
       gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
       ssh_key: ${{ secrets.TRENTOBOT_SSH_KEY }}
