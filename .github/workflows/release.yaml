@@ -23,7 +23,7 @@ jobs:
       gpg_key: ${{ secrets.TRENTOBOT_GPG_KEY }}
 
   publish-containers:
-    name: Publish GHCR Containers
+    name: Publish GHCR Container: ${{ matrix.imgname }}:${{ matrix.config.tag }}
     needs:
       - release
     strategy:
