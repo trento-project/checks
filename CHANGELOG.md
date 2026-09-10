@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.2](https://github.com/trento-project/checks/tree/1.2.0/compare/1.3.1...1.3.2) - 2026-09-10
+
+### What's Changed
+
+* Update documentation links in checks: SAPHanaSR-angi (#99) @trentobot
+* fix of metadata hana-scale_out to hana_scale_out (#98) @trentobot
+* Fix typos (#96) @trentobot
+
+#### Maintenance
+
+* Adding second name to the GHCR image, trento-checks (#97) @trentobot
+
+**Full Changelog**: https://github.com/trento-project/checks/compare/1.3.1...1.3.2
+
 ## [1.3.1](https://github.com/trento-project/checks/tree/1.2.0/compare/1.3.0...1.3.1) - 2026-06-17
 
 ### What's Changed
