@@ -58,7 +58,17 @@ values:
 expectations:
   - name: expectations_interleave
     expect: |
-          let hana_ct = facts.resources.master;
+          let masters = [];
+          let promotable_clones = [];
+          let resources = facts.resources;
+          if "master" in resources {
+            masters = resources.master;
+          }
+          if "clone" in resources {
+            promotable_clones = resources.clone.filter(|cln| cln.meta_attributes.find(|ma| ma.nvpair.find(|item| item.name == "promotable" && item.value == "true") != ()) != ());
+          }
+
+          let hana_ct = masters + promotable_clones;
           for cln in hana_ct {
               for ma in cln.meta_attributes {
                 let cnx = ma.nvpair.find(|item| item.name == "interleave");
