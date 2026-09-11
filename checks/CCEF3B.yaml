@@ -20,7 +20,7 @@ remediation: |
 
   AWS:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#filesystem-resources
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#filesystem-resources-nw-sles
 
   GCP:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.7.4

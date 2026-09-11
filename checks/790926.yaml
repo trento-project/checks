@@ -20,7 +20,7 @@ remediation: |
 
   AWS:
 
-    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-cluster-configuration.html#sap-hana-on-aws-update-the-hacluster-password
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-cluster-node-setup.html#_change_the_hacluster_password
 
   GCP:
 

@@ -24,7 +24,7 @@ remediation: |
 
   AWS:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#cluster-bootstrap
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#cluster-bootstrap-nw-sles
 
   GCP:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
