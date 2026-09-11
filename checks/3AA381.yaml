@@ -19,7 +19,7 @@ remediation: |
   `zypper update saptune`
 
   ## References
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-enable
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-enable
 
 
 metadata:

@@ -14,7 +14,7 @@ remediation: |
   Install or upgrade to a supported Pacemaker version
 
   ## Reference
-  - https://www.suse.com/support/kb/doc/?id=000019604
+  - https://support.scc.suse.com/s/redirect?id=000019604
 
 metadata:
   target_type: cluster

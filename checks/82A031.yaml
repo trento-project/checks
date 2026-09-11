@@ -14,7 +14,7 @@ remediation: |
   Install an identical Pacemaker version on all nodes of the cluster
 
   ## Reference
-  - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
+  - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
     (EXAMPLE 1:Installing additional software for the HA cluster)
 
 

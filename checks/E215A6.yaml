@@ -20,7 +20,7 @@ remediation: |
 
   AWS:
 
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-saphanafilesystem
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/#id-saphanafilesystem
 
   GCP:
 
@@ -28,11 +28,11 @@ remediation: |
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-saphanafilesystem
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/#id-saphanafilesystem
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-saphanafilesystem
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/#id-saphanafilesystem
 
 severity: warning
 metadata:

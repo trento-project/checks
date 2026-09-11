@@ -24,8 +24,8 @@ remediation: |
     - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
 
   SUSE / KVM / Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-allowing-sidadm-to-access-the-cluster
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-allowing-sidadm-to-access-the-cluster
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-allowing-sidadm-to-access-the-cluster
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-allowing-sidadm-to-access-the-cluster
 
 customization_disabled: true
 severity: critical
