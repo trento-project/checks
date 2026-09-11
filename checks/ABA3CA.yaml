@@ -26,6 +26,8 @@ remediation: |
 
   GCP:
 
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#verify_that_sap_host_agent_is_receiving_metrics
+
   SUSE / KVM:
 
     - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.s4s.hana-install

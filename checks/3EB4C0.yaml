@@ -36,7 +36,7 @@ remediation: |
 
   GCP:
     - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
 
   Nutanix:
     - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ascs-instance

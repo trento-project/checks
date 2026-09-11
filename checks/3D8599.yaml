@@ -21,7 +21,7 @@ remediation: |
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-constraints.html
 
   GCP:
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
 
   SUSE / KVM:
     - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
