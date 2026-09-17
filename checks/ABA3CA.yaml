@@ -57,7 +57,7 @@ metadata:
   filesystem_type:
     - resource_managed
     - simple_mount
-    - mixed_fs_type
+    - mixed_fs_types
 
 exclude: host.is_majority_maker == true
 

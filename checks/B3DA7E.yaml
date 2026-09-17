@@ -56,6 +56,16 @@ metadata:
     - hana_scale_up
     - ascs_ers
   hana_scenario: performance_optimized
+  architecture_type:
+    - angi
+    - classic
+  ensa_version:
+    - ensa1
+    - ensa2
+  filesystem_type:
+    - resource_managed
+    - simple_mount
+    - mixed_fs_types
 facts:
   - name: resource_options
     gatherer: cibadmin@v1
