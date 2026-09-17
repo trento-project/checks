@@ -20,7 +20,13 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
-
+  ensa_version:
+    - ensa1
+    - ensa2
+  filesystem_type:
+    - resource_managed
+    - simple_mount
+    - mixed_fs_types
 facts:
   - name: compare_patterns_sap_nw
     gatherer: package_version
