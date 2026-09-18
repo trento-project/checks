@@ -5,7 +5,7 @@ id: "205AF7"
 name: fencing enabled
 group: Pacemaker
 description: |
-  Fencing is enabled in the cluster properties 'cib-bootstrap-options': stonith-enabled
+  Fencing is enabled in the cluster properties 'cib-bootstrap-options': fencing-enabled (Pacemaker 3.0.2+) or stonith-enabled (Pacemaker < 3.0.2)
 remediation: |
   ## Abstract
   Fencing is mandatory to guarantee data integrity for your SAP Applications.
@@ -13,6 +13,10 @@ remediation: |
 
   ## Remediation
   Execute the following command to enable it:
+  ```
+  crm configure property fencing-enabled=true
+  ```
+  On Pacemaker versions older than 3.0.2:
   ```
   crm configure property stonith-enabled=true
   ```
@@ -49,7 +53,6 @@ metadata:
   target_type: cluster
   cluster_type:
     - hana_scale_up
-    - hana_scale_out
     - ascs_ers
   hana_scenario:
     - performance_optimized
@@ -58,11 +61,52 @@ facts:
   - name: crm_config_properties
     gatherer: cibadmin@v1
     argument: cib.configuration.crm_config.cluster_property_set
+  - name: crm_feature_set
+    gatherer: cibadmin@v1
+    argument: cib.crm_feature_set
+
+values:
+  - name: expected_crm_feature_set_pacemaker_302
+    default: "3.20.0"
 
 expectations:
   - name: expectations_fencing_enabled
-    expect: |
-      facts.crm_config_properties
-           .find(|item| item.id == "cib-bootstrap-options").nvpair
-           .find(|prop| prop.name == "stonith-enabled").value
-    failure_message: Fencing was expected to be enabled in the cluster configuration, but property 'stonith-enabled' is set to false or missing.
+    expect_enum: |
+      let bootstrap = facts.crm_config_properties.find(|item| item.id == "cib-bootstrap-options").nvpair;
+      let fencing_enabled = bootstrap.find(|prop| prop.name == "fencing-enabled");
+      let stonith_enabled = bootstrap.find(|prop| prop.name == "stonith-enabled");
+
+      let fencing_enabled_ok = fencing_enabled != () && fencing_enabled.value == true;
+      let stonith_enabled_ok = stonith_enabled != () && stonith_enabled.value == true;
+
+      let feature_set = facts.crm_feature_set.split(".").map(|part| parse_int(part));
+      let threshold = values.expected_crm_feature_set_pacemaker_302.split(".").map(|part| parse_int(part));
+      let is_pacemaker_302_or_newer = feature_set[0] > threshold[0] || (feature_set[0] == threshold[0] && feature_set[1] >= threshold[1]);
+
+      // On Pacemaker 3.0.2+, "fencing-enabled" is the authoritative property and "stonith-enabled" is deprecated.
+      // Before Pacemaker 3.0.2 it is the other way round: "stonith-enabled" is authoritative and "fencing-enabled" is not even recognized by Pacemaker.
+
+      let authoritative_property = if is_pacemaker_302_or_newer { fencing_enabled } else { stonith_enabled };
+      let authoritative_property_enabled = if is_pacemaker_302_or_newer { fencing_enabled_ok } else { stonith_enabled_ok };
+      let deprecated_property = if is_pacemaker_302_or_newer { stonith_enabled } else { fencing_enabled };
+      let deprecated_property_enabled = if is_pacemaker_302_or_newer { stonith_enabled_ok } else { fencing_enabled_ok };
+
+      // - passing:  the authoritative property is correctly set to true, and the deprecated property is not present.
+      // - warning:  the authoritative property is correctly set to true, but the deprecated property is also present and should be cleaned up;
+      //             or the authoritative property is absent, but fencing still works because the deprecated property is correctly set to true.
+      // - critical: the authoritative property is present but not set to true; or the authoritative property is absent and the deprecated property isn't correctly set to true either.
+
+      if authoritative_property != () {
+        if authoritative_property_enabled {
+          if deprecated_property != () { "warning" } else { "passing" }
+        } else {
+          "critical"
+        }
+      } else if deprecated_property_enabled {
+        "warning"
+      } else {
+        "critical"
+      }
+
+    warning_message: Fencing is enabled, but the cluster properties do not fully match the convention for the detected Pacemaker version. Either fencing relies on the deprecated/unrecognized property, or a leftover property from the other convention is still present alongside the correct one. The cluster is functional but the configuration should be migrated to only use the property matching the running Pacemaker version.
+    failure_message: Fencing was expected to be enabled in the cluster configuration, but neither 'fencing-enabled' nor 'stonith-enabled' is correctly set to true for the detected Pacemaker version.

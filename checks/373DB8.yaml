@@ -5,10 +5,10 @@ id: "373DB8"
 name: fencing timeout
 group: Pacemaker
 description: |
-  Cluster fencing timeout is configured correctly in the cluster properties 'cib-bootstrap-options': stonith-timeout
+  Cluster fencing timeout is configured correctly in the cluster properties 'cib-bootstrap-options': fencing-timeout (Pacemaker 3.0.2+) or stonith-timeout (Pacemaker < 3.0.2)
 remediation: |
   ## Abstract
-  The fencing timeout (`stonith-timeout`) determines the time Pacemaker will wait for fencing to succeed.
+  The fencing timeout (`fencing-timeout` in Pacemaker 3.0.2+, `stonith-timeout` in older versions) determines the time Pacemaker will wait for fencing to succeed.
   The recommended default value is at least `150` seconds for SBD.
   The recommended values on Azure are at least `144` seconds for SBD only or `900` seconds when using SBD combined with the Azure Fence agent.
   The recommended value on AWS is at least `600` seconds.
@@ -16,6 +16,11 @@ remediation: |
 
   ## Remediation
   Execute the following command to adjust the timeout for your use case:
+  ```crm configure property fencing-timeout=144```
+  or
+  ```crm configure property fencing-timeout=900```
+
+  On Pacemaker versions older than 3.0.2:
   ```crm configure property stonith-timeout=144```
   or
   ```crm configure property stonith-timeout=900```
@@ -60,6 +65,9 @@ facts:
   - name: resources_primitives
     gatherer: cibadmin@v1
     argument: cib.configuration.resources.primitive
+  - name: crm_feature_set
+    gatherer: cibadmin@v1
+    argument: cib.crm_feature_set
 
 values:
   - name: expected_fencing_timeout
@@ -72,24 +80,59 @@ values:
       - value: 144
         when: env.provider == "azure"
 
-  - name: expected_azure_fencing_timeout
+  - name: expected_azure_arm_fencing_timeout
     default: 900
+
+  - name: expected_crm_feature_set_pacemaker_302
+    default: "3.20.0"
 
 expectations:
   - name: expectations_fencing_timeout
-    expect: |
-      let fencing_timeout =
-          facts.crm_config_properties
-               .find(|item| item.id == "cib-bootstrap-options").nvpair
-               .find(|prop| prop.name == "stonith-timeout");
+    expect_enum: |
+      let bootstrap_nvpairs = facts.crm_config_properties.find(|item| item.id == "cib-bootstrap-options").nvpair;
+      let fencing_timeout = bootstrap_nvpairs.find(|prop| prop.name == "fencing-timeout");
+      let stonith_timeout = bootstrap_nvpairs.find(|prop| prop.name == "stonith-timeout");
 
-      let fence_azure_arm_detected =
-          facts.resources_primitives
-               .filter(|item| item.type == "fence_azure_arm").len() != 0;
+      let fence_azure_arm_detected = facts.resources_primitives.filter(|item| item.type == "fence_azure_arm").len() != 0;
 
-      if fence_azure_arm_detected {
-        fencing_timeout != () && fencing_timeout.value == values.expected_azure_fencing_timeout;
+      let expected_timeout = if fence_azure_arm_detected {
+        values.expected_azure_arm_fencing_timeout
       } else {
-        fencing_timeout != () && fencing_timeout.value >= values.expected_fencing_timeout;
+        values.expected_fencing_timeout
+      };
+
+      let fencing_timeout_ok = fencing_timeout != () && fencing_timeout.value >= expected_timeout;
+      let stonith_timeout_ok = stonith_timeout != () && stonith_timeout.value >= expected_timeout;
+
+      let feature_set = facts.crm_feature_set.split(".").map(|part| parse_int(part));
+      let threshold = values.expected_crm_feature_set_pacemaker_302.split(".").map(|part| parse_int(part));
+      let is_pacemaker_302_or_newer = feature_set[0] > threshold[0] || (feature_set[0] == threshold[0] && feature_set[1] >= threshold[1]);
+
+      // On Pacemaker 3.0.2+, "fencing-timeout" is the authoritative property and "stonith-timeout" is deprecated.
+      // Before Pacemaker 3.0.2 it is the other way round: "stonith-timeout" is authoritative and "fencing-timeout" is not even recognized by Pacemaker.
+
+      let authoritative_property = if is_pacemaker_302_or_newer { fencing_timeout } else { stonith_timeout };
+      let authoritative_property_ok = if is_pacemaker_302_or_newer { fencing_timeout_ok } else { stonith_timeout_ok };
+      let deprecated_property = if is_pacemaker_302_or_newer { stonith_timeout } else { fencing_timeout };
+      let deprecated_property_ok = if is_pacemaker_302_or_newer { stonith_timeout_ok } else { fencing_timeout_ok };
+
+      // - passing:  the authoritative property meets the expected timeout, and the deprecated property is not present.
+      // - warning:  the authoritative property meets the expected timeout, but the deprecated property is also present and should be cleaned up;
+      //             or the authoritative property is absent, but the expected timeout is still met by the deprecated property.
+      // - critical: the authoritative property is present but does not meet the expected timeout;
+      //             or the authoritative property is absent and the deprecated property doesn't meet it either.
+
+      if authoritative_property != () {
+        if authoritative_property_ok {
+          if deprecated_property != () { "warning" } else { "passing" }
+        } else {
+          "critical"
+        }
+      } else if deprecated_property_ok {
+        "warning"
+      } else {
+        "critical"
       }
-    failure_message: Cluster fencing timeout 'stonith-timeout' is not configured correctly
+
+    warning_message: Cluster fencing timeout is configured, but the cluster properties do not fully match the convention for the detected Pacemaker version. Either the timeout relies on the deprecated/unrecognized property, or a leftover property from the other convention is still present alongside the correct one. The cluster is functional but the configuration should be migrated to only use the property matching the running Pacemaker version.
+    failure_message: Cluster fencing timeout ('fencing-timeout' in Pacemaker 3.0.2+, 'stonith-timeout' in older versions) is not configured correctly for the detected Pacemaker version
