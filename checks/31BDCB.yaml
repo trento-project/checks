@@ -13,7 +13,7 @@ remediation: |
   Install or upgrade to a supported SAPHanaSR version
   ## Reference
   As it is highly recommended to use the HA/DR provider hook when running SAP workloads in HA environments and the HA/DR provider hook support started with SAPHanaSR version 0.153.2, delivered on installation media of 15SP1 and as update package for 15GA, the version of the SAPHanaSR package must be at least 0.153.2.
-  - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
+  - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-installing-additional-software
     (EXAMPLE 1: Installing additional software for the HA cluster)
 
 

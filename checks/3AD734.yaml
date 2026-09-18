@@ -20,7 +20,7 @@ remediation: |
       This may influence your SAP system performance and stability.
 
   ## References
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-configure-tuning
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-configure-tuning
 
 
 metadata:

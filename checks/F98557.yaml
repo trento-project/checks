@@ -22,22 +22,22 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

@@ -19,8 +19,8 @@ remediation: |
   Such a Solution is considered equivalent to the recommendation.
 
   ## References
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-configure-tuning
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-create-solution
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-configure-tuning
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-create-solution
 
 metadata:
   target_type: cluster

@@ -18,8 +18,8 @@ remediation: |
   Check the man page of **systemctl** to get a detailed explanation of what the reported state means. A `systemctl list-units --failed` lists failed services and can assist in tracking down the cause.
 
   ## References
-  - https://documentation.suse.com/sles/15-SP6/single-html/SLES-administration/#sec-boot-systemd-debug-review
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
+  - https://documentation.suse.com/sles/15-SP7/single-html/SLES-administration/#sec-boot-systemd-debug-review
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
 
 
 

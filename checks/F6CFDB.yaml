@@ -16,22 +16,22 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-nw740-sle15-setupguide/index.html#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-adapting-sap-profiles-to-match-the-sap-nw-ha-clu-7-40-certification
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
