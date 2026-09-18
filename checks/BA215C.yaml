@@ -17,7 +17,7 @@ remediation: |
 
   AWS:
 
-    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-cluster-configuration.html
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-cluster-node-setup.html#_modify_generated_corosync_configuration
 
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#create_the_corosync_configuration_files

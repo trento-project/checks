@@ -36,8 +36,8 @@ remediation: |
   AWS:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-classic
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-simple
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#sap-resources-classic-nw-sles
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#sap-resources-simple-nw-sles
 
   GCP:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs

@@ -18,7 +18,7 @@ remediation: |
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
 
   AWS:
-    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-implementing-python-hook-saphanasr-in-sles.html
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-hana-control.html#hook_sustkover
 
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#enable-hana-hadr-provider-hook
