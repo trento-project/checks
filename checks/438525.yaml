@@ -28,6 +28,8 @@ remediation: |
 
   GCP:
 
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#define_host_names_for_the_vip_address_in_etchosts
+
   Nutanix:
 
     - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario

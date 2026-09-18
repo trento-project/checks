@@ -20,7 +20,7 @@ remediation: |
     - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-cluster-configuration.html
 
   GCP:
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#create_the_corosync_configuration_files
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#create_the_corosync_configuration_files
 
   Nutanix:
 

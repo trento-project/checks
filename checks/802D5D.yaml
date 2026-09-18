@@ -53,7 +53,7 @@ remediation: |
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ers-instance
     - https://documentation.suse.com/en-us/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-configuring-resources-for-the-ers-instance
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#create_the_file_system_resources
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#create_the_file_system_resources
 
   Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
