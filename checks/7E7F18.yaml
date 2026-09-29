@@ -88,6 +88,9 @@ facts:
 values:
   - name: resource_type
     default: IPaddr2
+    conditions:
+      - value: aws-vpc-move-ip
+        when: env.provider == "aws"    
 expectations:
   - name: ascs_resource_in_group
     expect: |

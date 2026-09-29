@@ -60,7 +60,7 @@ values:
     conditions:
       - when: env.provider == "aws"
         value:
-          - IPaddr2
+          - aws-vpc-move-ip
           - SAPStartSrv
           - SAPInstance
       - when: env.provider == "azure"
