@@ -28,7 +28,7 @@ remediation: |
 
   GCP:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#set_up_fencing
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#set_up_fencing
 
   Nutanix:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
