@@ -23,15 +23,15 @@ remediation: |
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario
 
   VMware:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#cha.hana-sr.scenario
 
 severity: warning
 

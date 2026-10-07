@@ -22,37 +22,37 @@ remediation: |
   ## References
   Azure:
     - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
     - https://me.sap.com/notes/3139184/E
     - https://me.sap.com/notes/3115048/E
 
   AWS:
     - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
     - https://me.sap.com/notes/3139184/E
     - https://me.sap.com/notes/3115048/E
 
   GCP:
     - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
     - https://me.sap.com/notes/3139184/E
     - https://me.sap.com/notes/3115048/E
 
   SUSE / KVM:
     - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
     - https://me.sap.com/notes/3139184/E
     - https://me.sap.com/notes/3115048/E
 
   Nutanix:
     - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
     - https://me.sap.com/notes/3139184/E
     - https://me.sap.com/notes/3115048/E
 
   VMware:
     - https://www.suse.com/c/handover-for-the-next-round-sap-on-suse-cluster-and-systemd-native-integration/
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
     - https://me.sap.com/notes/3139184/E
     - https://me.sap.com/notes/3115048/E
 severity: warning

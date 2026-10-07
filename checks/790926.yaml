@@ -28,15 +28,15 @@ remediation: |
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-setting-up-the-initial-cluster-using-ha-cluster-init
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-setting-up-the-initial-cluster-using-ha-cluster-init
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-setting-up-the-initial-cluster-using-ha-cluster-init
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-setting-up-the-initial-cluster-using-ha-cluster-init
 
   VMware:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-setting-up-the-initial-cluster-using-ha-cluster-init
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-setting-up-the-initial-cluster-using-ha-cluster-init
 
 severity: warning
 

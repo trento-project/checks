@@ -28,33 +28,33 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-azure-files?tabs=lb-portal%2Censa1#installing-sap-netweaver-ascsers
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-simple-mount?tabs=lb-portal%2Censa1#install-sap-netweaver-ascs-and-ers
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-classic
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#sap-resources-simple
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#sap-resources-classic-nw-sles
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#sap-resources-simple-nw-sles
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-resources-for-the-ascs
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
 severity: warning
 metadata:
   target_type: cluster
