@@ -18,7 +18,7 @@ remediation: |
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_6_saphanasr
 
   AWS:
-    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphana.html
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-cluster-config.html#resource-saphana
 
   GCP:
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
