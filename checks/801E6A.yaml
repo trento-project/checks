@@ -23,7 +23,9 @@ metadata:
   filesystem_type:
     - simple_mount
     - mixed_fs_types
-
+  ensa_version:
+    - ensa1
+    - ensa2
 facts:
   - name: compare_sapstartsrv_resource_agents
     gatherer: package_version
