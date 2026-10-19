@@ -27,8 +27,8 @@ remediation: |
 
   GCP:
 
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-scaleout-config-sles#sles-for-sap-15-sp6-or-later_5
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp6-or-later_3
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-scaleout-config-sles#sles-for-sap-15-sp6-or-later_5
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp6-or-later_3
 
   SUSE / KVM:
 

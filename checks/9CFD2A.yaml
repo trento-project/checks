@@ -22,7 +22,7 @@ remediation: |
       ## AWS has a different resource agent for virtual IP and different values for interval and timeout for the monitor operation for the virtual IP resource configured
 
   GCP:
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
       ## GCP has the same resource agent IPaddr2 but different values for interval and timeout for monitor operations.
 
   SUSE / KVM:
