@@ -16,7 +16,7 @@ remediation: |
   ## References
   Azure:
 
-    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability#implement-hana-hooks-saphanasr-and-suschksrv
+    - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_3_saphanasr
 
   AWS:
 
