@@ -22,7 +22,7 @@ remediation: |
 
   AWS:
 
-    - https://docs.aws.amazon.com/launchwizard/latest/userguide/launch-wizard-sap-add-remove-nodes.html
+    - https://docs.aws.amazon.com/launchwizard/latest/userguide/launch-wizard-sap.html
 
   GCP:
 

@@ -21,7 +21,7 @@ remediation: |
 
   AWS:
 
-    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-saphana.html
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-cluster-config.html#resource-saphana
 
   GCP:
 
