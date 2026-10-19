@@ -32,7 +32,16 @@ metadata:
     - performance_optimized
     - cost_optimized
   provider: azure
-
+  architecture_type:
+    - angi
+    - classic
+  ensa_version:
+    - ensa1
+    - ensa2
+  filesystem_type:
+    - resource_managed
+    - simple_mount
+    - mixed_fs_types
 facts:
   - name: crm_config_properties
     gatherer: cibadmin@v1

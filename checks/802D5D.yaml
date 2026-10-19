@@ -78,6 +78,9 @@ metadata:
   filesystem_type:
     - resource_managed
     - mixed_fs_types
+  ensa_version:
+    - ensa1
+    - ensa2
 facts:
   - name: cluster_sids
     gatherer: ascsers_cluster@v1
