@@ -24,14 +24,14 @@ remediation: |
     - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-constraints
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-constraints-for-saphanasr-angi
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-constraints-for-saphanasr
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/#id-constraints
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-constraints-for-saphanasr-angi
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-constraints-for-saphanasr
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/index.html#id-constraints
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-constraints-for-saphanasr-angi
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-constraints-for-saphanasr
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-scaleout-perfopt-15/#id-constraints
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-constraints-for-saphanasr-angi
 
 severity: critical
 metadata:

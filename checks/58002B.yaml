@@ -22,22 +22,22 @@ remediation: |
   ## References
 
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
 
 metadata:

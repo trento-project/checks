@@ -21,7 +21,7 @@ remediation: |
   Install a supported SAP Kernel Release that supports systemd or start instance with SysVinit.
 
   ## Reference
-  - https://me.sap.com/notes/3115048
+  - https://me.sap.com/notes/3115048/E
 severity: warning
 metadata:
   target_type: cluster

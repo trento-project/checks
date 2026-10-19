@@ -16,7 +16,7 @@ remediation: |
   Run `saptune service take-over` to solve the situation.
 
   ## References
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-disable
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-disable
 
 
 metadata:

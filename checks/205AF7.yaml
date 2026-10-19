@@ -32,18 +32,18 @@ remediation: |
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-cluster-bootstrap-and-more
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#sec-ha-fencing-recommend
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-cluster-bootstrap-and-more
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#sec-ha-fencing-recommend
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-cluster-bootstrap-and-more
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#sec-ha-fencing-recommend
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-cluster-bootstrap-and-more
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#sec-ha-fencing-recommend
 
   VMware:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-cluster-bootstrap-and-more
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#sec-ha-fencing-recommend
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-cluster-bootstrap-and-more
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#sec-ha-fencing-recommend
 
 metadata:
   target_type: cluster

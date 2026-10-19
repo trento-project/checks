@@ -20,8 +20,8 @@ remediation: |
   ```
 
   ## References
-  - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
-  - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-colocation-constraints-between-ascs-and-ers
+  - ENSA1: https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/#id-configuring-the-colocation-constraints-between-ascs-and-ers
+  - ENSA2: https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-colocation-constraints-between-ascs-and-ers
 
 metadata:
   target_type: cluster

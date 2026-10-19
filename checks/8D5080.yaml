@@ -15,25 +15,25 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-1.8.8.8.5
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-nfs-azure-files?tabs=lb-portal%2Censa1#installing-sap-netweaver-ascsers
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
-    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#filesystem-resources
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-1.8.8.8.5
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#filesystem-resources-nw-sles
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_resource_groups_and_location_constraints
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-1.8.8.8.5
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#configure_the_resource_groups_and_location_constraints
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-1.8.8.8.5
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-1.8.8.8.5
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-1.8.8.8.5
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

@@ -16,22 +16,22 @@ remediation: |
   ## References
 
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-resources-for-the-ascs-instance
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-resources-for-the-ascs-instance
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-resources-for-the-ascs-instance
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-resources-for-the-ascs-instance
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-resources-for-the-ascs-instance
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-configuring-the-resources-for-the-ascs-instance
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/#id-configuring-the-resources-for-the-ascs-instance
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
