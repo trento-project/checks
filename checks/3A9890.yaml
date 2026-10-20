@@ -12,7 +12,7 @@ remediation: |
   The override values must be identical on all nodes but they are different currently.
   This means some/all parameter values from the existing override files differ or an override file is missing on at least one node in the cluster.
 
-  Note: This check cannot be used on clusters with majority maker.
+  Note: Majority maker nodes are excluded from execution when they exist in the target cluster.
 
   ## Remediation
   Run `saptune note verify` on all nodes and compare the overrides.
@@ -28,6 +28,8 @@ severity: warning
 
 metadata:
   target_type: cluster
+
+exclude: host.is_majority_maker == true
 
 facts:
   - name: saptune_note_verify

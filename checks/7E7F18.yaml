@@ -72,6 +72,13 @@ remediation: |
 metadata:
   target_type: cluster
   cluster_type: ascs_ers
+  ensa_version:
+    - ensa1
+    - ensa2
+  filesystem_type:
+    - resource_managed
+    - simple_mount
+    - mixed_fs_types
 facts:
   - name: cluster_sids
     gatherer: ascsers_cluster@v1
@@ -81,6 +88,9 @@ facts:
 values:
   - name: resource_type
     default: IPaddr2
+    conditions:
+      - value: aws-vpc-move-ip
+        when: env.provider == "aws"    
 expectations:
   - name: ascs_resource_in_group
     expect: |

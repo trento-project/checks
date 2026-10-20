@@ -11,7 +11,7 @@ remediation: |
   ## Abstract
   The enabled Solution is **not** the recommended one.
 
-  Note: This check cannot be used on clusters with majority maker.
+  Note: Majority maker nodes are excluded from execution when they exist in the target cluster.
 
   ## Remediation
   Enable the recommended Solution with `saptune solution change <SOLUTION>`.
@@ -24,6 +24,8 @@ remediation: |
 
 metadata:
   target_type: cluster
+
+exclude: host.is_majority_maker == true
 
 facts:
   - name: saptune_status

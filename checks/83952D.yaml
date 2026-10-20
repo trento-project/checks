@@ -40,6 +40,9 @@ metadata:
   filesystem_type:
     - simple_mount
     - mixed_fs_types
+  ensa_version:
+    - ensa1
+    - ensa2
 facts:
   - name: cluster_sids
     gatherer: ascsers_cluster@v1
@@ -57,7 +60,7 @@ values:
     conditions:
       - when: env.provider == "aws"
         value:
-          - IPaddr2
+          - aws-vpc-move-ip
           - SAPStartSrv
           - SAPInstance
       - when: env.provider == "azure"

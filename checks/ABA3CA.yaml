@@ -10,7 +10,7 @@ remediation: |
   ## Abstract
   SAP Host Agent should be running on all cluster nodes
 
-  Note: This check cannot be used on clusters with majority maker.
+  Note: Majority maker nodes are excluded from execution when they exist in the target cluster.
 
   ## Remediation
   Install and start SAP Host Agent on all nodes.
@@ -48,6 +48,19 @@ metadata:
   hana_scenario:
     - performance_optimized
     - cost_optimized
+  architecture_type:
+    - angi
+    - classic
+  ensa_version:
+    - ensa1
+    - ensa2
+  filesystem_type:
+    - resource_managed
+    - simple_mount
+    - mixed_fs_types
+
+exclude: host.is_majority_maker == true
+
 facts:
   - name: saphostctrl_ping
     gatherer: saphostctrl@v1

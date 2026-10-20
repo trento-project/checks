@@ -38,6 +38,11 @@ metadata:
   ensa_version:
     - ensa2
     - mixed_versions
+  filesystem_type:
+    - resource_managed
+    - simple_mount
+    - mixed_fs_types
+
 facts:
   - name: cluster_sids
     gatherer: ascsers_cluster@v1
