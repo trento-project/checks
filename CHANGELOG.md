@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.4.0](https://github.com/trento-project/checks/tree/1.2.0/compare/1.3.2...1.4.0) - 2026-10-20
+
+### What's Changed
+
+* 3D8598 review (#112) @ksanjeet
+* Relevant IP resource in values for provider AWS (#110) @ksanjeet
+* Updation of all applicable metadata values - set 1 (#92) @ksanjeet
+* Correction of position of exclude section in relevant checks (#82) @abravosuse
+* Changing description ofcheck 9FAAD0 (#73) @balanza, @abravosuse, @Copilot, Emanuele De Cupis
+* Changing description ofcheck 9FAAD0 (#71) @abravosuse, @Copilot
+
+#### Features
+
+* Addition of majority maker exclude predictate to relevant checks (#81) @abravosuse
+
+#### Maintenance
+
+* Use automerge reusable workflow (#108) @antgamdia
+* Revert backport ci back to normal (#100) @skrech
+* Switch to pull_request_target for backport action - #761 (#95) @skrech
+* Enable backport action (#93) @skrech
+
+#### Dependencies
+
+<details>
+<summary>9 changes</summary>
+* Bump the common-workflows group with 5 updates (#111) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Bump the common-workflows group with 4 updates (#109) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Bump apache/skywalking-eyes/header from 0.8.0 to 0.9.0 (#107) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Bump the common-workflows group with 3 updates (#94) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Bump actions/checkout from 7.0.0 to 7.0.1 (#89) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Update docker-compose file (#79) @antgamdia
+* Bump actions/checkout from 6.0.3 to 7.0.0 (#76) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Bump the common-workflows group across 1 directory with 3 updates (#69) [@dependabot[bot]](https://github.com/apps/dependabot)
+* Bump actions/checkout from 6.0.2 to 6.0.3 (#75) [@dependabot[bot]](https://github.com/apps/dependabot)
+
+</details>
+**Full Changelog**: https://github.com/trento-project/checks/compare/1.3.0...1.4.0
+
 ## [1.3.2](https://github.com/trento-project/checks/tree/1.2.0/compare/1.3.1...1.3.2) - 2026-09-10
 
 ### What's Changed
