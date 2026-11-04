@@ -1,7 +1,6 @@
 ---
 name: lint
-description: run tlint on checks # https://github.com/trento-project/tlint
-Runs a basic syntax analysis on the check DSL
+description: run tlint on checks # https://github.com/trento-project/tlint. Runs a basic syntax analysis on the check DSL
 ---
 
 ## An example of tlint execution.
