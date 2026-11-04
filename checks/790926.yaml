@@ -24,7 +24,7 @@ remediation: |
 
   GCP:
 
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles
 
   Nutanix:
 

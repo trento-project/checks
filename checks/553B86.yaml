@@ -25,7 +25,7 @@ remediation: |
 
   GCP:
 
-    - https://cloud.google.com/solutions/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
+    - https://docs.cloud.google.com/sap/docs/sap-hana-ha-config-sles#sles-for-sap-15-sp5-or-earlier
 
   SUSE / KVM:
 

@@ -24,7 +24,7 @@ remediation: |
 
   GCP:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_resource_groups_and_location_constraints
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#configure_the_resource_groups_and_location_constraints
 
   Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-sle15/index.html#id-1.8.8.8.5
