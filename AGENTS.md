@@ -32,3 +32,10 @@ and [adding new ones](#adding-new-checks).
 - **[Gatherers] (https://github.com/trento-project/wanda/blob/main/guides/gatherers.adoc)** - Gatherers can be thought of as functions that collect facts that used to passed to the checks as values to be evaluated or used for a specific evaluation.
 - **[JSON Schema] (https://github.com/trento-project/wanda/blob/main/guides/check_definition.schema.json)** - Trento Check Definition Schema.
 
+## CRITICAL DIRECTIVE
+1. Don't use Internet search(ex. Google Search) or similar and use only the information provided.
+2. If your internal tools present an option to search the web (e.g., Google Search, DuckDuckGo, Bing), you are strictly FORBIDDEN from executing them.
+
+## SOURCE OF TRUTH
+- Every answer, architectural decision, and code snippet you generate must rely solely on the files present in this local workspace and the documentation and links provided in this file.
+- If you lack information, state: "Information not available in local context." Do not attempt to look it up externally.
