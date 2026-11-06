@@ -51,7 +51,7 @@ jobs:
     strategy:
       matrix:
         imgname: ["checks", "trento-checks"]
-    uses: trento-project/.github/.github/workflows/publish-containers.yaml@94dac57211d792dda649383e7f23326b24a9087b # v1.11.0
+    uses: trento-project/.github/.github/workflows/publish-containers.yaml@9eeba3813dd18bf0350ba0c867ef0f3f2cc26342 # v1.13.0
     with:
       image_name: ${{ matrix.imgname }}
       tag: rolling
@@ -93,6 +93,6 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
-    uses: trento-project/.github/.github/workflows/dependabot-auto-merge.yaml@4ca871917ddcecb8cca455409a299d2be7bcbe11 # v1.12.0
+    uses: trento-project/.github/.github/workflows/dependabot-auto-merge.yaml@9eeba3813dd18bf0350ba0c867ef0f3f2cc26342 # v1.13.0
     secrets:
       gh_token: ${{ secrets.TRENTOBOT_GH_PAT }}
