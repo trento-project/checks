@@ -42,7 +42,7 @@ remediation: |
   GCP:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
-    - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#configure_the_cluster_resources_for_ascs_and_ers
 
   Nutanix:
     - https://documentation.suse.com/sbp/sap-15/html/SAP-nw740-sle15-setupguide/index.html#id-configuring-the-resources-for-the-ascs
