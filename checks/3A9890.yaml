@@ -19,9 +19,9 @@ remediation: |
   If there are differences please fix the related override file.
 
   ## References
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-customize
-  - https://documentation.suse.com/sles-sap/15-SP6/single-html/SLES-SAP-guide/#sec-saptune-customize-solution
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-verify-and-troubleshooting
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-customize
+  - https://documentation.suse.com/sles-sap/15-SP7/single-html/SLES-SAP-guide/#sec-saptune-customize-solution
 
 
 severity: warning

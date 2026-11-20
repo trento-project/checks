@@ -23,34 +23,34 @@ remediation: |
 
   ## References
   Azure:
-    - https://www.suse.com/support/kb/doc/?id=000019924
-    - https://www.suse.com/support/kb/doc/?id=000019613
-    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+    - https://support.scc.suse.com/s/redirect?id=000019924
+    - https://support.scc.suse.com/s/redirect?id=000019613
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
 
   AWS:
-    - https://www.suse.com/support/kb/doc/?id=000019924
-    - https://www.suse.com/support/kb/doc/?id=000019613
-    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+    - https://support.scc.suse.com/s/redirect?id=000019924
+    - https://support.scc.suse.com/s/redirect?id=000019613
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
 
   GCP:
-    - https://www.suse.com/support/kb/doc/?id=000019924
-    - https://www.suse.com/support/kb/doc/?id=000019613
-    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+    - https://support.scc.suse.com/s/redirect?id=000019924
+    - https://support.scc.suse.com/s/redirect?id=000019613
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
 
   SUSE / KVM:
-    - https://www.suse.com/support/kb/doc/?id=000019924
-    - https://www.suse.com/support/kb/doc/?id=000019613
-    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+    - https://support.scc.suse.com/s/redirect?id=000019924
+    - https://support.scc.suse.com/s/redirect?id=000019613
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
 
   Nutanix:
-    - https://www.suse.com/support/kb/doc/?id=000019924
-    - https://www.suse.com/support/kb/doc/?id=000019613
-    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+    - https://support.scc.suse.com/s/redirect?id=000019924
+    - https://support.scc.suse.com/s/redirect?id=000019613
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
 
   VMware:
-    - https://www.suse.com/support/kb/doc/?id=000019924
-    - https://www.suse.com/support/kb/doc/?id=000019613
-    - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
+    - https://support.scc.suse.com/s/redirect?id=000019924
+    - https://support.scc.suse.com/s/redirect?id=000019613
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-sap-s4hana-into-the-cluster-using-the-cluster-connector
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

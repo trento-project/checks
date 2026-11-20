@@ -20,22 +20,22 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
   AWS:
-    - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
   GCP:
-    - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
   Nutanix:
-    - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 
   VMware:
-    - https://documentation.suse.com/sbp/all/single-html/SAP_S4HA10_SetupGuide-SLE12/index.html#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-integrating-the-cluster-framework-using-sap-suse-cluster-connector
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

@@ -14,7 +14,7 @@ remediation: |
   Install or upgrade to a supported sapstartsrv-resource-agents version
 
   ## Reference
-  - https://documentation.suse.com/sbp/sap/single-html/SAP-S4HA10-setupguide-simplemount-sle15/#id-differences-to-previous-cluster-architectures
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-differences-to-previous-cluster-architectures
 
 
 metadata:

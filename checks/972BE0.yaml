@@ -19,7 +19,7 @@ remediation: |
   ```
 
   ## Reference
-  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
+  - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-disabling-systemd-services-of-the-ascs-and-the-ers-sap-instance
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

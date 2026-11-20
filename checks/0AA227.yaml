@@ -19,25 +19,29 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
     - https://learn.microsoft.com/en-us/azure/sap/workloads/high-availability-guide-suse-pacemaker?tabs=msi#create-a-fencing-device-on-the-pacemaker-cluster
 
   AWS:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
     - https://docs.aws.amazon.com/sap/latest/sap-netweaver/sles-netweaver-ha-cluster-resources.html#cluster-bootstrap
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://docs.aws.amazon.com/sap/latest/sap-netweaver/cluster-config-nw-sles.html#cluster-bootstrap-nw-sles
 
   GCP:
     - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
     - https://cloud.google.com/solutions/sap/docs/netweaver-ha-config-sles#set_up_fencing
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
+    - https://docs.cloud.google.com/sap/docs/netweaver-ha-config-sles#set_up_fencing
 
   Nutanix:
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
 
   SUSE / KVM:
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
 
   VMware:
-    - https://documentation.suse.com/sle-ha/15-SP5/single-html/SLE-HA-administration/index.html#pro-ha-storage-protect-fencing
+    - https://documentation.suse.com/sle-ha/15-SP7/single-html/SLE-HA-administration/#pro-ha-storage-protect-fencing
 severity: warning
 metadata:
   target_type: cluster

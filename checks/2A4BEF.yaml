@@ -27,13 +27,13 @@ remediation: |
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-implementing-suschksrv-hook-for-srservicestatechanged
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-1.10.11.4
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-implementing-suschksrv-hook-for-srservicestatechanged
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/index.html#id-1.10.11.4
-    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/index.html#id-implementing-suschksrv-hook-for-srservicestatechanged
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-1.10.11.4
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-angi-perfopt-15/#id-implementing-suschksrv-hook-for-srservicestatechanged
 
 severity: critical
 metadata:

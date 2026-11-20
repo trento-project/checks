@@ -16,22 +16,22 @@ remediation: |
 
   ## References
   Azure:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 
   AWS:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 
   GCP:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 
   SUSE / KVM:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 
   Nutanix:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 
   VMware:
-    - https://documentation.suse.com/sbp/sap-15/single-html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-adapting-sap-profiles-to-match-the-sap-s4-ha-clu-1-0-certification
 metadata:
   target_type: cluster
   cluster_type: ascs_ers

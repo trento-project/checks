@@ -16,10 +16,10 @@ remediation: |
   crm configure rsc_defaults resource-stickiness=1000
   crm configure rsc_defaults migration-threshold=5000
   ```
-  In case of problems please refer to TID https://www.suse.com/support/kb/doc/?id=000021075 for guidance.
+  In case of problems please refer to TID https://support.scc.suse.com/s/redirect?id=000021075 for guidance.
 
   ## References
-  In addition to the provider specific documentation listed below please refer to TID https://www.suse.com/support/kb/doc/?id=000021075 for important information too.
+  In addition to the provider specific documentation listed below please refer to TID https://support.scc.suse.com/s/redirect?id=000021075 for important information too.
 
   Azure:
 
@@ -37,18 +37,18 @@ remediation: |
 
   Nutanix:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-crm-configuration-of-the-two-node-cluster
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-crm-configuration-of-the-two-node-cluster
 
   SUSE / KVM:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-crm-configuration-of-the-two-node-cluster
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-crm-configuration-of-the-two-node-cluster
 
   VMware:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
-    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/index.html#id-crm-configuration-of-the-two-node-cluster
+    - https://documentation.suse.com/sbp/sap-15/html/SLES4SAP-hana-sr-guide-PerfOpt-15/#id-example-cluster-configuration
+    - https://documentation.suse.com/sbp/sap-15/html/SAP-S4HA10-setupguide-simplemount-sle15/#id-crm-configuration-of-the-two-node-cluster
 
 metadata:
   target_type: cluster
