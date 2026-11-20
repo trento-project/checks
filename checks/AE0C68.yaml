@@ -20,7 +20,7 @@ remediation: |
 
   AWS:
 
-    - https://documentation.suse.com/sbp/all/single-html/SLES4SAP-hana-sr-guide-PerfOpt-15/
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-cluster-config.html#resource-saphana
 
   GCP:
 

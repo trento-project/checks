@@ -18,7 +18,7 @@ remediation: |
     - https://learn.microsoft.com/en-us/azure/sap/workloads/sap-hana-high-availability?tabs=lb-portal%2Csaphanasr#tabpanel_7_saphanasr
 
   AWS:
-    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-on-aws-move-the-ip-resource.html
+    - https://docs.aws.amazon.com/sap/latest/sap-hana/sap-hana-pacemaker-sles-cluster-config.html#resource-overlayip
       ## AWS has a different resource agent for virtual IP and different values for interval and timeout for monitor operation for virtual IP resource configured
 
   GCP:
